@@ -1,0 +1,15 @@
+services:
+  noc-portal:
+    image: noc-portal:latest
+    container_name: noc-portal
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./backend/logs:/app/logs
+    env_file:
+      - .env

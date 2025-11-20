@@ -1,0 +1,4 @@
+All DTO (Data Transfer Object) files
+
+Request Data Schema
+Response Data Schema

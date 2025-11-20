@@ -1,0 +1,44 @@
+# Python-specific files and directories
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Operating System and Editor specific files
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+tmp/
+
+# Configuration and sensitive files (example, adjust as needed)
+.env
+config.ini
+secrets.yaml
+*.key
+*.pem
+
+# Database files (if using local development databases)
+*.sqlite3
+*.db
+
+# FastAPI specific (if any generated during development)
+# For example, if you're using a local database or specific build artifacts
+# that shouldn't be committed to version control.
+
+
+# Upload directories
+uploads/*
