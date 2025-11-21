@@ -8,7 +8,7 @@
             <v-tab v-for="tab in tabs" :key="tab.value" :value="tab.value"
               :class="{ 'tab-submitted': store.isTabSubmitted(tab.dataKey) }">
               <v-icon left>{{ tab.icon }}</v-icon>
-              {{ tab.title }}
+              {{ NOC_FORM_LABEL_MAP[tab.dataKey] }}
               <v-icon v-if="store.isTabSubmitted(tab.dataKey)" class="ml-2" color="success" size="small">
                 mdi-check-circle
               </v-icon>
@@ -62,10 +62,10 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useNOCStore } from '@/stores/nocStore'
-import NOCFormTabGeneralInformation from './noc-forms/NOCFormTabGeneralInformation.vue'
-import NOCFormTabFundingInvestment from './noc-forms/NOCFormTabFundingInvestment.vue'
-import NOCFormTabDocumentUpload from './noc-forms/NOCFormTabDocumentUpload.vue'
+import { NOC_FORM_LABEL_MAP, useNOCStore } from '@/stores/nocStore'
+import NOCForm1 from './noc-forms/NOCForm1.vue'
+import NOCForm2 from './noc-forms/NOCForm2.vue'
+import NOCForm3 from './noc-forms/NOCForm3.vue'
 
 const store = useNOCStore()
 
@@ -76,24 +76,21 @@ const activeTab = ref(1)
 const tabs = [
   {
     value: 1,
-    title: "General Information",
     icon: "mdi-information",
-    component: NOCFormTabGeneralInformation,
-    dataKey: 'generalInformation'
+    component: NOCForm1,
+    dataKey: 'form1'
   },
   {
     value: 2,
-    title: "Funding & Investment",
     icon: "mdi-currency-inr",
-    component: NOCFormTabFundingInvestment,
-    dataKey: 'fundingData'
+    component: NOCForm2,
+    dataKey: 'form2'
   },
   {
     value: 3,
-    title: "Document Upload",
     icon: "mdi-upload",
-    component: NOCFormTabDocumentUpload,
-    dataKey: 'documentData'
+    component: NOCForm3,
+    dataKey: 'form3'
   }
 ]
 
@@ -143,8 +140,7 @@ async function onSubmitTab() {
   const current = currentTab.value
   if (!current) return
 
-  const tabData = store.getTabData(current.dataKey)
-  await store.submitTab(current.dataKey, tabData)
+  await store.submitTab(current.dataKey)
 }
 
 // Complete form submission

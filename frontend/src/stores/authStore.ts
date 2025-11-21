@@ -2,16 +2,25 @@ import { defineStore } from 'pinia'
 import type { Status } from '@/types/common'
 import { submitLogin } from '@/apis'
 
-function defaultForm() {
+type LoginForm = { username: string; password: string }
+
+function defaultForm(): LoginForm {
   return {
     username: '',
     password: '',
   }
 }
 
+interface AuthState {
+  user: { token: string } | null
+  status: Status
+  error: string | null
+  form: LoginForm
+}
+
 export const useAuthStore = defineStore('auth', {
-  state: (): { status: Status; error: string | null; form: { username: string; password: string }; user: { token: string } | null } => ({
-    user: null,
+  state: (): AuthState => ({
+    user: localStorage.getItem('authToken') ? { token: localStorage.getItem('authToken')! } : null,
     status: 'initialized',
     error: null,
     form: defaultForm(),
@@ -23,20 +32,25 @@ export const useAuthStore = defineStore('auth', {
     resetForm() {
       this.form = defaultForm()
     },
-    async login() {
+    async login(): Promise<void> {
       this.status = 'processing'
       this.error = null
       try {
         const response = await submitLogin(this.form)
         this.status = 'processed'
         this.user = { token: response.data.token }
+        localStorage.setItem('authToken', response.data.token)
+        this.resetForm()
       } catch (err: any) {
         this.status = 'failed'
         this.error = err?.response?.data?.message || err?.message || 'Login failed'
-        alert(this.error)
         throw err
       }
     },
+    logout() {
+      localStorage.removeItem('authToken')
+      this.user = null
+    }
   },
 })
 

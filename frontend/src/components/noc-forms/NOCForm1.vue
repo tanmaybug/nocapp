@@ -231,7 +231,7 @@
     <v-col cols="12">
       <div class="text-body-2 mb-2">Whether the land already owned</div>
       <v-radio-group
-        v-model="modelValue.landOwnedStatus"
+        v-model="modelValue.landStatus.landOwnedStatus"
         row
         @update:model-value="updateValue"
       >
@@ -248,7 +248,7 @@
     <v-col cols="12">
       <div class="text-body-2 mb-2">Whether the land has been converted for use of educational purpose or not</div>
       <v-radio-group
-        v-model="modelValue.landConvertedForEducationalPurposeStatus"
+        v-model="modelValue.landStatus.landConvertedForEducationalPurposeStatus"
         row
         @update:model-value="updateValue"
       >

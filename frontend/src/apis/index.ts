@@ -1,11 +1,20 @@
 import axios from 'axios'
 import type { State, District, SubDivision } from '@/types/common'
+import type { NOCFormType } from '@/stores/nocStore'
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || ''
 
 const api = axios.create({
   baseURL,
   headers: { 'Content-Type': 'application/json' },
+})
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('authToken')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
 })
 
 export const getStates = async (): Promise<State[]> => {
@@ -50,6 +59,11 @@ export const getPostOffices = async (pin: number) => {
 
 export const getGramPanchayats = async (municipalityBlockId: number) => {
   const resp = await api.get(`/registration/grampanchayats/${municipalityBlockId}`)
+  return resp.data
+}
+
+export const submitNocForm = async (nocFormUrl: NOCFormType, payload: any) => {
+  const resp = await api.post(`/${nocFormUrl}`, payload)
   return resp.data
 }
 

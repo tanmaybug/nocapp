@@ -133,10 +133,10 @@ export const useRegistrationStore = defineStore('registration', {
       this.status = 'processing'
       this.error = null
       try {
-        const response =await submitRegistration({ ...this.form, confirm_password: this.form.password })
-        alert(response.data.noc_registration_id)
+        const response = await submitRegistration({ ...this.form, confirm_password: this.form.password })
         this.status = 'processed'
-        this.dialogStore.showDialog({ type: 'ALERT', title: 'Registration Successful', message: `Your registration ID is ${response.data.noc_registration_id}`})
+        this.resetForm()
+        this.dialogStore.showDialog({ type: 'ALERT', title: 'Registration Successful', message: `Your registration ID is ${response.data.noc_registration_id}` })
       } catch (err: any) {
         this.status = 'failed'
         this.error = err?.response?.data?.message || err?.message || 'Registration failed'

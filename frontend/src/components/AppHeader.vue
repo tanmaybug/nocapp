@@ -9,6 +9,7 @@
       <v-btn class="me-2" text :to="{ name: 'Registration' }" v-if="!isAuthenticated">Registration</v-btn>
       <v-btn class="me-2" text :to="{ name: 'Login' }" v-if="!isAuthenticated">Login</v-btn>
       <v-btn class="me-2" text :to="{ name: 'NOCApplication' }" v-if="isAuthenticated">NOC Application</v-btn>
+      <v-btn class="me-2" text @click="logout()" v-if="isAuthenticated">Log Out</v-btn>
     </div>
   </v-app-bar>
 
@@ -29,12 +30,19 @@
 </template>
 
 <script setup lang="ts">
-import useAuthStore from '@/stores/authStore';
-import { storeToRefs } from 'pinia';
+import router from '@/routes'
+import useAuthStore from '@/stores/authStore'
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 const drawer = ref(false)
-const { isAuthenticated } = storeToRefs(useAuthStore())
+const authStore = useAuthStore()
+const { isAuthenticated } = storeToRefs(authStore)
+
+const logout = () => {
+  authStore.logout()
+  router.push({ name: 'Login' })
+}
 </script>
 
 <style scoped></style>
