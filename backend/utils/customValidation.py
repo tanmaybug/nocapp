@@ -13,3 +13,10 @@ def pinNumberValidation(pin: int) -> bool:
         return True
     else:
         return False
+    
+def emailValidation(email: str) -> bool:
+    pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    if re.fullmatch(pattern, str(email)):
+        return True
+    else:
+        return False

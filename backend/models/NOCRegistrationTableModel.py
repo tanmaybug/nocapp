@@ -5,6 +5,7 @@ from sqlalchemy import (
     SmallInteger,
     Text,
     TIMESTAMP,
+    BigInteger,
 )
 from config.DB.DBConfig import Base
 
@@ -49,3 +50,7 @@ class NOCRegistration(Base):
     applicant_address = Column(String, nullable=True)
     institution_address = Column(String, nullable=True)
     active_status = Column(SmallInteger, nullable=True)
+
+    applicant_mobile = Column(BigInteger, nullable=True)
+    applicant_email_id = Column(String, nullable=True)
+    applicant_tan_no = Column(String, nullable=True)

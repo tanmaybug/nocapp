@@ -1,92 +1,107 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,field_validator
 from typing import Optional, Literal
 
-
-class AimAndObjective(BaseModel):
-    vision: Optional[str]
-    mission: Optional[str]
-    coreValues: Optional[str]
-    aims: Optional[str]
-    objectiveConcernedInstitution: Optional[str]
-
-
-class CollegeLandDetails(BaseModel):
-    mouza: Optional[str]
-    jlNo: Optional[str]
-    khatianNo: Optional[str]
-    plotNo: Optional[str]
-    areaClasification: Optional[int]
+class BaseModelWithEmptyString(BaseModel):
+    @field_validator("*", mode="before")
+    def empty_string_to_none_and_trim(cls, v):
+        # If the value is a string, trim it
+        if isinstance(v, str):
+            v = v.strip()
+            # Convert empty string to None
+            if v == "":
+                return None
+        return v
 
 
-class CredibilityAndReadiness(BaseModel):
-    experienceInEducation: Optional[str]
-    generalReputation: Optional[str]
-    readinessToComplyWithRegulatoryNorms: Optional[str]
+class AimAndObjective(BaseModelWithEmptyString):
+    vision: Optional[str]= None
+    mission: Optional[str]= None
+    coreValues: Optional[str]= None
+    aims: Optional[str]= None
+    objectiveConcernedInstitution: Optional[str]= None
 
 
-class AdditionalCommitmentsAndPlans(BaseModel):
-    studentReservation: Optional[int]
-    employeeReservation: Optional[int]
-    specialSkillDevelomentActivity: Optional[int]
-    academicAuditingPlans: Optional[int]
+class CollegeLandDetails(BaseModelWithEmptyString):
+    mouza: Optional[str]= None
+    jlNo: Optional[str]= None
+    khatianNo: Optional[str]= None
+    plotNo: Optional[str]= None
+    areaClasification: Optional[int]= None
 
 
-class LandStatus(BaseModel):
-    landOwnedStatus: Optional[int]
-    landConvertedForEducationalPurposeStatus: Optional[int]
+class CredibilityAndReadiness(BaseModelWithEmptyString):
+    experienceInEducation: Optional[str]= None
+    generalReputation: Optional[str]= None
+    readinessToComplyWithRegulatoryNorms: Optional[str]= None
 
 
-class ApprovedPlanWith(BaseModel):
-    totalBuildUpArea: Optional[float]
-    groundFloorArea: Optional[float]
-    firstFloorArea: Optional[float]
+class AdditionalCommitmentsAndPlans(BaseModelWithEmptyString):
+    studentReservation: Optional[int]= None
+    employeeReservation: Optional[int]= None
+    specialSkillDevelomentActivity: Optional[int]= None
+    academicAuditingPlans: Optional[int]= None
 
 
-class TotalNumberOf(BaseModel):
-    classRoomCount: Optional[int]
-    seminarRoomCount: Optional[int]
-    multipurposeHallCount: Optional[int]
-    labResourceCenterCount: Optional[int]
-    ictEduTechLabCount: Optional[int]
-    languageLabCount: Optional[int]
-    storeRoomCount: Optional[int]
-    boysCommonRoomCount: Optional[int]
-    girlsCommonRoomCount: Optional[int]
-    boysToiletCount: Optional[int]
-    girlsToiletCount: Optional[int]
+class LandStatus(BaseModelWithEmptyString):
+    landOwnedStatus: Optional[int]= None
+    landConvertedForEducationalPurposeStatus: Optional[int]= None
 
 
-class AnyOtherRoom(BaseModel):
-    conferrenceRoomStatus: Optional[int]
-    meetingRoomStatus: Optional[int]
+class ApprovedPlanWith(BaseModelWithEmptyString):
+    totalBuildUpArea: Optional[float]= None
+    groundFloorArea: Optional[float]= None
+    firstFloorArea: Optional[float]= None
 
 
-class LibraryDetails(BaseModel):
-    totalSpace: Optional[float]
-    readingRoomCount: Optional[int]
-    booksCount: Optional[int]
-    journalPeriodicalCount: Optional[int]
+class TotalNumberOf(BaseModelWithEmptyString):
+    classRoomCount: Optional[int]= None
+    seminarRoomCount: Optional[int]= None
+    multipurposeHallCount: Optional[int]= None
+    labResourceCenterCount: Optional[int]= None
+    ictEduTechLabCount: Optional[int]= None
+    languageLabCount: Optional[int]= None
+    storeRoomCount: Optional[int]= None
+    boysCommonRoomCount: Optional[int]= None
+    girlsCommonRoomCount: Optional[int]= None
+    boysToiletCount: Optional[int]= None
+    girlsToiletCount: Optional[int]= None
 
 
-class CampusDevelopmentPlan(BaseModel):
-    approvedPlanWith: Optional[ApprovedPlanWith]
-    totalNumberOf: Optional[TotalNumberOf]
-    anyOtherRoom: Optional[AnyOtherRoom]
-    libraryDetails: Optional[LibraryDetails]
-    administrativeOfficeStatus: Optional[int]
-    totalPlannedConstruction: Optional[float]
+class AnyOtherRoom(BaseModelWithEmptyString):
+    conferrenceRoomStatus: Optional[int]= None
+    meetingRoomStatus: Optional[int]= None
 
 
-class Form1(BaseModel):
-    aimAndObjective: Optional[AimAndObjective]
-    collegeLandDetails: Optional[CollegeLandDetails]
-    credibilityAndReadiness: Optional[CredibilityAndReadiness]
-    additionalCommitmentsAndPlans: Optional[AdditionalCommitmentsAndPlans]
-    campusDevlopmentPlan: Optional[CampusDevelopmentPlan]
-    comprehensivePlan: Optional[str]
-    collegeLandAreaInAcres: Optional[float]
-    collegeCoveredArea: Optional[float]
-    landStatus: Optional[LandStatus]
+class LibraryDetails(BaseModelWithEmptyString):
+    totalSpace: Optional[float]= None
+    readingRoomCount: Optional[int]= None
+    booksCount: Optional[int]= None
+    journalPeriodicalCount: Optional[int]= None
+
+   
+
+
+class CampusDevelopmentPlan(BaseModelWithEmptyString):
+    approvedPlanWith: Optional[ApprovedPlanWith]= None
+    totalNumberOf: Optional[TotalNumberOf]= None
+    anyOtherRoom: Optional[AnyOtherRoom]= None
+    libraryDetails: Optional[LibraryDetails]= None
+    administrativeOfficeStatus: Optional[int]= None
+    totalPlannedConstruction: Optional[float]= None
+
+
+class Form1(BaseModelWithEmptyString):
+    aimAndObjective: Optional[AimAndObjective]= None
+    collegeLandDetails: Optional[CollegeLandDetails]= None
+    credibilityAndReadiness: Optional[CredibilityAndReadiness]= None
+    additionalCommitmentsAndPlans: Optional[AdditionalCommitmentsAndPlans]= None
+    campusDevlopmentPlan: Optional[CampusDevelopmentPlan]= None
+    comprehensivePlan: Optional[str]= None
+    collegeLandAreaInAcres: Optional[float]= None
+    collegeCoveredArea: Optional[float]= None
+    landStatus: Optional[LandStatus]= None
+
+    
 
     # @model_validator(mode="after")
     
