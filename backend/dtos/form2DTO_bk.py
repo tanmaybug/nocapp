@@ -1,20 +1,9 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, validator
 from typing import Optional, Literal
 from datetime import date
 
-class BaseModelWithEmptyString(BaseModel):
-    @field_validator("*", mode="before")
-    def empty_string_to_none_and_trim(cls, v):
-        # If the value is a string, trim it
-        if isinstance(v, str):
-            v = v.strip()
-            # Convert empty string to None
-            if v == "":
-                return None
-        return v
 
-
-class ProjectedFundFlow(BaseModelWithEmptyString):
+class ProjectedFundFlow(BaseModel):
     amount: Optional[float] = Field(
         None, description="Amount (Numeric field, 10,2 precision)"
     )
@@ -29,7 +18,7 @@ class ProjectedFundFlow(BaseModelWithEmptyString):
     #     return v
 
 
-class Synopsis(BaseModelWithEmptyString):
+class Synopsis(BaseModel):
     proposedInvestment: Optional[float] = Field(
         None, description="Proposed Investment"
     )
@@ -44,7 +33,7 @@ class Synopsis(BaseModelWithEmptyString):
     )
 
 
-class BuildingDetails(BaseModelWithEmptyString):
+class BuildingDetails(BaseModel):
     buildingCompletionStatus: Optional[int] = Field(
         None, description="1 = Yes, 0 = No"
     )
@@ -55,10 +44,26 @@ class BuildingDetails(BaseModelWithEmptyString):
     #     None, description="Expected date of completion if building not completed"
     # )
 
-   
+    # @validator("buildingCompletionDate", always=True)
+    # def validate_completion_dates(cls, v, values):
+    #     status = values.get("buildingCompletionStatus")
+    #     if status == "1" and v is None:
+    #         raise ValueError("Building completion date is required when status is 'Yes'")
+    #     if status == "0" and v is not None:
+    #         raise ValueError("Completion date should be empty when building is not completed")
+    #     return v
+
+    # @validator("buildingCompletionExpectedDate", always=True)
+    # def validate_expected_date(cls, v, values):
+    #     status = values.get("buildingCompletionStatus")
+    #     if status == "0" and v is None:
+    #         raise ValueError("Expected completion date is required when status is 'No'")
+    #     if status == "1" and v is not None:
+    #         raise ValueError("Expected completion date should be empty when building is completed")
+    #     return v
 
 
-class Form2(BaseModelWithEmptyString):
+class Form2(BaseModel):
     projectedFundFlow: Optional[ProjectedFundFlow]
     synopsis: Optional[Synopsis]
     buildingDetails: Optional[BuildingDetails]

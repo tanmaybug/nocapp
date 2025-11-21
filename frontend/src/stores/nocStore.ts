@@ -280,7 +280,8 @@ export const useNOCStore = defineStore('noc', {
       try {
         const data = this.form[tabKey]
 
-        await submitNocForm(tabKey, { [tabKey]: { ...data } })
+        await submitNocForm(tabKey, { ...data } )
+        // await submitNocForm(tabKey, { [tabKey]: { ...data } })
 
         // Mark tab as submitted
         this.submissionProgress[tabKey] = true

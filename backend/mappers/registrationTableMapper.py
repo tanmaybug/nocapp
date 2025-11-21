@@ -43,6 +43,9 @@ def dtotodb(data: RegistrationFormRequestDTO,regId:str) -> NOCRegistration:
         entry_time=date_time(),
         entry_ip="127.0.0.1",
         active_status=1,
+        applicant_mobile=data.applicantMobileNo,
+        applicant_email_id=data.applicantEmailId,
+        applicant_tan_no=data.applicantTanNo,
     )
 
     return result
