@@ -16,6 +16,17 @@ from fastapi.encoders import jsonable_encoder
 router = APIRouter(prefix="/form3", tags=["Form"])
 
 @router.post("/", response_model=response.APIResponse)
+def submit():
+    nocRegId = "NOC20251121102258"
+    result = {
+        "status_code": status.HTTP_200_OK,
+        "message": "Form3 Successfully Submitted",
+        "data": nocRegId,
+    }
+    return result
+
+
+@router.post("/fileUpload", response_model=response.APIResponse)
 def upload_file(
     file: UploadFile,
     db: Session = Depends(get_db),

@@ -26,10 +26,27 @@ def updatedb(form_data: Form2, existing_obj: NocApplicationDetails) -> NocApplic
             existing_obj.nearby_feeder_school_count = form_data.synopsis.feederSchoolCountWithin15Km
 
     # --- Building Details ---
-    if form_data.buildingDetails:
-        if form_data.buildingDetails.buildingCompletionStatus is not None:
-            existing_obj.date_of_completion_flag = form_data.buildingDetails.buildingCompletionStatus
-        if form_data.buildingDetails.buildingCompletionDate is not None:
-            existing_obj.date_of_completion_building = form_data.buildingDetails.buildingCompletionDate
+    # if form_data.buildingDetails:
+    #     if form_data.buildingDetails.buildingCompletionStatus is not None:
+    #         existing_obj.date_of_completion_flag = form_data.buildingDetails.buildingCompletionStatus
+    #     if form_data.buildingDetails.buildingCompletionDate is not None:
+    #         existing_obj.date_of_completion_building = form_data.buildingDetails.buildingCompletionDate
 
+    if form_data.buildingCompletionStatus is not None:
+        existing_obj.date_of_completion_flag = form_data.buildingCompletionStatus
+    if form_data.buildingCompletionDate is not None:
+        existing_obj.date_of_completion_building = form_data.buildingCompletionDate
+
+    # if form_data.buildingCompletionExpectedDate is not None:
+    #     existing_obj.date_of_completion_building = form_data.buildingCompletionExpectedDate
+    # if form_data.buildingPlanAmountToBeDeposited is not None:
+    #     existing_obj.date_of_completion_building = form_data.buildingPlanAmountToBeDeposited
+    # if form_data.estimatedIncomeAndExpenditureForFirst5Years is not None:
+    #     existing_obj.date_of_completion_building = form_data.estimatedIncomeAndExpenditureForFirst5Years
+    # if form_data.initialFundInformation is not None:
+    #     existing_obj.date_of_completion_building = form_data.initialFundInformation
+    # if form_data.nationalizedBank is not None:
+    #     existing_obj.date_of_completion_building = form_data.nationalizedBank
+    
+    
     return existing_obj
