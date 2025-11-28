@@ -41,8 +41,11 @@ async function onSubmit() {
   const validation = await formRef.value.validate()
   if (!validation.valid) return
   await store.login()
-  router.push({ name: 'NOCApplication' })
+  if (store.isAuthenticated) {
+    router.push({ name: 'NOCApplication' })
+  }
 }
+
 function onReset() {
   store.resetForm()
 }
