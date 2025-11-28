@@ -36,4 +36,4 @@ app.include_router(router.master_router)
 
 @app.get("/")
 def get_data():
-    return {"Details": "Details from Default Page"}
+    return {"Details": "Details from Default Page...."}
