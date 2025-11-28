@@ -11,19 +11,34 @@ import base64
 from config.DB.DBConfig import get_db
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
+# from core.Dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/form3", tags=["Form"])
 
 @router.post("/", response_model=response.APIResponse)
+def submit():
+    nocRegId = "NOC20251121102258"
+    result = {
+        "status_code": status.HTTP_200_OK,
+        "message": "Form3 Successfully Submitted",
+        "data": nocRegId,
+    }
+    return result
+
+
+@router.post("/fileUpload", response_model=response.APIResponse)
 def upload_file(
     file: UploadFile,
     db: Session = Depends(get_db),
     client_ip: str = Depends(get_client_ip),
+    # current_user: dict = Depends(get_current_user),
 ):
     print(f"client ip: {client_ip}")
 
     UPLOAD_DIR = Path("../uploads")
     UPLOAD_DIR.mkdir(exist_ok=True)
+    # nocRegId = current_user["stake_user"]
+    nocRegId = "NOC20251121102258"
 
     if validatePDF(file):
         # Create unique filename
@@ -38,7 +53,7 @@ def upload_file(
         if uploadedFilePath.exists():
             uploadDataMap = dtotodb(
                 {
-                    "regId": "999",
+                    "regId": nocRegId,
                     "documentId": 1,
                     "documentName": unique_filename,
                     "ip": client_ip,

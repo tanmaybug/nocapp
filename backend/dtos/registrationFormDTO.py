@@ -1,7 +1,11 @@
 # from typing import List
 from pydantic import BaseModel, Field, model_validator, ValidationError,ConfigDict
 
-from utils.customValidation import pinNumberValidation
+from utils.customValidation import (
+    pinNumberValidation,
+    phoneNumberValidation,
+    emailValidation,
+)
 
 
 # class FinancialRow(BaseModel):
@@ -98,6 +102,10 @@ class RegistrationFormRequestDTO(BaseModel):
     registrationDate: str | None = Field(default=None, description="Registration Date")
     placeOfRegistration: str | None = Field(default=None, description="Registration Place")
     minorityDetails: str | None = Field(default=None, description="Minority Status")
+
+    applicantMobileNo: int | None = Field(default=None, description="Applicant Mobile Number")
+    applicantEmailId: str | None = Field(default=None, description="Applicant Email Id")
+    applicantTanNo: str | None = Field(default=None, description="Applicant TAN Number")
     
     applicantLocation: Applicantaddress = Field(description="Applicant Address details")
     
@@ -162,6 +170,28 @@ class RegistrationFormRequestDTO(BaseModel):
                     "msg": "Please Enter Minority Details",
                     "input": values.minorityDetails,
                     "ctx": {"error": ValueError("Please Enter Minority Details")},
+                }
+            )
+
+        if not phoneNumberValidation(values.applicantMobileNo):
+            errors.append(
+                {
+                    "type": "value_error",
+                    "loc": ("applicantMobileNo",),
+                    "msg": "Please Enter Valid Phone Number",
+                    "input": values.applicantMobileNo,
+                    "ctx": {"error": ValueError("Please Enter Valid Phone Number")},
+                }
+            )
+
+        if not emailValidation(values.applicantEmailId):
+            errors.append(
+                {
+                    "type": "value_error",
+                    "loc": ("applicantEmailId",),
+                    "msg": "Please Enter Valid Email Id",
+                    "input": values.applicantEmailId,
+                    "ctx": {"error": ValueError("Please Enter Valid Email Id")},
                 }
             )
 
