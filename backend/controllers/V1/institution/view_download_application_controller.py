@@ -200,7 +200,7 @@ def download_application():
     data["total"] = sum(item["qty"] * item["price"] for item in data["items"])
 
     # Render HTML
-    template = templates.get_template("test_pdf_view.html")
+    template = templates.get_template("applicant_noc_profile_view.html")
     html_content = template.render(**data)
 
     pdf = convert_html_to_pdf(html_content)
@@ -208,7 +208,7 @@ def download_application():
     return StreamingResponse(
         io.BytesIO(pdf),
         media_type="application/pdf",
-        headers={"Content-Disposition": "attachment; filename=invoice.pdf"},
+        headers={"Content-Disposition": "attachment; filename=NOC_Application.pdf"},
     )
 
 def convert_html_to_pdf(source_html: str) -> bytes:
