@@ -110,7 +110,7 @@
       <v-divider class="my-4"></v-divider>
     </v-col>
     <v-col cols="12">
-      <div class="text-body-2 mb-2">Total build up area of Building plan Amount to be deposited</div>
+      <div class="text-body-2 mb-2">Application Fees to be deposited to HED</div>
       <v-radio-group
         v-model="modelValue.buildingPlanAmountToBeDeposited"
         @update:model-value="updateValue"

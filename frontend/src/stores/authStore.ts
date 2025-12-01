@@ -20,7 +20,7 @@ interface AuthState {
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
-    user: localStorage.getItem('authToken') ? { token: localStorage.getItem('authToken')! } : null,
+    user: localStorage.getItem('token') ? { token: localStorage.getItem('token')! } : null,
     status: 'initialized',
     error: null,
     form: defaultForm(),
@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('auth', {
         const response = await submitLogin(this.form)
         this.status = 'processed'
         this.user = { token: response.data.token }
-        localStorage.setItem('authToken', response.data.token)
+        localStorage.setItem('token', response.data.token)
         this.resetForm()
       } catch (err: any) {
         this.status = 'failed'
@@ -48,7 +48,7 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     logout() {
-      localStorage.removeItem('authToken')
+      localStorage.removeItem('token')
       this.user = null
     }
   },

@@ -9,41 +9,10 @@
               <v-autocomplete v-model.number="form.entityTypeID" :items="entityTypes" item-title="details" item-value="id" label="Category of Entity *" :rules="[requiredRule]" />
             </v-col>
             <v-col cols="12">
-              <v-text-field v-model="form.applicantName" label="Name of the applicant(Society/ Trust/ Company/ Minority Institutions Eligible) *" :rules="[requiredRule]" />
-            </v-col>
-
-            <v-col cols="12">
-              <div class="text-subtitle-1">Evidence of Registration</div>
+              <v-text-field v-model="form.applicantName" label="Name of Applicant/Office Bearer *" :rules="[requiredRule]" />
             </v-col>
             <v-col cols="12">
-              <v-autocomplete v-model.number="form.isRegistered" :items="yesNoItems" item-title="label" item-value="value" label="Whether the society is registered under the Societies Registration Act? *" :rules="[requiredRule]" />
-            </v-col>
-            <template v-if="form.isRegistered === 1">
-              <v-col cols="12">
-                <v-text-field v-model="form.registrationNo" label="Registration No *" :rules="[requiredRule]" />
-              </v-col>
-              <v-col cols="12">
-                <v-text-field v-model="form.registrationDate" type="date" label="Date of Registration *" :rules="[requiredRule]" />
-              </v-col>
-              <v-col cols="12">
-                <v-text-field v-model="form.placeOfRegistration" label="Place of Registration *" :rules="[requiredRule]" />
-              </v-col>
-            </template>
-
-            <v-col cols="12">
-              <v-autocomplete v-model.number="form.minorityFlag" :items="yesNoItems" item-title="label" item-value="value" label="Is Minority? *" :rules="[requiredRule]" />
-            </v-col>
-            <template v-if="form.minorityFlag === 1">
-              <v-col cols="12">
-                <v-autocomplete v-model.number="form.minorityTypeId" :items="minorityTypes" item-title="details" item-value="id" label="Minority Type *" :rules="[requiredRule]" />
-              </v-col>
-              <v-col cols="12">
-                <v-textarea v-model="form.minorityDetails" label="Details of Minority Status *" rows="3" :rules="[requiredRule]" />
-              </v-col>
-            </template>
-
-            <v-col cols="12">
-              <v-divider class="my-4"></v-divider>
+              <v-text-field v-model="form.applicantDesignation" label="Designation of Applicant/Office Bearer *" :rules="[requiredRule]" />
             </v-col>
 
             <v-col cols="12">
@@ -58,9 +27,6 @@
             </v-col>
             <v-col cols="12">
               <v-autocomplete v-model.number="form.applicantLocation.subDivisionId" :items="applicantSubDivisions" item-title="details" item-value="id" label="Subdivision *" :rules="[requiredRule]" />
-            </v-col>
-            <v-col cols="12">
-              <v-autocomplete v-model.number="form.applicantLocation.assemblyConstituencyId" :items="applicantAssemblyConstituencies" item-title="details" item-value="id" label="Assembly Constituency *" :rules="[requiredRule]" />
             </v-col>
             <v-col cols="12">
               <v-autocomplete v-model.number="form.applicantLocation.municipalityBlockId" :items="applicantMunicipalityBlocks" item-title="details" item-value="id" label="Municipality/Block *" :rules="[requiredRule]" />
@@ -86,7 +52,7 @@
               <v-text-field v-model="form.proposedCollegeName" label="Name of the proposed college *" :rules="[requiredRule]" />
             </v-col>
             <v-col cols="12">
-              <v-autocomplete v-model.number="form.affiliatedUniversityId" :items="affiliatedUniversities" item-title="details" item-value="id" label="Name of the affiliated university *" :rules="[requiredRule]" />
+              <v-autocomplete v-model.number="form.affiliatedUniversityId" :items="affiliatedUniversities" item-title="details" item-value="id" label="Proposed Affiliating University *" :rules="[requiredRule]" />
             </v-col>
             <v-col cols="12">
               <v-autocomplete v-model.number="form.institutionForId" :items="instituteType" item-title="details" item-value="id" label="The institution is for *" :rules="[requiredRule]" />
@@ -181,7 +147,6 @@ const store = useRegistrationStore()
 const {
   form,
   entityTypes,
-  minorityTypes,
   districts,
   subDivisions,
   policeStations,
@@ -193,10 +158,6 @@ const {
   instituteType,
   affiliatedUniversities
 } = storeToRefs(store)
-const yesNoItems = [
-  { label: 'Yes', value: 1 },
-  { label: 'No', value: 0 },
-]
 const formRef = ref<any>(null)
 
 // Entity Type
@@ -243,11 +204,6 @@ watch(() => form.value.collegeLocation.subDivisionId, (n, o) => {
 })
 
 // Assembly Constituency
-const applicantAssemblyConstituencies = computed<any[]>(() => {
-  const selectedDistrictId = form.value.applicantLocation.districtId
-  if (!selectedDistrictId) return []
-  return (assemblyConstituencies.value || []).filter((s: any) => s.districtId === selectedDistrictId)
-})
 const collegeAssemblyConstituencies = computed<any[]>(() => {
   const selectedDistrictId = form.value.collegeLocation.districtId
   if (!selectedDistrictId) return []

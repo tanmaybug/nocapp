@@ -15,13 +15,7 @@
     </v-col>
 
     <v-col cols="12" v-for="(field, fieldKey) in fileUploadFields" :key="fieldKey">
-      <FileUploadField 
-        :label="field.label"
-        :uploadedFiles="uploadedFiles[fieldKey]"
-        :rules="[]"
-        @add="(file) => uploadFile(file, uploadedFiles[fieldKey], field.displayName)"
-        @remove="(index) => removeItem(uploadedFiles[fieldKey], index)"
-      />
+      <FileUploadField :label="field.label" :uploadedFiles="uploadedFiles[fieldKey]" :rules="[]" @add="(file) => uploadFile(file, uploadedFiles[fieldKey], field.displayName)" @remove="(index) => removeItem(uploadedFiles[fieldKey], index)" />
     </v-col>
   </v-row>
 </template>
@@ -42,7 +36,6 @@ const props = defineProps<{
     extracurricularActivitiesAndPlacesDetails: any[]
     societyRegistrationCertificate: any[]
     conveyanceDeed: any[]
-    homesteadPurposeConversionApplication: any[]
     gripsEchallan: any[]
     buildingPlan: any[]
     proofoFFees: any[]
@@ -102,11 +95,6 @@ const fileUploadFields = {
     displayName: 'Conveyance deed',
     required: false
   },
-  homesteadPurposeConversionApplication: {
-    label: 'Application for Conversion of Land for Homestead purpose',
-    displayName: 'Homestead purpose conversion application',
-    required: false
-  },
   gripsEchallan: {
     label: 'Govt of West Bengal Land & Land Reforms GRIPS eChallan',
     displayName: 'GRIPS eChallan',
@@ -118,7 +106,7 @@ const fileUploadFields = {
     required: false
   },
   proofoFFees: {
-    label: 'Upload the proof of fees',
+    label: 'Upload the proof of fees structure',
     displayName: 'Proof of fees',
     required: false
   },
@@ -138,7 +126,7 @@ const fileUploadFields = {
     required: false
   },
   otherInformation: {
-    label: 'Any other information that the applicant will take to share',
+    label: 'Any other information that the applicant may like to share',
     displayName: 'Other information',
     required: false
   }

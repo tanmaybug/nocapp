@@ -18,7 +18,9 @@ interface Form1Data {
   collegeLandDetails: {
     mouza: string
     jlNo: string
+    khatianType: Nullable<number>
     khatianNo: string
+    plotType: Nullable<number>
     plotNo: string
     areaClasification: Nullable<number>
   }
@@ -103,7 +105,6 @@ interface Form3Data {
   extracurricularActivitiesAndPlacesDetails: Array<string | number>
   societyRegistrationCertificate: Array<string | number>
   conveyanceDeed: Array<string | number>
-  homesteadPurposeConversionApplication: Array<string | number>
   gripsEchallan: Array<string | number>
   buildingPlan: Array<string | number>
   proofoFFees: Array<string | number>
@@ -146,7 +147,9 @@ function createDefaultNOCData(): NOCForm {
       collegeLandDetails: {
         mouza: '',
         jlNo: '',
+        khatianType: null,
         khatianNo: '',
+        plotType: null,
         plotNo: '',
         areaClasification: null
       },
@@ -229,7 +232,6 @@ function createDefaultNOCData(): NOCForm {
       extracurricularActivitiesAndPlacesDetails: [],
       societyRegistrationCertificate: [],
       conveyanceDeed: [],
-      homesteadPurposeConversionApplication: [],
       gripsEchallan: [],
       buildingPlan: [],
       proofoFFees: [],
