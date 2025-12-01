@@ -67,4 +67,24 @@ export const submitNocForm = async (nocFormUrl: NOCFormType, payload: any) => {
   return resp.data
 }
 
+export const sendOtp = async (payload: {userInput: string}) => {
+  return await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: true } )
+    }, 5000)
+  })
+  // const resp = await api.post(`/otp/getOTP`, payload)
+  // return resp.data
+}
+
+export const verifyOtp = async (payload: {userInput: string, otp: string}) => {
+  return await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: true } )
+    }, 5000)
+  })
+  // const resp = await api.post(`/otp/otpVerification`, payload)
+  // return resp.data
+}
+
 export default api

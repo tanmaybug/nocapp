@@ -1,5 +1,7 @@
 <template>
-  <RegistrationForm />
+  <div class="page registration-view">
+    <RegistrationForm />
+  </div>
 </template>
 
 <script setup lang="ts">

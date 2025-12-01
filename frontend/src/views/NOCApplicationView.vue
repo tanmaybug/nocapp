@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page noc-application-view">
     <NOCForm />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="page home">
+  <div class="page dashboard-view">
     <h2>Welcome to the NOC portal.</h2>
   </div>
 </template>
@@ -8,7 +8,7 @@
 </script>
 
 <style scoped>
-.page.home {
+.page.dashboard-view {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,7 +17,7 @@
   overflow-y: hidden;
 }
 
-.page.home h2 {
+.page.dashboard-view h2 {
   font-size: 2.5rem;
   color: #1976d2;
   margin: 0;

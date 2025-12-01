@@ -1,5 +1,3 @@
-import useAuthStore from '@/stores/authStore'
-import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import auth from './guards/auth'
@@ -8,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/HomeView.vue'),
+    component: () => import('../views/DashboardView.vue'),
   },
   {
     path: '/registration',
