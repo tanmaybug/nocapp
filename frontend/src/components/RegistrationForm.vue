@@ -137,7 +137,7 @@
             </v-col>
 
             <v-col cols="12">
-              <v-text-field v-model.number="form.applicantMobileNo" label="Applicant Mobile Number *" :rules="[requiredRule, mobileRule]" type="tel" maxlength="10" />
+              <OTPInput user-input-label="Applicant Mobile Number *" user-input-type="tel" :user-input-rules="[requiredRule, mobileRule]" :send-otp="sendOtp" :verify-otp="verifyOtp" v-model:is-verified="applicantOtpVerified" />
             </v-col>
             <v-col cols="12">
               <v-text-field v-model="form.applicantTanNo" label="Applicant TAN No" :rules="[alphanumericRule(10)]" maxlength="10" />
@@ -158,7 +158,7 @@
             </v-col>
             <v-col cols="12" class="d-flex justify-end">
               <v-btn variant="text" @click="onReset">Reset</v-btn>
-              <v-btn class="ms-2" :disabled="false" @click.prevent="onSubmit">Submit</v-btn>
+              <v-btn class="ms-2" :disabled="!allOTPVerified" @click.prevent="onSubmit">Submit</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -169,10 +169,12 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch, watchEffect } from 'vue'
+import OTPInput from '@/components/OTPInput.vue'
 import { requiredRule, passwordRule, makeMatchRule, numericRule, emailRule, alphanumericRule, mobileRule } from '@/composables/validators'
 import type { SubDivision } from '@/types/common'
 import { useRegistrationStore } from '@/stores/registrationStore'
 import { storeToRefs } from 'pinia'
+import { sendOtp, verifyOtp } from '@/apis'
 
 const store = useRegistrationStore()
 
@@ -294,10 +296,22 @@ watchEffect(() => {
   }
 })
 
+// Password
+const confirmPassword = ref('')
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
+
 // Confirm Password
 const confirmPasswordRule = makeMatchRule(() => form.value.password, 'Passwords do not match')
 
+// OTP
+const applicantOtpVerified = ref(false)
+const allOTPVerified = computed(() => applicantOtpVerified.value)
+
+// Form Submission
 async function onSubmit() {
+  if (!allOTPVerified.value) return
+
   const validation = await formRef.value.validate()
   if (!validation.valid) return
 
@@ -305,15 +319,11 @@ async function onSubmit() {
 }
 function onReset() {
   store.resetForm()
+  applicantOtpVerified.value = false
 }
 
 onMounted(async () => {
   onReset()
   await store.getFormOptions()
 })
-
-// Password
-const confirmPassword = ref('')
-const showPassword = ref(false)
-const showConfirmPassword = ref(false)
 </script>

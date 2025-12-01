@@ -43,6 +43,8 @@ function createDefaultRegistrationData() {
     applicantMobileNo: '',
     applicantTanNo: '',
     applicantEmailId: '',
+    applicantMobileNoOTP: null,
+    applicantEmailIdOTP: null,
     password: ''
   }
 }
