@@ -1,4 +1,17 @@
-export type NumericOptions = { length?: number; min?: number; max?: number }
+export type NumericRuleMessages = {
+  digits?: string
+  length?: string | ((expectedLength: number) => string)
+  min?: string | ((minValue: number) => string)
+  max?: string | ((maxValue: number) => string)
+}
+
+export type NumericOptions = {
+  length?: number
+  min?: number
+  max?: number
+  allowDecimal?: boolean
+  messages?: NumericRuleMessages
+}
 
 export const requiredRule = (v: any) => (!!v && (Array.isArray(v) ? v.length > 0 : true)) || 'This field is required'
 
@@ -18,23 +31,54 @@ export function requiredIfRule(condition: boolean | (() => boolean), message = '
   }
 }
 
+function resolveMessage<T>(custom: string | ((arg: T) => string) | undefined, fallback: string | ((arg: T) => string), arg: T): string {
+  if (custom !== undefined) {
+    return typeof custom === 'function' ? custom(arg) : custom
+  }
+  return typeof fallback === 'function' ? fallback(arg) : fallback
+}
+
 export function numericRule(options: NumericOptions) {
+  const defaultMessages = {
+    digits: 'Must contain digits only',
+    length: (len: number) => `Must be exactly ${len} digits`,
+    min: (minVal: number) => `Must be >= ${minVal}`,
+    max: (maxVal: number) => `Must be <= ${maxVal}`,
+  }
+
   return (v: any) => {
-    const s = String(v || '')
-    if (!/^[0-9]+$/.test(s)) return 'Must contain digits only'
-    if (options.length !== undefined) {
-      return s.length === options.length || `Must be exactly ${options.length} digits`
+    const s = String(v ?? '')
+    if (!s) return true
+
+    const allowDecimal = options.allowDecimal ?? false
+    const pattern = allowDecimal ? /^[0-9]+(\.[0-9]+)?$/ : /^[0-9]+$/
+    if (!pattern.test(s)) {
+      return resolveMessage(options.messages?.digits, defaultMessages.digits, undefined as never)
     }
+
+    if (options.length !== undefined) {
+      return (
+        s.length === options.length ||
+        resolveMessage(options.messages?.length, defaultMessages.length, options.length)
+      )
+    }
+
     const n = Number(s)
-    if (options.min !== undefined && n < options.min) return `Must be >= ${options.min}`
-    if (options.max !== undefined && n > options.max) return `Must be <= ${options.max}`
+    if (options.min !== undefined && n < options.min) {
+      return resolveMessage(options.messages?.min, defaultMessages.min, options.min)
+    }
+    if (options.max !== undefined && n > options.max) {
+      return resolveMessage(options.messages?.max, defaultMessages.max, options.max)
+    }
     return true
   }
 }
 
 export function isNumericValidRule(value: any, options: NumericOptions) {
   const s = String(value || '')
-  if (!/^[0-9]+$/.test(s)) return false
+  const allowDecimal = options.allowDecimal ?? false
+  const pattern = allowDecimal ? /^[0-9]+(\.[0-9]+)?$/ : /^[0-9]+$/
+  if (!pattern.test(s)) return false
   if (options.length !== undefined) return s.length === options.length
   const n = Number(s)
   if (options.min !== undefined && n < options.min) return false

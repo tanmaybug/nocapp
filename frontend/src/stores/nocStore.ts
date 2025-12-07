@@ -18,7 +18,9 @@ interface Form1Data {
   collegeLandDetails: {
     mouza: string
     jlNo: string
+    khatianType: Nullable<number>
     khatianNo: string
+    plotType: Nullable<number>
     plotNo: string
     areaClasification: Nullable<number>
   }
@@ -31,13 +33,16 @@ interface Form1Data {
   }
   additionalCommitmentsAndPlans: {
     studentReservation: Nullable<number>
+    studentReservationDetails: string
     employeeReservation: Nullable<number>
+    employeeReservationDetails: string
     specialSkillDevelomentActivity: Nullable<number>
+    specialSkilDetails: string
     academicAuditingPlans: Nullable<number>
+    academicAuditDetails: string
   }
   landStatus: {
     landOwnedStatus: Nullable<number>
-    landConvertedForEducationalPurposeStatus: Nullable<number>
   }
   comprehensivePlan: string
   campusDevlopmentPlan: {
@@ -103,7 +108,6 @@ interface Form3Data {
   extracurricularActivitiesAndPlacesDetails: Array<string | number>
   societyRegistrationCertificate: Array<string | number>
   conveyanceDeed: Array<string | number>
-  homesteadPurposeConversionApplication: Array<string | number>
   gripsEchallan: Array<string | number>
   buildingPlan: Array<string | number>
   proofoFFees: Array<string | number>
@@ -146,7 +150,9 @@ function createDefaultNOCData(): NOCForm {
       collegeLandDetails: {
         mouza: '',
         jlNo: '',
+        khatianType: null,
         khatianNo: '',
+        plotType: null,
         plotNo: '',
         areaClasification: null
       },
@@ -159,13 +165,16 @@ function createDefaultNOCData(): NOCForm {
       },
       additionalCommitmentsAndPlans: {
         studentReservation: null,
+        studentReservationDetails: '',
         employeeReservation: null,
+        employeeReservationDetails: '',
         specialSkillDevelomentActivity: null,
-        academicAuditingPlans: null
+        specialSkilDetails: '',
+        academicAuditingPlans: null,
+        academicAuditDetails: ''
       },
       landStatus: {
         landOwnedStatus: null,
-        landConvertedForEducationalPurposeStatus: null,
       },
       comprehensivePlan: '',
       campusDevlopmentPlan: {
@@ -229,7 +238,6 @@ function createDefaultNOCData(): NOCForm {
       extracurricularActivitiesAndPlacesDetails: [],
       societyRegistrationCertificate: [],
       conveyanceDeed: [],
-      homesteadPurposeConversionApplication: [],
       gripsEchallan: [],
       buildingPlan: [],
       proofoFFees: [],
