@@ -1,9 +1,12 @@
 from fastapi import APIRouter
 
-from controllers.V1 import registration_controller
-from controllers.V1 import login_controller
-from controllers.V1 import noc_application_controller
-from controllers.V1 import test_new
+from controllers.V1 import (
+    otp_controller,
+    registration_controller,
+    login_controller,
+    noc_application_controller,
+    test_new,
+)
 from controllers.V1.institution import form1Controller, form2Controller,form3Controller
 
 master_router = APIRouter()
@@ -13,6 +16,7 @@ master_router.include_router(login_controller.router, prefix="/v1")
 master_router.include_router(noc_application_controller.router, prefix="/v1")
 
 master_router.include_router(test_new.router, prefix="/v1")
+master_router.include_router(otp_controller.router, prefix="/v1")
 
 master_router.include_router(form1Controller.router, prefix="/v1")
 master_router.include_router(form2Controller.router, prefix="/v1")
