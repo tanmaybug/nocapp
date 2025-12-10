@@ -7,16 +7,23 @@ from controllers.V1 import (
     noc_application_controller,
     test_new,
 )
-from controllers.V1.institution import form1Controller, form2Controller,form3Controller
+
+from controllers.V1.institution import (
+    form1Controller,
+    form2Controller,
+    form3Controller,
+    view_download_application_controller,
+)
 
 master_router = APIRouter()
 
-master_router.include_router(registration_controller.router,prefix="/v1")
+master_router.include_router(registration_controller.router, prefix="/v1")
 master_router.include_router(login_controller.router, prefix="/v1")
 master_router.include_router(noc_application_controller.router, prefix="/v1")
 
 master_router.include_router(test_new.router, prefix="/v1")
 master_router.include_router(otp_controller.router, prefix="/v1")
+master_router.include_router(view_download_application_controller.router, prefix="/v1")
 
 master_router.include_router(form1Controller.router, prefix="/v1")
 master_router.include_router(form2Controller.router, prefix="/v1")
