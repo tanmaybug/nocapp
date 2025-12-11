@@ -103,13 +103,13 @@
             </v-col>
 
             <v-col cols="12">
-              <OTPInput user-input-label="Applicant Mobile Number *" user-input-type="tel" :user-input-rules="[requiredRule, mobileRule]" :send-otp="sendOtp" :verify-otp="verifyOtp" v-model:is-verified="applicantOtpVerified" />
+              <OTPInput user-input-label="Applicant Mobile Number *" user-input-type="tel" :user-input-rules="[requiredRule, mobileRule]" :send-otp="sendOtp" :verify-otp="verifyOtp" v-model:is-verified="applicantMobileNoOtpVerified" v-model:user-input-value="form.applicantMobileNo" v-model:otp-value="form.applicantMobileNoOTP" />
             </v-col>
             <v-col cols="12">
               <v-text-field v-model="form.applicantTanNo" label="Applicant TAN No" :rules="[alphanumericRule(10)]" maxlength="10" />
             </v-col>
             <v-col cols="12">
-              <v-text-field v-model="form.applicantEmailId" label="Applicant Email ID *" :rules="[requiredRule, emailRule]" type="email" />
+              <OTPInput user-input-label="Applicant Email ID *" user-input-type="email" :user-input-rules="[requiredRule, emailRule]" :send-otp="sendOtp" :verify-otp="verifyOtp" v-model:is-verified="applicantEmailIdOtpVerified" v-model:user-input-value="form.applicantEmailId" v-model:otp-value="form.applicantEmailIdOTP" />
             </v-col>
 
             <v-col cols="12">
@@ -261,8 +261,9 @@ const showConfirmPassword = ref(false)
 const confirmPasswordRule = makeMatchRule(() => form.value.password, 'Passwords do not match')
 
 // OTP
-const applicantOtpVerified = ref(false)
-const allOTPVerified = computed(() => applicantOtpVerified.value)
+const applicantMobileNoOtpVerified = ref(false)
+const applicantEmailIdOtpVerified = ref(false)
+const allOTPVerified = computed(() => applicantMobileNoOtpVerified.value && applicantEmailIdOtpVerified.value)
 
 // Form Submission
 async function onSubmit() {
@@ -275,7 +276,8 @@ async function onSubmit() {
 }
 function onReset() {
   store.resetForm()
-  applicantOtpVerified.value = false
+  applicantMobileNoOtpVerified.value = false
+  applicantEmailIdOtpVerified.value = false
 }
 
 onMounted(async () => {

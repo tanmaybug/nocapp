@@ -40,12 +40,12 @@ type ValidationRule = (value: string) => true | string
 type SendOtpHandler = (payload: { userInput: string }) => Promise<any>
 type VerifyOtpHandler = (payload: { userInput: string, otp: string }) => Promise<any>
 
-const userInputValue = ref('')
 const userInputError = ref('')
 const sending = ref(false)
 const showOTPDialog = ref(false)
 const otpError = ref(false)
-const otpValue = ref('')
+const userInputValue = defineModel('userInputValue', { type: String })
+const otpValue = defineModel('otpValue', { type: Number })
 const isVerified = defineModel('isVerified', { type: Boolean, default: false })
 
 const props = withDefaults(defineProps<{
