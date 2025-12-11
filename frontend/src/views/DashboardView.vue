@@ -1,25 +1,24 @@
 <template>
   <div class="page dashboard-view">
-    <h2>Welcome to the NOC portal.</h2>
+    <v-container>
+      <component :is="dashboardComponent" />
+    </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import useAuthStore, { ROLE } from '@/stores/authStore'
+import AdminDashboard from '@/components/dashboard/AdminDashboard.vue'
+import InstitutionDashboard from '@/components/dashboard/InstitutionDashboard.vue'
+import { storeToRefs } from 'pinia'
+
+const { role } = storeToRefs(useAuthStore())
+const dashboardComponent = computed(() => {
+  const componentMap: Record<string, any> = {
+    [ROLE.ADMIN]: AdminDashboard,
+    [ROLE.INSTITUTION]: InstitutionDashboard,
+  }
+  return componentMap[role.value as string] || InstitutionDashboard
+})
 </script>
-
-<style scoped>
-.page.dashboard-view {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 64px);
-  text-align: center;
-  overflow-y: hidden;
-}
-
-.page.dashboard-view h2 {
-  font-size: 2.5rem;
-  color: #1976d2;
-  margin: 0;
-}
-</style>

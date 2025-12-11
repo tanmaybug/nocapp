@@ -2,7 +2,27 @@ import { defineStore } from 'pinia'
 import type { Status } from '@/types/common'
 import { submitLogin } from '@/apis'
 
-type LoginForm = { username: string; password: string }
+export const ROLE = {
+  ADMIN: 'ADMIN',
+  INSTITUTION: 'INSTITUTION',
+} as const
+
+export type Role = typeof ROLE[keyof typeof ROLE]
+type LoginForm = {
+  username: string
+  password: string
+}
+export type User  = {
+  token: string
+  role: Role
+  name: string
+}
+export interface AuthState {
+  user: User | null
+  status: Status
+  error: string | null
+  form: LoginForm
+}
 
 function defaultForm(): LoginForm {
   return {
@@ -11,22 +31,16 @@ function defaultForm(): LoginForm {
   }
 }
 
-interface AuthState {
-  user: { token: string } | null
-  status: Status
-  error: string | null
-  form: LoginForm
-}
-
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
-    user: localStorage.getItem('token') ? { token: localStorage.getItem('token')! } : null,
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!): null,
     status: 'initialized',
     error: null,
     form: defaultForm(),
   }),
   getters: {
     isAuthenticated: (state) => !!state.user?.token,
+    role: (state) => state.user?.role || null,
   },
   actions: {
     resetForm() {
@@ -38,8 +52,8 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await submitLogin(this.form)
         this.status = 'processed'
-        this.user = { token: response.data.token }
-        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('user', JSON.stringify(response.data))
+        this.user = { ...response.data }
         this.resetForm()
       } catch (err: any) {
         this.status = 'failed'
@@ -48,7 +62,7 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     logout() {
-      localStorage.removeItem('token')
+      localStorage.removeItem('user')
       this.user = null
     }
   },
