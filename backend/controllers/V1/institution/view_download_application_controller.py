@@ -208,24 +208,14 @@ def download_application(
     request: Request,
     # current_user: dict = Depends(get_current_user),
 ):
-    # data = {
-    #     "invoice_number": "INV-001",
-    #     "items": [
-    #         {"name": "Laptop", "qty": 1, "price": 800},
-    #         {"name": "Mouse", "qty": 2, "price": 25},
-    #         {"name": "Keyboard", "qty": 1, "price": 50},
-    #     ],
-    # }
-
     # Render HTML
-    html_content = templates.get_template("applicant_noc_profile_view.html").render({"request": request})
+    html_content = templates.get_template("test.html").render(
+        {"request": request}
+    )
 
     # Ensure html_content is a string
-    if isinstance(html_content, list):
-        html_content = "".join(html_content)
-
-    # template = templates.get_template("applicant_noc_profile_view.html")
-    # html_content = template.render(**data)
+    # if isinstance(html_content, list):
+    #     html_content = "".join(html_content)
 
     pdf = convert_html_to_pdf(html_content)
 
@@ -234,12 +224,8 @@ def download_application(
         media_type="application/pdf",
         headers={"Content-Disposition": "attachment; filename=NOC_Application.pdf"},
     )
-def convert_html_to_pdf(source_html: str):
-    # Convert HTML string to PDF using WeasyPrint
-    pdf = HTML(string=source_html).write_pdf()
-    return pdf
 
-def convert_html_to_pdf2(source_html: str):
+def convert_html_to_pdf(source_html: str):
     output = io.BytesIO()
     pisa_status = pisa.CreatePDF(io.StringIO(source_html), dest=output)
     if pisa_status.err:
