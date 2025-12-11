@@ -11,7 +11,7 @@ import base64
 from config.DB.DBConfig import get_db
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
-# from core.Dependencies.auth import get_current_user
+from core.Dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/form3", tags=["Form"])
 
@@ -31,18 +31,28 @@ def upload_file(
     file: UploadFile,
     db: Session = Depends(get_db),
     client_ip: str = Depends(get_client_ip),
-    # current_user: dict = Depends(get_current_user),
+    current_user: dict = Depends(get_current_user),
 ):
     print(f"client ip: {client_ip}")
 
     UPLOAD_DIR = Path("../uploads")
     UPLOAD_DIR.mkdir(exist_ok=True)
-    # nocRegId = current_user["stake_user"]
-    nocRegId = "NOC20251121102258"
+    nocRegId = current_user["stake_user"]
+    # nocRegId = "NOC20251121102258"
 
     if validatePDF(file):
+        if not file.filename:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Filename is empty.",
+            )
         # Create unique filename
         file_ext = Path(file.filename).suffix
+        if not file_ext:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="File has no extension.",
+            )
         unique_filename = f"{uuid.uuid4()}{file_ext}"
         file_path = UPLOAD_DIR / unique_filename
 

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Depends
 from helpers import response
 
 from fastapi.responses import StreamingResponse
@@ -7,13 +7,17 @@ from jinja2 import Environment, FileSystemLoader
 # from weasyprint import HTML
 from xhtml2pdf import pisa
 import io
+from core.Dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/institution/NOCApplication", tags=["NOCApplication"])
 # Setup Jinja2 environment
 templates = Environment(loader=FileSystemLoader("templates"))
 
 @router.get("/")
-def view_application():
+def view_application(
+    current_user: dict = Depends(get_current_user),
+):
+    nocRegId = current_user["stake_user"]
     data = {
         "applicantDetails": {
             "entityType": "Society",
@@ -21,7 +25,7 @@ def view_application():
             "isRegistered": "YES",
             "minorityType": "YES",
             "minorityFlag": "YES",
-            "registrationNo": "REG123456",
+            "registrationNo": nocRegId,
             "registrationDate": "2022-05-12",
             "placeOfRegistration": "New Delhi",
             "minorityDetails": "Muslim",
@@ -188,7 +192,9 @@ def view_application():
     return result
 
 @router.get("/download")
-def download_application():
+def download_application(
+    current_user: dict = Depends(get_current_user),
+):
     data = {
         "invoice_number": "INV-001",
         "items": [
@@ -197,7 +203,6 @@ def download_application():
             {"name": "Keyboard", "qty": 1, "price": 50},
         ],
     }
-    data["total"] = sum(item["qty"] * item["price"] for item in data["items"])
 
     # Render HTML
     template = templates.get_template("applicant_noc_profile_view.html")
@@ -211,7 +216,7 @@ def download_application():
         headers={"Content-Disposition": "attachment; filename=NOC_Application.pdf"},
     )
 
-def convert_html_to_pdf(source_html: str) -> bytes:
+def convert_html_to_pdf(source_html: str):
     output = io.BytesIO()
     pisa_status = pisa.CreatePDF(io.StringIO(source_html), dest=output)
     if pisa_status.err:

@@ -4,10 +4,11 @@ import datetime
 # Secret key for encoding and decoding
 SECRET_KEY = "8d9fe9ebb6663c265d68daded700c3c80e46437d"
 
-def create_token(stake_user: str, user_id:int):
+def create_token(stake_user: str, user_id: int, stake_level_id:int):
     payload = {
         "user_id": user_id,
         "stake_user": stake_user,
+        "stake_level_id": stake_level_id,
         "exp": datetime.datetime.now()
         + datetime.timedelta(minutes=30),  # Token expires in 30 mins
     }

@@ -18,7 +18,8 @@ async def get_otp(userInput: str):
         )
         return result
 
-    otp = await OTPService.generate_otp()
+    # otp = await OTPService.generate_otp()
+    otp = "123456"
     await OTPService.store_otp(redis, userInput, otp)
 
     # send OTP via SMS/Mail
