@@ -1,4 +1,5 @@
 from fastapi import APIRouter, status
+from dtos.OTPRequestDTO import OTPGetRequest, OTPValidationRequest
 from helpers import response
 from config.redis_client import redis
 from utils.otp import OTPService
@@ -7,8 +8,9 @@ import re
 router = APIRouter(prefix="/otp", tags=["MailSMS"])
 
 @router.post("/getOTP")
-async def get_otp(userInput: str):
+async def get_otp(request: OTPGetRequest):
 
+    userInput = request.userInput
     # check cooldown first
     can_send = await OTPService.can_send_otp(redis, userInput)
     if not can_send:
@@ -42,8 +44,10 @@ async def get_otp(userInput: str):
 
     return result
 
-@router.get("/otpVerification")
-async def otpVerification(userInput: str,otp:str):
+@router.post("/otpVerification")
+async def otpVerification(request: OTPValidationRequest):
+    userInput = request.userInput
+    otp = request.otp
     status, status_code,msg = await OTPService.validate_otp(redis, userInput, otp)
     # data = {"status":status,"message":msg}
     print(f"status:{status} | code:{status_code} | message:{msg}")

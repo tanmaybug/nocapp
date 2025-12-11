@@ -5,7 +5,7 @@ from config.DB.DBConfig import get_db
 from mappers.form1Mapper import dtotodb as form1Map
 from helpers import response
 from services.form1Repo import form1Service
-from core.Dependencies.auth import get_current_user
+# from core.Dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/form1", tags=["Form"])
 
@@ -13,13 +13,13 @@ router = APIRouter(prefix="/form1", tags=["Form"])
 def submit_application_data(
     request: Form1,
     db: Session = Depends(get_db),
-    current_user: dict = Depends(get_current_user),
+    # current_user: dict = Depends(get_current_user),
 ):
     # print(request)
     # print(current_user)
-    nocRegId = current_user["stake_user"]
+    # nocRegId = current_user["stake_user"]
     
-    # nocRegId = "NOC20251121102258"
+    nocRegId = "NOC20251211212515"
     form1_data = form1Map(request, nocRegId)
     insert_status = form1Service(db).insert_data(
         form1_data
