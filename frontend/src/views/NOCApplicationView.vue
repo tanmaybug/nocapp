@@ -1,6 +1,6 @@
 <template>
   <div class="page noc-application-view">
-    <NOCForm />
+    <n-o-c-form />
   </div>
 </template>
 

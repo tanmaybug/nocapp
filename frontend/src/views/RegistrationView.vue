@@ -1,6 +1,6 @@
 <template>
   <div class="page registration-view">
-    <RegistrationForm />
+    <registration-form />
   </div>
 </template>
 

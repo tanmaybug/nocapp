@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import auth from './guards/auth'
 import guest from './guards/guest'
+import { ROLE } from '@/stores/authStore'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -32,6 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'NOCApplication',
     component: () => import('../views/NOCApplicationView.vue'),
     beforeEnter: auth,
+    meta: { roles: [ROLE.INSTITUTION] },
   },
   {
     path: '/:pathMatch(.*)*',
