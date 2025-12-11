@@ -42,7 +42,7 @@ async function onSubmit() {
   if (!validation.valid) return
   await store.login()
   if (store.isAuthenticated) {
-    router.push({ name: 'NOCApplication' })
+    router.push({ name: 'Home' })
   }
 }
 

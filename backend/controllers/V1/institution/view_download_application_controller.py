@@ -1,20 +1,32 @@
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, Request
 from helpers import response
 
 from fastapi.responses import StreamingResponse
-from jinja2 import Environment, FileSystemLoader
+# from jinja2 import Environment, FileSystemLoader
+from fastapi.templating import Jinja2Templates
 
 # from weasyprint import HTML
 from xhtml2pdf import pisa
 import io
 from core.Dependencies.auth import get_current_user
+from fastapi.responses import HTMLResponse
 
 router = APIRouter(prefix="/institution/NOCApplication", tags=["NOCApplication"])
 # Setup Jinja2 environment
-templates = Environment(loader=FileSystemLoader("templates"))
+# templates = Environment(loader=FileSystemLoader("templates"))
+templates = Jinja2Templates(directory="templates")
+
+
+@router.get("/", response_class=HTMLResponse)
+async def view_application(request: Request):
+    # Render the template with the request context (mandatory in FastAPI for Jinja2)
+    html_content = templates.TemplateResponse(
+        "applicant_noc_profile_view.html", {"request": request}
+    )
+    return html_content
 
 @router.get("/")
-def view_application(
+def view_application_old(
     current_user: dict = Depends(get_current_user),
 ):
     nocRegId = current_user["stake_user"]
@@ -193,20 +205,27 @@ def view_application(
 
 @router.get("/download")
 def download_application(
-    current_user: dict = Depends(get_current_user),
+    request: Request,
+    # current_user: dict = Depends(get_current_user),
 ):
-    data = {
-        "invoice_number": "INV-001",
-        "items": [
-            {"name": "Laptop", "qty": 1, "price": 800},
-            {"name": "Mouse", "qty": 2, "price": 25},
-            {"name": "Keyboard", "qty": 1, "price": 50},
-        ],
-    }
+    # data = {
+    #     "invoice_number": "INV-001",
+    #     "items": [
+    #         {"name": "Laptop", "qty": 1, "price": 800},
+    #         {"name": "Mouse", "qty": 2, "price": 25},
+    #         {"name": "Keyboard", "qty": 1, "price": 50},
+    #     ],
+    # }
 
     # Render HTML
-    template = templates.get_template("applicant_noc_profile_view.html")
-    html_content = template.render(**data)
+    html_content = templates.get_template("applicant_noc_profile_view.html").render({"request": request})
+
+    # Ensure html_content is a string
+    if isinstance(html_content, list):
+        html_content = "".join(html_content)
+
+    # template = templates.get_template("applicant_noc_profile_view.html")
+    # html_content = template.render(**data)
 
     pdf = convert_html_to_pdf(html_content)
 
@@ -215,8 +234,12 @@ def download_application(
         media_type="application/pdf",
         headers={"Content-Disposition": "attachment; filename=NOC_Application.pdf"},
     )
-
 def convert_html_to_pdf(source_html: str):
+    # Convert HTML string to PDF using WeasyPrint
+    pdf = HTML(string=source_html).write_pdf()
+    return pdf
+
+def convert_html_to_pdf2(source_html: str):
     output = io.BytesIO()
     pisa_status = pisa.CreatePDF(io.StringIO(source_html), dest=output)
     if pisa_status.err:

@@ -8,7 +8,7 @@
     <div class="d-none d-md-flex">
       <v-btn class="me-2" text :to="{ name: 'Registration' }" v-if="!isAuthenticated">Registration</v-btn>
       <v-btn class="me-2" text :to="{ name: 'Login' }" v-if="!isAuthenticated">Login</v-btn>
-      <v-btn class="me-2" text :to="{ name: 'NOCApplication' }" v-if="isAuthenticated">NOC Application</v-btn>
+      <v-btn class="me-2" text :to="{ name: 'NOCApplication' }" v-if="isAuthenticated && role === ROLE.INSTITUTION">NOC Application</v-btn>
       <v-btn class="me-2" text @click="logout()" v-if="isAuthenticated">Log Out</v-btn>
     </div>
   </v-app-bar>
@@ -31,13 +31,13 @@
 
 <script setup lang="ts">
 import router from '@/routes'
-import useAuthStore from '@/stores/authStore'
+import useAuthStore, { ROLE } from '@/stores/authStore'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 
 const drawer = ref(false)
 const authStore = useAuthStore()
-const { isAuthenticated } = storeToRefs(authStore)
+const { isAuthenticated, role } = storeToRefs(authStore)
 
 const logout = () => {
   authStore.logout()
