@@ -1,21 +1,15 @@
 from fastapi import APIRouter, status, Depends, Request
 from helpers import response
-
 from fastapi.responses import StreamingResponse
-# from jinja2 import Environment, FileSystemLoader
 from fastapi.templating import Jinja2Templates
-
-# from weasyprint import HTML
 from xhtml2pdf import pisa
 import io
 from core.Dependencies.auth import get_current_user
 from fastapi.responses import HTMLResponse
 
 router = APIRouter(prefix="/institution/NOCApplication", tags=["NOCApplication"])
-# Setup Jinja2 environment
-# templates = Environment(loader=FileSystemLoader("templates"))
-templates = Jinja2Templates(directory="templates")
 
+templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse)
 async def view_application(request: Request):
@@ -208,15 +202,9 @@ def download_application(
     request: Request,
     # current_user: dict = Depends(get_current_user),
 ):
+    data = {"NocReg": "NOC20251211212515"}
     # Render HTML
-    html_content = templates.get_template("test.html").render(
-        {"request": request}
-    )
-
-    # Ensure html_content is a string
-    # if isinstance(html_content, list):
-    #     html_content = "".join(html_content)
-
+    html_content = templates.get_template("applicant_noc_profile_view.html").render(**data)
     pdf = convert_html_to_pdf(html_content)
 
     return StreamingResponse(

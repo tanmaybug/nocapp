@@ -1,7 +1,7 @@
 <table style="width:100%;">
     <tbody>
         <tr>
-            <th style="width: 100%; text-align: center; padding-top: -5%;"><img src="https://wbscc.wb.gov.in/assets/front_end/img/biswa-bangla.png" title="BB Logo" height="70" width="70"/></th>
+            <th style="width: 100%; text-align: center; padding-top: -5%;"><img src="./biswa-bangla.png" title="BB Logo" height="70" width="70"/></th>
         </tr>
         <tr>
             <th style="width: 100%; text-align: center; font-size: 30px; color: #025C31">NOC Application</th>
@@ -12,13 +12,13 @@
     </tbody>
 </table>
 
-<p style="background-color: #3D5368;color: #fff;text-align:center;height: 30px;padding-top: 10;font-size: 18;">Applicant Details</p>
+<p style="background-color: #3D5368;color: #fff;text-align:center;font-size: 18px;">Applicant Details</p>
 <div id="sub-title" style="width:100%">
     <table class="table table-striped" style="font-size: 12px;text-align:left;" width="100%">
         <tbody>
             <tr>
                 <th style="text-align:left">Registration ID.</th>
-                <td>NOC20251121102258</td>
+                <td>{{NocReg}}</td>
                 <th style="text-align:left">Applicant Name</th>
                 <td>Tanmay</td>
             </tr>
@@ -46,8 +46,15 @@
                 <th style="text-align:left">Place Of Registration</th>
                 <td>New Delhi</td>
             </tr>
+
+             <tr>
+                <th style="text-align:left">Minority Details</th>
+                <td>Muslim</td>
+                <th style="text-align:left">Applicant TAN No</th>
+                <td>TAN9876543</td>
+            </tr>
             <tr>
-                <th colspan="4" style="background: #4D6377;color: white;font-size: 14px;">Address Details</th>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Address Details</th>
             </tr>
             <tr>
                 <th style="text-align:left">Address</th>
@@ -55,11 +62,37 @@
                 <th style="text-align:left">District</th>
                 <td>Howrah</td>
             </tr>
+            <tr>
+                <th style="text-align:left">Sub Division</th>
+                <td>Howrah Sub</td>
+                <th style="text-align:left">Police Station</th>
+                <td>Bantra</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">Post Office</th>
+                <td>Kadamtala</td>
+                <th style="text-align:left">Municipality Block</th>
+                <td>Howrah</td>
+            </tr>
+
+             <tr>
+                <th style="text-align:left">Assembly Constituency</th>
+                <td>Shibpur</td>
+                <th style="text-align:left">city</th>
+                <td>Gurgaon</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">PIN</th>
+                <td>711101</td>
+                <th style="text-align:left"></th>
+                <td></td>
+            </tr>
         </tbody>
     </table>
 </div>
+    
 
-<p style="background-color: #3D5368;color: #fff;text-align:center;height: 30px;padding-top: 10;font-size: 18;">Institution Details</p>
+<p style="background-color: #3D5368;color: #fff;text-align:center;font-size: 18px;">Institution Details</p>
 <div id="sub-title" style="width:100%">
     <table class="table table-striped" style="font-size: 12px;text-align:left;" width="100%">
         <tbody>
@@ -70,7 +103,13 @@
                 <td>CU</td>
             </tr>
             <tr>
-                <th colspan="4" style="background: #4D6377;color: white;font-size: 14px;">Address Details</th>
+                <th style="text-align:left">Institution For</th>
+                <td>XYZ</td>
+                <th style="text-align:left"></th>
+                <td></td>
+            </tr>
+            <tr>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Address Details</th>
             </tr>
             <tr>
                 <th style="text-align:left">Address</th>
@@ -78,11 +117,36 @@
                 <th style="text-align:left">District</th>
                 <td>Howrah</td>
             </tr>
+             <tr>
+                <th style="text-align:left">Sub Division</th>
+                <td>Howrah Sub</td>
+                <th style="text-align:left">Police Station</th>
+                <td>Bantra</td>
+            </tr>
+             <tr>
+                <th style="text-align:left">Post Office</th>
+                <td>Kadamtala</td>
+                <th style="text-align:left">Gram Panchayat</th>
+                <td>XYZ</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">Assembly Constituency</th>
+                <td>Shibpur</td>
+                <th style="text-align:left">Municipality Block</th>
+                <td>XYZ Block</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">PIN</th>
+                <td>700011</td>
+                <th style="text-align:left"></th>
+                <td></td>
+            </tr>
         </tbody>
     </table>
 </div>
 
-<p style="background-color: #3D5368;color: #fff;text-align:center;height: 30px;padding-top: 10;font-size: 18;">Institution Purpose</p>
+
+<p style="background-color: #3D5368;color: #fff;text-align:center;font-size: 18px;">Institution Purpose</p>
 <div id="sub-title" style="width:100%">
     <table class="table table-striped" style="font-size: 12px;text-align:left;" width="100%">
         <tbody>
@@ -93,45 +157,197 @@
                 <td>To provide world-class education, foster innovation, and create socially responsible engineers.</td>
             </tr>
             <tr>
-                <th colspan="4" style="background: #4D6377;color: white;font-size: 14px;">Institution Land Details</th>
+                <th style="text-align:left">Core Values</th>
+                <td>Integrity, Excellence, Innovation, Inclusivity, Sustainability.</td>
+                <th style="text-align:left">Aims</th>
+                <td>To provide a platform for young minds to achieve academic and personal growth, contributing to societal welfare.</td>
             </tr>
+            <tr>
+                <th style="text-align:left">Objective Concerned Institution</th>
+                <td>To meet the growing demand for skilled engineers by offering state-of-the-art learning resources.</td>
+                <th style="text-align:left"></th>
+                <td></td>
+            </tr>
+            <tr>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Institution Land Details</th>
+            </tr>
+
             <tr>
                 <th style="text-align:left">Mouza</th>
                 <td>Mauza-A</td>
                 <th style="text-align:left">JlNo</th>
                 <td>159</td>
             </tr>
+            <tr>
+                <th style="text-align:left">KhatianNo</th>
+                <td>1212</td>
+                <th style="text-align:left">Plot No</th>
+                <td>99/7B</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">Area Clasification</th>
+                <td>1</td>
+                <th style="text-align:left"></th>
+                <td></td>
+            </tr>
+           
+            <tr>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Credibility And Readiness</th>
+            </tr>
+
+            <tr>
+                <th style="text-align:left">Experience In Education</th>
+                <td>The trust has over 20 years of experience in running schools and training centers.</td>
+                <th style="text-align:left">General Reputation</th>
+                <td>Recognized for its commitment to quality and community service in the region.</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">Readiness To Comply With Regulatory Norms</th>
+                <td>Fully committed to complying with regulatory norms set by the government and affiliating body.</td>
+                <th style="text-align:left"></th>
+                <td></td>
+            </tr>
+
+             <tr>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Additional Commitments And Plans</th>
+            </tr>
+
+            <tr>
+                <th style="text-align:left">Student Reservation</th>
+                <td>1</td>
+                <th style="text-align:left">Employee Reservation</th>
+                <td>1</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">Special Skill Development Activity</th>
+                <td>1</td>
+                <th style="text-align:left">Academic Auditing Plans</th>
+                <td>1</td>
+            </tr>
         </tbody>
     </table>
 </div>
 
-<p style="background-color: #3D5368;color: #fff;text-align:center;height: 30px;padding-top: 10;font-size: 18;">Campus Development Details</p>
+<p style="background-color: #3D5368;color: #fff;text-align:center;font-size: 18px;">Campus Development Details</p>
 <div id="sub-title" style="width:100%">
     <table class="table table-striped" style="font-size: 12px;text-align:left;" width="100%">
         <tbody>
+
             <tr>
-                <th style="text-align:left">Proposed College Name</th>
-                <td>Shree Ram College of Engineering</td>
-                <th style="text-align:left">Affiliated University</th>
-                <td>CU</td>
+                <th style="text-align:left">totalBuildUpArea</th>
+                <td>30000</td>
+                <th style="text-align:left">groundFloorArea</th>
+                <td>10000</td>
+            </tr>
+             <tr>
+                <th style="text-align:left">firstFloorArea</th>
+                <td>9000</td>
+            </tr>
+
+            <tr>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Total Number Of</th>
             </tr>
             <tr>
-                <th colspan="4" style="background: #4D6377;color: white;font-size: 14px;">Library Details</th>
+                <th style="text-align:left">Class Room Count</th>
+                <td>30</td>
+                <th style="text-align:left">Seminar Room Count</th>
+                <td>3</td>
+            </tr>
+
+             <tr>
+                <th style="text-align:left">Multipurpose Hall Count</th>
+                <td>1</td>
+                <th style="text-align:left">Lab Resource Center Count</th>
+                <td>5</td>
+            </tr>
+             <tr>
+                <th style="text-align:left">ICT EduTech Lab Count</th>
+                <td>2</td>
+                <th style="text-align:left">Language Lab Count</th>
+                <td>1</td>
+            </tr>
+             <tr>
+                <th style="text-align:left">Store Room Count</th>
+                <td>2</td>
+                <th style="text-align:left">Boys CommonRoom Count</th>
+                <td>1</td>
+            </tr>
+             <tr>
+                <th style="text-align:left">Girls Common Room Count</th>
+                <td>1</td>
+                <th style="text-align:left">Boys Toilet Count</th>
+                <td>6</td>
+            </tr>
+             <tr>
+                <th style="text-align:left">Girls Toilet Count</th>
+                <td>6</td>
+                <th style="text-align:left"></th>
+                <td></td>
             </tr>
             <tr>
-                <th style="text-align:left">Address</th>
-                <td>456, College Road, Sector 21</td>
-                <th style="text-align:left">District</th>
-                <td>Howrah</td>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Any Other Room</th>
             </tr>
+            <tr>
+                <th style="text-align:left">Conferrence Room Status</th>
+                <td>1</td>
+                <th style="text-align:left">Meeting Room Status</th>
+                <td>1</td>
+            </tr>
+
+            <tr>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Library Details</th>
+            </tr>
+            <tr>
+                <th style="text-align:left">Total Space</th>
+                <td>2500</td>
+                <th style="text-align:left">Reading Room Count</th>
+                <td>3</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">Books Count</th>
+                <td>15000</td>
+                <th style="text-align:left">Journal Periodical Count</th>
+                <td>50</td>
+            </tr>
+            <hr>
+            <tr>
+                <th style="text-align:left">Administrative Office Status</th>
+                <td>1</td>
+                <th style="text-align:left">Total Planned Construction</th>
+                <td>40000</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">Comprehensive Plan</th>
+                <td>In the next 5 years, we will expand the infrastructure, including hostels and recreational facilities.</td>
+                <th style="text-align:left">College Land Area In Acres</th>
+                <td>10.0</td>
+            </tr>
+            <hr>
+            <tr>
+                <th style="text-align:left">College Covered Area</th>
+                <td>4.0</td>
+                <th style="text-align:left"></th>
+                <td></td>
+            </tr>
+             <tr>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Land Status</th>
+            </tr>
+            <tr>
+                <th style="text-align:left">Land Owned Status</th>
+                <td>1</td>
+                <th style="text-align:left">Land Converted For Educational Purpose Status</th>
+                <td>1</td>
+            </tr>
+             
         </tbody>
     </table>
 </div>
 
-<p style="background-color: #3D5368;color: #fff;text-align:center;height: 30px;padding-top: 10;font-size: 18;">Financial Details</p>
+<p style="background-color: #3D5368;color: #fff;text-align:center;font-size: 18px;">Financial Details</p>
 <div id="sub-title" style="width:100%">
     <table class="table table-striped" style="font-size: 12px;text-align:left;" width="100%">
         <tbody>
+
             <tr>
                 <th style="text-align:left">Amount</th>
                 <td>200000</td>
@@ -144,13 +360,48 @@
                 <th style="text-align:left">Building Completion Date</th>
                 <td>29-11-2025</td>
             </tr>
+             <tr>
+                <th style="text-align:left">Building Completion Expected Date</th>
+                <td>2026-12-31</td>
+                <th style="text-align:left">Building Plan Amount To Be Deposited</th>
+                <td>5000.0</td>
+            </tr>
+             <tr>
+                <th style="text-align:left">Estimated Income And Expenditure For First 5 Years</th>
+                <td>Projected income of 100000, projected expenditure of 80000</td>
+                <th style="text-align:left">Initial Fund Information</th>
+                <td>Initial capital from trust and government subsidy.</td>
+            </tr> 
+            <tr>
+                <th style="text-align:left">Nationalized Bank</th>
+                <td>State Bank of India</td>
+                <th style="text-align:left"></th>
+                <td></td>
+            </tr>
+
+            <tr>
+                <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Synopsis</th>
+            </tr>
+            <tr>
+                <th style="text-align:left">Proposed Investment</th>
+                <td>5</td>
+                <th style="text-align:left">Proposed Employment</th>
+                <td>10</td>
+            </tr>
+            <tr>
+                <th style="text-align:left">Professional Colleges Count Within 25 Km</th>
+                <td>"15000.0</td>
+                <th style="text-align:left">Feeder School Count With in 15 Km</th>
+                <td>200</td>
+            </tr>
+             
         </tbody>
     </table>
 </div>
 
 
 
-<p style="background-color: #3D5368;color: #fff;text-align:center;height: 30px;padding-top: 10;font-size: 18;">Upload Documents</p>
+<p style="background-color: #3D5368;color: #fff;text-align:center;font-size: 18px;">Upload Documents</p>
 <div id="sub-title" style="width:100%">
     <table class="table table-striped" style="font-size: 12px;text-align:left;" width="100%">
         <tbody>
@@ -164,7 +415,7 @@
     </table>
 </div>
 
-<br />
+<br /><br />
 <p style="font-weight:bold; font-size: 10px;color:#800000;"><i><u>Self Declaration</u></i></p>
 <p style="font-weight:bold; font-size: 8px;color:#800000;">
     <i>I Shri/ Smt Tanmay do hereby declare that I / my parents/ legal guardian/ my family have/ has been residing in the State of West Bengal since last 10 years (or more) . I further declare that the above mentioned information furnished by me correct and true my knowledge and belief.</i>
