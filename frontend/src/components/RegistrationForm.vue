@@ -5,22 +5,22 @@
       <v-card-text>
         <v-form @submit.prevent="onSubmit" ref="formRef">
           <v-row class="pa-2">
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.entityTypeID" :items="entityTypes" item-title="details" item-value="id" label="Category of Entity *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field v-model="form.applicantName" label="Name of Applicant/Office Bearer *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <OTPInput user-input-label="Applicant Mobile Number *" user-input-type="tel" :user-input-rules="[requiredRule, mobileRule]" :send-otp="sendOtp" :verify-otp="verifyOtp" v-model:is-verified="applicantMobileNoOtpVerified" v-model:user-input-value="form.applicantMobileNo" v-model:otp-value="form.applicantMobileNoOTP" />
             </v-col>
-            <v-col cols="12">
-              <v-text-field v-model="form.applicantTanNo" label="Applicant TAN No" :rules="[alphanumericRule(10)]" maxlength="10" />
-            </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <OTPInput user-input-label="Applicant Email ID *" user-input-type="email" :user-input-rules="[requiredRule, emailRule]" :send-otp="sendOtp" :verify-otp="verifyOtp" v-model:is-verified="applicantEmailIdOtpVerified" v-model:user-input-value="form.applicantEmailId" v-model:otp-value="form.applicantEmailIdOTP" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
+              <v-text-field v-model="form.applicantTanNo" label="Applicant TAN No" :rules="[alphanumericRule(10)]" maxlength="10" />
+            </v-col>
+            <v-col cols="6">
               <v-text-field v-model="form.applicantDesignation" label="Designation of Applicant/Office Bearer *" :rules="[requiredRule]" />
             </v-col>
 
@@ -31,25 +31,25 @@
             <v-col cols="12">
               <v-textarea v-model="form.applicantLocation.applicantAddress" label="Enter the Address Line of the applicant *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.applicantLocation.districtId" :items="districts" item-title="details" item-value="id" label="District *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.applicantLocation.subDivisionId" :items="applicantSubDivisions" item-title="details" item-value="id" label="Subdivision *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.applicantLocation.municipalityBlockId" :items="applicantMunicipalityBlocks" item-title="details" item-value="id" label="Municipality/Block *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field v-model="form.applicantLocation.city" label="City/Village *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.applicantLocation.policeStationId" :items="policeStations" item-title="details" item-value="id" label="Police Station *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="3">
               <v-text-field v-model.number="form.applicantLocation.pin" label="PIN *" :rules="[requiredRule, pinRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="3">
               <v-autocomplete v-model.number="form.applicantLocation.postOfficeId" :items="applicantPostOffices" item-title="details" item-value="id" label="Post Office *" :rules="[requiredRule]" />
             </v-col>
 
@@ -60,10 +60,10 @@
             <v-col cols="12">
               <v-text-field v-model="form.proposedCollegeName" label="Name of the proposed college *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.affiliatedUniversityId" :items="affiliatedUniversities" item-title="details" item-value="id" label="Proposed Affiliating University *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.institutionForId" :items="instituteType" item-title="details" item-value="id" label="The institution is for *" :rules="[requiredRule]" />
             </v-col>
 
@@ -78,28 +78,28 @@
             <v-col cols="12">
               <v-textarea v-model="form.collegeLocation.collegeAddress" label="College Address *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.collegeLocation.districtId" :items="districts" item-title="details" item-value="id" label="District *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.collegeLocation.subDivisionId" :items="collegeSubDivisions" item-title="details" item-value="id" label="Subdivision *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.collegeLocation.assemblyConstituencyId" :items="collegeAssemblyConstituencies" item-title="details" item-value="id" label="Assembly Constituency *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.collegeLocation.municipalityBlockId" :items="collegeMunicipalityBlocks" item-title="details" item-value="id" label="Municipality/Block *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.collegeLocation.gramPanchayatId" :items="gramPanchayats" item-title="details" item-value="id" label="Gram Panchayat *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.collegeLocation.policeStationId" :items="policeStations" item-title="details" item-value="id" label="Police Station *" :rules="[requiredRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field v-model.number="form.collegeLocation.pin" label="PIN *" type="number" :rules="[requiredRule, pinRule]" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-autocomplete v-model.number="form.collegeLocation.postOfficeId" :items="collegePostOffices" item-title="details" item-value="id" label="Post Office *" :rules="[requiredRule]" />
             </v-col>
 
@@ -107,14 +107,10 @@
               <v-divider class="my-4"></v-divider>
             </v-col>
 
-            <v-col cols="12">
-              <v-divider class="my-4"></v-divider>
-            </v-col>
-
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field v-model="form.password" label="Password *" :rules="[requiredRule, passwordRule]" :type="showPassword ? 'text' : 'password'" :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'" @click:append-inner="showPassword = !showPassword" autocomplete="new-password" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <v-text-field v-model="confirmPassword" label="Confirm Password *" :rules="[requiredRule, confirmPasswordRule]" :type="showConfirmPassword ? 'text' : 'password'" :append-inner-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'" @click:append-inner="showConfirmPassword = !showConfirmPassword" autocomplete="new-password" />
             </v-col>
             <v-col cols="12" class="d-flex justify-end">

@@ -6,7 +6,7 @@ from utils.token import validate_token, decode_token
 
 async def auth_middleware(request: Request, call_next):
     # protected_paths = ["/v1/noc_application/","/v1/form1","/v1/form2","/v1/form3"]
-    protected_paths = ["/v1/noc_application"]
+    protected_paths = ["/v1/form1"]
 
     # Only protect exact matches
     if any(request.url.path.startswith(prefix) for prefix in protected_paths):

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { State, District, SubDivision } from '@/types/common'
 import type { NOCFormType } from '@/stores/nocStore'
+import { useAuthStore } from '@/stores/authStore'
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || ''
 
@@ -10,9 +11,9 @@ const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+  const {user} = useAuthStore()
+  if (user?.token) {
+    config.headers.Authorization = `Bearer ${user.token}`
   }
   return config
 })
