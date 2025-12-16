@@ -11,7 +11,7 @@ router = APIRouter(prefix="/institution/NOCApplication", tags=["NOCApplication"]
 
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/", response_class=HTMLResponse)
+@router.get("", response_class=HTMLResponse)
 async def view_application(request: Request):
     # Render the template with the request context (mandatory in FastAPI for Jinja2)
     html_content = templates.TemplateResponse(
@@ -19,7 +19,7 @@ async def view_application(request: Request):
     )
     return html_content
 
-@router.get("/")
+@router.get("/test")
 def view_application_old(
     current_user: dict = Depends(get_current_user),
 ):
