@@ -19,13 +19,22 @@ def dtotodb_insert(
     return result
 
 def dtotodb_update(
-    data: InspectionFeedbackRequest, client_ip: str
+    data: InspectionFeedbackRequest, existing_data: inspectionDetails
 ) -> inspectionDetails:
-    result = inspectionDetails(
-        noc_registration_id=data.nocRegId,
-        inspection_feedback = data.remarks,
-        insert_ip=client_ip,
-        insert_time=date_time(),
-    )
+    if data.remarks is not None:
+        existing_data.inspection_feedback = data.remarks
+    if data.status is not None:
+        existing_data.loi_or_noc = data.status
+    
+    existing_data.feedback_date = date_time()
 
-    return result
+    return existing_data
+
+def dtotodb_document_update(
+    existing_data: inspectionDetails, file_path:str
+) -> inspectionDetails:
+    
+    existing_data.inspection_document = file_path
+    existing_data.feedback_date = date_time()
+
+    return existing_data

@@ -34,3 +34,15 @@ class inspectionService:
             print(e)
             self.db.rollback()
             return False
+        
+    def update_data(self, inspection_data: inspectionDetails):
+        try:
+            self.db.add(inspection_data)
+            self.db.commit()
+            self.db.refresh(inspection_data)
+
+            return True
+        except Exception as e:
+            print(e)
+            self.db.rollback()
+            return False

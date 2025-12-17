@@ -9,8 +9,11 @@ from sqlalchemy.orm import Session
 from helpers import response
 from core.Dependencies.auth import get_current_admin
 from utils.iP import get_client_ip
-from mappers.department.inspectionMapper import dtotodb_insert as inspectionMap
-from mappers.department.inspectionMapper import dtotodb_update as inspectionUpdateMap
+from mappers.department.inspectionMapper import (
+    dtotodb_insert as inspectionMap,
+    dtotodb_update as inspectionUpdateMap,
+    dtotodb_document_update as inspectionDocumentUpdateMap,
+)
 from services.department.inspectionRepo import inspectionService
 
 router = APIRouter(prefix="/department/Inspection", tags=["Inspection"])
@@ -70,7 +73,6 @@ def get_inspection_track(
 def add_inspection_feedback(
     request: InspectionFeedbackRequest,
     current_user: dict = Depends(get_current_admin),
-    client_ip: str = Depends(get_client_ip),
     db: Session = Depends(get_db),
 ):
     print(current_user)
@@ -78,41 +80,58 @@ def add_inspection_feedback(
     # userId = current_user["stake_user"]
 
     nocRegId = request.nocRegId
-    inspection_data = jsonable_encoder(inspectionService(db).get_data(nocRegId))
+    inspection_db_data = inspectionService(db).get_data(nocRegId)
+    if not inspection_db_data:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
+        )
 
-    inspection_data = inspectionUpdateMap(request, client_ip)
-    print(inspection_data)
+    inspection_data = inspectionUpdateMap(request,inspection_db_data)
+    update_status = inspectionService(db).update_data(inspection_data)
 
-    data = {
-        "totalPendingApplication": 10,
-        "totalInProcessApplication": 20,
-        "totalNocCompleteApplication": 30,
-    }
+    if update_status:
+        result = {
+            "status_code": status.HTTP_200_OK,
+            "message": "Feedback Submited Successfully",
+            "data": "",
+        }
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Updation Failed.Please Try Again",
+        )
 
-    result = {
-        "status_code": status.HTTP_200_OK,
-        "message": "Add Inspection Feedback Data",
-        "data": data,
-    }
     return result
 
 @router.post("/addInspectionDocument", response_model=response.APIResponse)
 def add_inspection_document(
-    file: UploadFile, current_user: dict = Depends(get_current_admin)
+    file: UploadFile,db: Session = Depends(get_db), current_user: dict = Depends(get_current_admin)
 ):
     print(current_user)
-    
     # userId = current_user["stake_user"]
+    file_path = "test.pdf"
 
-    data = {
-        "totalPendingApplication": 10,
-        "totalInProcessApplication": 20,
-        "totalNocCompleteApplication": 30,
-    }
 
-    result = {
-        "status_code": status.HTTP_200_OK,
-        "message": "Add Inspection Document",
-        "data": data,
-    }
+    nocRegId = "NOC123"
+    inspection_db_data = inspectionService(db).get_data(nocRegId)
+    if not inspection_db_data:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
+        )
+
+    inspection_data = inspectionDocumentUpdateMap(inspection_db_data, file_path)
+    update_status = inspectionService(db).update_data(inspection_data)
+
+    if update_status:
+        result = {
+            "status_code": status.HTTP_200_OK,
+            "message": "Feedback Document Update Successfully",
+            "data": "",
+        }
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Updation Failed.Please Try Again",
+        )
+
     return result
