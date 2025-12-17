@@ -4,7 +4,6 @@ from core.Dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/institution/Inspection", tags=["Inspection"])
 
-
 @router.get("", response_model=response.APIResponse)
 def get_inspection_data(current_user: dict = Depends(get_current_user)):
     print(current_user)

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from models.NOCRegistrationTableModel import NOCRegistration
 from models.loginTableModel import Login
+from models.applicationDetailsModel import NocApplicationDetails
 
 
 class applicantRegistrationService:
@@ -18,10 +19,12 @@ class applicantRegistrationService:
         self,
         registration_data: NOCRegistration,
         login_data: Login,
+        from1_data: NocApplicationDetails,
     ):
         try:
             self.db.add(registration_data)
             self.db.add(login_data)
+            self.db.add(from1_data)
             self.db.commit()
             self.db.refresh(registration_data)
             # return registration_data.applicant_record_id_pk # Last Insert Id

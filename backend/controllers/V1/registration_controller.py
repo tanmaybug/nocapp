@@ -5,8 +5,9 @@ from config.DB.DBConfig import get_db
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 from mappers.registrationTableMapper import dtotodb as registrationMap
+from mappers.form1Mapper import dtotodb_insert as form1Map
 from mappers.loginTableMapper import dtotodb as loginMap
-
+from utils.iP import get_client_ip
 from services.applicantRegistrationRepo import applicantRegistrationService
 from datetime import datetime
 
@@ -101,19 +102,21 @@ def get_postOffices(pin: int, db: Session = Depends(get_db)):
 def submit_regisration_data(
     request: RegistrationFormRequestDTO,
     db: Session = Depends(get_db),
+    client_ip: str = Depends(get_client_ip),
 ):
     # print(request)
     noc_application_id = generate_applicantion_id()
     password = hash_password(request.password)
     # print(noc_application_id)
 
-    registration_data = registrationMap(request, noc_application_id)
+    registration_data = registrationMap(request, noc_application_id, client_ip)
     # print(jsonable_encoder(registration_data))
     login_data = loginMap(password, noc_application_id)
+    from1_data = form1Map(noc_application_id, client_ip)
     # fund_data = fundMap(request.financialRows, noc_application_id)
 
     insert_status = applicantRegistrationService(db).insert_data(
-        registration_data, login_data
+        registration_data, login_data, from1_data
     )
     
     if insert_status:
@@ -128,11 +131,6 @@ def submit_regisration_data(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="Registration Failed.Please Try Again",
         )
-        # result = {
-        #     "status_code": status.HTTP_422_UNPROCESSABLE_ENTITY,
-        #     "message": "Registration Failed.Please Try Again",
-        #     "data": "",
-        # }
     return result
 
 

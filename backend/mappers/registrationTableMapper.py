@@ -7,7 +7,7 @@ def dbtodto(data: NOCRegistration):
     pass
 
 
-def dtotodb(data: RegistrationFormRequestDTO,regId:str) -> NOCRegistration:
+def dtotodb(data: RegistrationFormRequestDTO, regId: str, client_ip:str) -> NOCRegistration:
     result = NOCRegistration(
         applicant_type_id_fk=data.entityTypeID,
         applicant_name=data.applicantName,
@@ -41,7 +41,7 @@ def dtotodb(data: RegistrationFormRequestDTO,regId:str) -> NOCRegistration:
         institution_pin=data.collegeLocation.pin,
         noc_registration_id=regId,
         entry_time=date_time(),
-        entry_ip="127.0.0.1",
+        entry_ip=client_ip,
         active_status=1,
         applicant_mobile=data.applicantMobileNo,
         applicant_email_id=data.applicantEmailId,

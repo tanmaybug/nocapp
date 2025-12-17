@@ -2,6 +2,15 @@ from dtos.form1DTOcg import Form1
 from helpers.dateHelper import date_time
 from models.applicationDetailsModel import NocApplicationDetails
 
+def dtotodb_insert(regId: str, client_ip: str) -> NocApplicationDetails:
+    result = NocApplicationDetails(
+        noc_registration_id = regId,
+        insert_time = date_time(),
+        insert_ip = client_ip,
+        active_status = 1,
+    )
+    return result
+
 def dtotodb(form_data: Form1,regId:str) -> NocApplicationDetails:
     result = NocApplicationDetails(
          # --- Identifiers ---
@@ -67,10 +76,5 @@ def dtotodb(form_data: Form1,regId:str) -> NocApplicationDetails:
             library_books_count=form_data.campusDevlopmentPlan.libraryDetails.booksCount if form_data.campusDevlopmentPlan and form_data.campusDevlopmentPlan.libraryDetails else None,
             library_journal_count=form_data.campusDevlopmentPlan.libraryDetails.journalPeriodicalCount if form_data.campusDevlopmentPlan and form_data.campusDevlopmentPlan.libraryDetails else None,
             total_planned_construction_in_sq_feet=form_data.campusDevlopmentPlan.totalPlannedConstruction if form_data.campusDevlopmentPlan else None,
-
-            # --- Meta fields ---
-            insert_time=date_time(),
-            insert_ip="127.0.0.1",
-            active_status=1
     )
     return result
