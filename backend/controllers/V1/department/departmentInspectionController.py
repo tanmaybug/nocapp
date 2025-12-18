@@ -13,8 +13,10 @@ from mappers.department.inspectionMapper import (
     dtotodb_insert as inspectionMap,
     dtotodb_update as inspectionUpdateMap,
     dtotodb_document_update as inspectionDocumentUpdateMap,
+    dtotodb_inspection_date_update as inspectionDateUpdateMap,
 )
 from services.department.inspectionRepo import inspectionService
+from services.department.applicationRepo import applicationService
 
 router = APIRouter(prefix="/department/Inspection", tags=["Inspection"])
 
@@ -29,9 +31,18 @@ def set_inspection_date(
     print(request)
     userId = current_user["stake_user"]
 
+    nocRegId = request.nocRegId
+    application_db_data = applicationService(db).get_application_data_by_id(nocRegId)
+    if not application_db_data:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
+        )
+    
+    application_data = inspectionDateUpdateMap(application_db_data, request.date)
+
     inspection_data = inspectionMap(request, userId, client_ip)
 
-    insert_status = inspectionService(db).insert_data(inspection_data)
+    insert_status = inspectionService(db).insert_data(inspection_data, application_data)
 
     if insert_status:
         result = {
@@ -85,7 +96,7 @@ def add_inspection_feedback(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
         )
-
+    
     inspection_data = inspectionUpdateMap(request,inspection_db_data)
     update_status = inspectionService(db).update_data(inspection_data)
 

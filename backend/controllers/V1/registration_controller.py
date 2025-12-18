@@ -112,11 +112,11 @@ def submit_regisration_data(
     registration_data = registrationMap(request, noc_application_id, client_ip)
     # print(jsonable_encoder(registration_data))
     login_data = loginMap(password, noc_application_id)
-    from1_data = form1Map(noc_application_id, client_ip)
+    application_data = form1Map(noc_application_id, client_ip)
     # fund_data = fundMap(request.financialRows, noc_application_id)
 
     insert_status = applicantRegistrationService(db).insert_data(
-        registration_data, login_data, from1_data
+        registration_data, login_data, application_data
     )
     
     if insert_status:

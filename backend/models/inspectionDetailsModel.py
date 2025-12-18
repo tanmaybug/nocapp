@@ -9,7 +9,7 @@ class inspectionDetails(Base):
     noc_registration_id = Column(String, nullable=False)
     inspection_date = Column(String, nullable=False)
     inspection_feedback = Column(Text, nullable=False)
-    inspection_document = Column(String, nullable=False)
+    inspection_document = Column[String]
     active_status = Column(SMALLINT, nullable=False)
     loi_or_noc = Column(SMALLINT, nullable=False)
     insert_time = Column(TIMESTAMP, server_default=func.now())

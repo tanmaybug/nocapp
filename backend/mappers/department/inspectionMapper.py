@@ -2,6 +2,7 @@ from dtos.department.inspectionRequestDTO import (
     SetInspectionRequest,
     InspectionFeedbackRequest,
 )
+from models.applicationDetailsModel import NocApplicationDetails
 from models.inspectionDetailsModel import inspectionDetails
 from helpers.dateHelper import date_time
 
@@ -36,5 +37,12 @@ def dtotodb_document_update(
     
     existing_data.inspection_document = file_path
     existing_data.feedback_date = date_time()
+
+    return existing_data
+
+def dtotodb_inspection_date_update(
+    existing_data: NocApplicationDetails, inspection_date: str
+) -> NocApplicationDetails:
+    existing_data.inspection_date = inspection_date
 
     return existing_data

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from models.inspectionDetailsModel import inspectionDetails
+from models.applicationDetailsModel import NocApplicationDetails
 
 class inspectionService:
     def __init__(self, db: Session):
@@ -23,9 +24,14 @@ class inspectionService:
         result = self.db.execute(stmt).mappings().all()
         return result
 
-    def insert_data(self, inspection_data: inspectionDetails):
+    def insert_data(
+        self,
+        inspection_data: inspectionDetails,
+        application_data: NocApplicationDetails,
+    ):
         try:
             self.db.add(inspection_data)
+            self.db.add(application_data)
             self.db.commit()
             self.db.refresh(inspection_data)
             
@@ -35,7 +41,10 @@ class inspectionService:
             self.db.rollback()
             return False
         
-    def update_data(self, inspection_data: inspectionDetails):
+    def update_data(
+        self,
+        inspection_data: inspectionDetails
+    ):
         try:
             self.db.add(inspection_data)
             self.db.commit()
