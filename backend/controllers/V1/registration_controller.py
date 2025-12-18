@@ -7,10 +7,12 @@ from fastapi.encoders import jsonable_encoder
 from mappers.registrationTableMapper import dtotodb as registrationMap
 from mappers.form1Mapper import dtotodb_insert as form1Map
 from mappers.loginTableMapper import dtotodb as loginMap
+from mappers.applicationTrackMapper import dtotodb as applicationTrackMap
 from utils.iP import get_client_ip
-from services.applicantRegistrationRepo import applicantRegistrationService
+from utils.password import hash_password
 from datetime import datetime
 
+from services.applicantRegistrationRepo import applicantRegistrationService
 from services.applicantTypeRepo import applicantTypeService
 from services.institutionTypeMasterRepo import institutionTypeMasterService
 from services.minorityTypeMasterRepo import minorityTypeService
@@ -20,18 +22,12 @@ from services.assemblyConstituencyMasterRepo import assemblyConstituencyService
 from services.municipalityBlockMasterRepo import municipalityService
 from services.policeStationMasterRepo import policeStationMasterService
 from services.affiliatedUniversityRepo import affiliatedUniversityMasterService
-
 from services.gramPanchyatMasterRepo import gramPanchyatService
-
 from services.postOfficeMasterRepo import postOfficeMasterService
-
-
-from utils.password import hash_password
 
 router = APIRouter(prefix="/registration", tags=["Registration"])
 
-
-@router.get("/", response_model=response.APIResponse)
+@router.get("", response_model=response.APIResponse)
 def get_registration_master_data(db: Session = Depends(get_db)):
 
     noc_applicant_type = jsonable_encoder(applicantTypeService(db).get_data())
@@ -113,10 +109,10 @@ def submit_regisration_data(
     # print(jsonable_encoder(registration_data))
     login_data = loginMap(password, noc_application_id)
     application_data = form1Map(noc_application_id, client_ip)
-    # fund_data = fundMap(request.financialRows, noc_application_id)
+    track_data = applicationTrackMap(noc_application_id, client_ip)
 
     insert_status = applicantRegistrationService(db).insert_data(
-        registration_data, login_data, application_data
+        registration_data, login_data, application_data, track_data
     )
     
     if insert_status:
