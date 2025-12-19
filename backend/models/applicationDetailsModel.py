@@ -74,3 +74,6 @@ class NocApplicationDetails(Base):
     insert_time = Column(TIMESTAMP, server_default=func.now())
     insert_ip = Column(String(15))
     active_status = Column(SmallInteger, default=1)
+
+    docket_number = Column(String(50))
+    inspection_date = Column(Date)

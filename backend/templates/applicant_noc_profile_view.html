@@ -18,19 +18,19 @@
         <tbody>
             <tr>
                 <th style="text-align:left">Registration ID.</th>
-                <td>{{NocReg}}</td>
+                <td>{{applicantDetails["registrationNo"]}}</td>
                 <th style="text-align:left">Applicant Name</th>
-                <td>Tanmay</td>
+                <td>{{applicantDetails["applicantName"]}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Mobile No.</th>
-                <td>1234567890</td>
+                <td>{{applicantDetails["applicantMobileNo"]}}</td>
                 <th style="text-align:left">Email Id</th>
-                <td>tanmay@gmail.com</td>
+                <td>{{applicantDetails["applicantEmailId"]}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Entity Type</th>
-                <td>Society</td>
+                <td>{{applicantDetails["entityType"]}}</td>
                 <th style="text-align:left">Is Registered?</th>
                 <td>YES</td>
             </tr>
@@ -38,52 +38,52 @@
                 <th style="text-align:left">Minority Type</th>
                 <td></td>
                 <th style="text-align:left">Registration No</th>
-                <td>REG123456</td>
+                <td>{{applicantDetails["registrationNo"]}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Registration Date</th>
-                <td>29-11-2025</td>
+                <td>{{applicantDetails["registrationDate"]}}</td>
                 <th style="text-align:left">Place Of Registration</th>
-                <td>New Delhi</td>
+                <td>{{applicantDetails["placeOfRegistration"]}}</td>
             </tr>
 
              <tr>
                 <th style="text-align:left">Minority Details</th>
-                <td>Muslim</td>
+                <td>{{applicantDetails["minorityDetails"]}}</td>
                 <th style="text-align:left">Applicant TAN No</th>
-                <td>TAN9876543</td>
+                <td>{{applicantDetails["applicantTanNo"]}}</td>
             </tr>
             <tr>
                 <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Address Details</th>
             </tr>
             <tr>
                 <th style="text-align:left">Address</th>
-                <td>123, XYZ Street, Sector 15</td>
+                <td>{{applicantDetails["applicantLocation"]["applicantAddress"]}}</td>
                 <th style="text-align:left">District</th>
-                <td>Howrah</td>
+                <td>{{applicantDetails["applicantLocation"]["district"]}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Sub Division</th>
-                <td>Howrah Sub</td>
+                <td>{{applicantDetails["applicantLocation"]["subDivision"]}}</td>
                 <th style="text-align:left">Police Station</th>
-                <td>Bantra</td>
+                <td>{{applicantDetails["applicantLocation"]["policeStation"]}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Post Office</th>
-                <td>Kadamtala</td>
+                <td>{{applicantDetails["applicantLocation"]["postOffice"]}}</td>
                 <th style="text-align:left">Municipality Block</th>
-                <td>Howrah</td>
+                <td>{{applicantDetails["applicantLocation"]["municipalityBlock"]}}</td>
             </tr>
 
              <tr>
                 <th style="text-align:left">Assembly Constituency</th>
-                <td>Shibpur</td>
+                <td>{{applicantDetails["applicantLocation"]["assemblyConstituency"]}}</td>
                 <th style="text-align:left">city</th>
-                <td>Gurgaon</td>
+                <td>{{applicantDetails["applicantLocation"]["city"]}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">PIN</th>
-                <td>711101</td>
+                <td>{{applicantDetails["applicantLocation"]["pin"]}}</td>
                 <th style="text-align:left"></th>
                 <td></td>
             </tr>
@@ -98,13 +98,13 @@
         <tbody>
             <tr>
                 <th style="text-align:left">Proposed College Name</th>
-                <td>Shree Ram College of Engineering</td>
+                <td>{{collegeDetails["proposedCollegeName"]}}</td>
                 <th style="text-align:left">Affiliated University</th>
-                <td>CU</td>
+                <td>{{collegeDetails["affiliatedUniversity"]}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Institution For</th>
-                <td>XYZ</td>
+                <td>{{collegeDetails["institutionFor"]}}</td>
                 <th style="text-align:left"></th>
                 <td></td>
             </tr>

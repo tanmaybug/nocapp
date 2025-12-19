@@ -7,7 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from services.department.applicationRepo import applicationService
 
 router = APIRouter(
-    prefix="/department/CompleteApplication", tags=["Complete Application"]
+    prefix="/department/CompleteApplication", tags=["Report"]
 )
 
 @router.get("", response_model=response.APIResponse)

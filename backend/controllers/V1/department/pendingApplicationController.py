@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 from services.department.applicationRepo import applicationService
 
-router = APIRouter(prefix="/department/PendingApplication", tags=["Pending Application"])
+router = APIRouter(prefix="/department/PendingApplication", tags=["Report"])
 
 @router.get("", response_model=response.APIResponse)
 def get_application_data(

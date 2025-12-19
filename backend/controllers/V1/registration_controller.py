@@ -109,7 +109,14 @@ def submit_regisration_data(
     # print(jsonable_encoder(registration_data))
     login_data = loginMap(password, noc_application_id)
     application_data = form1Map(noc_application_id, client_ip)
-    track_data = applicationTrackMap(noc_application_id, client_ip)
+    track_data = applicationTrackMap(
+        {
+            "nocRegId": noc_application_id,
+            "remarks": "Registration Done",
+            "status": 1,
+            "ip": client_ip,
+        }
+    )
 
     insert_status = applicantRegistrationService(db).insert_data(
         registration_data, login_data, application_data, track_data

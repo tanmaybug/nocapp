@@ -200,9 +200,10 @@ def view_application_old(
 @router.get("/download")
 def download_application(
     request: Request,
-    # current_user: dict = Depends(get_current_user),
+    current_user: dict = Depends(get_current_user),
 ):
-    data = {"NocReg": "NOC20251211212515"}
+    NocRegId = current_user["stake_user"]
+    data = {"NocReg": NocRegId}
     # Render HTML
     html_content = templates.get_template("applicant_noc_profile_view.html").render(**data)
     pdf = convert_html_to_pdf(html_content)

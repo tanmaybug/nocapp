@@ -1,13 +1,13 @@
 from models.applictionTrackDetailsModel import applicationTrackDetails
 from helpers.dateHelper import date_time
 
-def dtotodb(regId: str, client_ip:str) -> applicationTrackDetails:
+def dtotodb(data) -> applicationTrackDetails:
     result = applicationTrackDetails(
-        noc_registration_id=regId,
-        status=1,
-        remarks="Registration Done",
+        noc_registration_id=data["nocRegId"],
+        status=data["status"],
+        remarks=data["remarks"],
         insert_date=date_time(),
-        insert_ip=client_ip,
+        insert_ip=data['ip'],
         active_status=1,
     )
     return result

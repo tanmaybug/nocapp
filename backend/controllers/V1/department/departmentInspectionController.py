@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Depends, UploadFile,HTTPException
+from fastapi import APIRouter, status, Depends, UploadFile, HTTPException
 from dtos.department.inspectionRequestDTO import (
     SetInspectionRequest,
     InspectionFeedbackRequest,
@@ -20,6 +20,7 @@ from services.department.applicationRepo import applicationService
 
 router = APIRouter(prefix="/department/Inspection", tags=["Inspection"])
 
+
 @router.post("/setInspectionDate", response_model=response.APIResponse)
 def set_inspection_date(
     request: SetInspectionRequest,
@@ -37,12 +38,14 @@ def set_inspection_date(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
         )
-    
+
     application_data = inspectionDateUpdateMap(application_db_data, request.date)
 
     inspection_data = inspectionMap(request, userId, client_ip)
 
-    insert_status = inspectionService(db).insert_data(inspection_data, application_data)
+    insert_status = inspectionService(db).insert_data(
+        inspection_data, application_data
+    )
 
     if insert_status:
         result = {
@@ -56,6 +59,7 @@ def set_inspection_date(
             detail="Please Try Again",
         )
     return result
+
 
 @router.get("/getInspectionTrack", response_model=response.APIResponse)
 def get_inspection_track(
@@ -80,6 +84,7 @@ def get_inspection_track(
     }
     return result
 
+
 @router.post("/addInspectionFeedback", response_model=response.APIResponse)
 def add_inspection_feedback(
     request: InspectionFeedbackRequest,
@@ -96,8 +101,8 @@ def add_inspection_feedback(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
         )
-    
-    inspection_data = inspectionUpdateMap(request,inspection_db_data)
+
+    inspection_data = inspectionUpdateMap(request, inspection_db_data)
     update_status = inspectionService(db).update_data(inspection_data)
 
     if update_status:
@@ -114,14 +119,16 @@ def add_inspection_feedback(
 
     return result
 
+
 @router.post("/addInspectionDocument", response_model=response.APIResponse)
 def add_inspection_document(
-    file: UploadFile,db: Session = Depends(get_db), current_user: dict = Depends(get_current_admin)
+    file: UploadFile,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_admin),
 ):
     print(current_user)
     # userId = current_user["stake_user"]
     file_path = "test.pdf"
-
 
     nocRegId = "NOC123"
     inspection_db_data = inspectionService(db).get_data(nocRegId)
