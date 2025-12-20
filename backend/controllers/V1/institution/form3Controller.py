@@ -1,10 +1,11 @@
 from fastapi import APIRouter, status, HTTPException, Depends, UploadFile
-# from dtos.institution.fileUploadDTO import FileUploadRequest
+from services.institution.fileRepo import FileService
+from dtos.institution.fileUploadDTO import SaveFileRequest
 from utils.iP import get_client_ip
 from services.form3Repo import form3Service
 from helpers import response
 from utils.customFileValidation import validatePDF
-from mappers.uploadDocumentTableMapper import dtotodb
+from mappers.uploadDocumentTableMapper import dtotodb,save_file_dtotodb
 from pathlib import Path
 import shutil
 import uuid
@@ -70,6 +71,7 @@ def upload_file(
                     "ip": client_ip,
                 }
             )
+            # print(jsonable_encoder(uploadDataMap))
             insert_status = form3Service(db).insert_data(uploadDataMap)
             if insert_status:
                 insertData = jsonable_encoder(insert_status)
@@ -97,6 +99,35 @@ def upload_file(
         )
     return result
 
+
+@router.post("/saveFile", response_model=response.APIResponse)
+def save_file(
+    request: SaveFileRequest,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_user),
+):
+    nocRegId = current_user["stake_user"]
+    fileId = request.fileId
+    file_db_data = FileService(db).get_unsaved_data(fileId,nocRegId)
+    if not file_db_data:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
+        )
+    
+    file_data = save_file_dtotodb(file_db_data, request.documentTypeId)
+    update_status = FileService(db).update_doc_type(file_data)
+    if update_status:
+        result = {
+            "status_code": status.HTTP_200_OK,
+            "message": "File Saved Successfully",
+            "data": "",
+        }
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Submission Failed.Please Try Again",
+        )
+    return result
 
 def file_to_base64(file_path):
     try:
