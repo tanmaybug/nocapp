@@ -117,15 +117,15 @@ const actions = computed(() => [
     handler: () => { }
   },
   {
-    label: 'NOC Doc Download',
-    icon: 'mdi-file-download-outline',
-    color: 'secondary',
-    handler: () => { }
-  },
-  {
     label: 'Track Application',
     icon: 'mdi-timeline-clock-outline',
     color: 'primary',
+    handler: () => { }
+  },
+  {
+    label: 'NOC Doc Download',
+    icon: 'mdi-file-download-outline',
+    color: 'secondary',
     handler: () => { }
   }
 ])

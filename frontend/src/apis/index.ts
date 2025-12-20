@@ -64,7 +64,7 @@ export const getGramPanchayats = async (municipalityBlockId: number) => {
 }
 
 export const submitNocForm = async (nocFormUrl: NOCFormType, payload: any) => {
-  const resp = await api.post(`/${nocFormUrl}`, payload)
+  const resp = await api.post(`/institution/${nocFormUrl}`, payload)
   return resp.data
 }
 
