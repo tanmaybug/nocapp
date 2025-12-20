@@ -7,7 +7,7 @@ from helpers import response
 from services.form1Repo import form1Service
 from core.Dependencies.auth import get_current_user
 
-router = APIRouter(prefix="/form1", tags=["Form"])
+router = APIRouter(prefix="/institution/form1", tags=["Form"])
 
 @router.post("", response_model=response.APIResponse)
 def submit_application_data(

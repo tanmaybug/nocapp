@@ -4,11 +4,9 @@
       <v-card v-for="card in cards" :key="card.title" variant="tonal" class="pa-4 card-panel">
         <div class="d-flex align-center justify-space-between mb-6">
           <v-icon :icon="card.icon" size="36" class="card-icon" />
-          <v-chip :color="card.chipColor" size="small" class="text-none">{{ card.chipText }}</v-chip>
         </div>
         <p class="eyebrow">{{ card.subtitle }}</p>
         <h2 class="card-value">{{ card.value }}</h2>
-        <p class="text-body-2 text-grey-darken-1 mb-6">{{ card.description }}</p>
         <v-btn variant="text" class="text-none px-0 mt-auto align-self-start" :text="card.actionText" :append-icon="'mdi-arrow-right'" @click="card.onAction" />
       </v-card>
     </div>
@@ -21,10 +19,7 @@ const cards = [
     title: 'Applications',
     subtitle: 'Total applications',
     value: '1,248',
-    description: 'Includes pending, approved, and rejected submissions this year.',
-    actionText: 'View all applications',
-    chipText: 'Live',
-    chipColor: 'success',
+    actionText: 'View details',
     icon: 'mdi-file-document-outline',
     onAction: () => { }
   },
@@ -32,10 +27,7 @@ const cards = [
     title: 'Reviews',
     subtitle: 'Pending reviews',
     value: '87',
-    description: 'Items awaiting evaluation across all departments.',
-    actionText: 'Open review queue',
-    chipText: 'Attention',
-    chipColor: 'warning',
+    actionText: 'View details',
     icon: 'mdi-clipboard-text-clock-outline',
     onAction: () => { }
   },
@@ -43,10 +35,7 @@ const cards = [
     title: 'Compliance',
     subtitle: 'Documents flagged',
     value: '12',
-    description: 'Applications requiring additional compliance documents.',
-    actionText: 'Resolve now',
-    chipText: 'Alerts',
-    chipColor: 'error',
+    actionText: 'View details',
     icon: 'mdi-shield-alert-outline',
     onAction: () => { }
   }

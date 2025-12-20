@@ -110,10 +110,10 @@ interface Form3Data {
   conveyanceDeed: Array<string | number>
   gripsEchallan: Array<string | number>
   buildingPlan: Array<string | number>
-  proofoFFees: Array<string | number>
+  proofOfFees: Array<string | number>
   proofOfLand: Array<string | number>
-  phasedDevlopmentBluePrint: Array<string | number>
-  prrofOfContiguousLandOwnership: Array<string | number>
+  phasedDevelopmentBluePrint: Array<string | number>
+  proofOfContiguousLandOwnership: Array<string | number>
   otherInformation: Array<string | number>
 }
 
@@ -240,10 +240,10 @@ function createDefaultNOCData(): NOCForm {
       conveyanceDeed: [],
       gripsEchallan: [],
       buildingPlan: [],
-      proofoFFees: [],
+      proofOfFees: [],
       proofOfLand: [],
-      phasedDevlopmentBluePrint: [],
-      prrofOfContiguousLandOwnership: [],
+      phasedDevelopmentBluePrint: [],
+      proofOfContiguousLandOwnership: [],
       otherInformation: []
     }
   }

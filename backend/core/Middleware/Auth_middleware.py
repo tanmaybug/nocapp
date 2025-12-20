@@ -6,9 +6,9 @@ from utils.token import validate_token, decode_token
 
 async def auth_middleware(request: Request, call_next):
     protected_paths = [
-        "/v1/form1",
-        "/v1/form2",
-        "/v1/form3",
+        "/v1/institution/form1",
+        "/v1/institution/form2",
+        "/v1/institution/form3",
         "/v1/institution/Dashboard",
         "/v1/institution/TrackApplication",
         "/v1/institution/Inspection",

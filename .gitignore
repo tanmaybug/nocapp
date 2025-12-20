@@ -4,3 +4,6 @@
 
 # Ignore uploaded files
 uploads/*
+
+# Ignore backup files
+backups/*

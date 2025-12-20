@@ -6,6 +6,7 @@ from controllers.V1 import (
     login_controller,
     noc_application_controller,
     test_new,
+    file_upload_controller
 )
 
 from controllers.V1.institution import (
@@ -32,6 +33,7 @@ master_router = APIRouter()
 
 master_router.include_router(noc_application_controller.router, prefix="/v1")
 master_router.include_router(test_new.router, prefix="/v1")
+master_router.include_router(file_upload_controller.router, prefix="/v1")
 
 master_router.include_router(registration_controller.router, prefix="/v1")
 master_router.include_router(otp_controller.router, prefix="/v1")

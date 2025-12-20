@@ -15,7 +15,7 @@
     </v-col>
 
     <v-col cols="12" v-for="(field, fieldKey) in fileUploadFields" :key="fieldKey">
-      <FileUploadField :label="field.label" :uploadedFiles="uploadedFiles[fieldKey]" :rules="[]" @add="(file) => uploadFile(file, uploadedFiles[fieldKey], field.displayName)" @remove="(index) => removeItem(uploadedFiles[fieldKey], index)" />
+      <FileUploadField :label="field.label" :uploadedFilesa="uploadedFiles[fieldKey]" :rules="[]" @add="(file) => uploadFile(file, uploadedFiles[fieldKey], field.displayName)" @remove="(index) => removeItem(uploadedFiles[fieldKey], index)" />
     </v-col>
   </v-row>
 </template>
@@ -38,10 +38,10 @@ const props = defineProps<{
     conveyanceDeed: any[]
     gripsEchallan: any[]
     buildingPlan: any[]
-    proofoFFees: any[]
+    proofOfFees: any[]
     proofOfLand: any[]
-    phasedDevlopmentBluePrint: any[]
-    prrofOfContiguousLandOwnership: any[]
+    phasedDevelopmentBluePrint: any[]
+    proofOfContiguousLandOwnership: any[]
     otherInformation: any[]
   }
 }>()
@@ -105,7 +105,7 @@ const fileUploadFields = {
     displayName: 'Building plan',
     required: false
   },
-  proofoFFees: {
+  proofOfFees: {
     label: 'Upload the proof of fees structure',
     displayName: 'Proof of fees',
     required: false
@@ -115,12 +115,12 @@ const fileUploadFields = {
     displayName: 'Proof of land',
     required: false
   },
-  phasedDevlopmentBluePrint: {
+  phasedDevelopmentBluePrint: {
     label: 'Upload the Blue-print for phased development',
     displayName: 'Phased development blueprint',
     required: false
   },
-  prrofOfContiguousLandOwnership: {
+  proofOfContiguousLandOwnership: {
     label: 'Upload the proof of the contiguous land ownership',
     displayName: 'Proof of contiguous land ownership',
     required: false

@@ -9,6 +9,8 @@
 ### Stop services:
 `docker-compose -f docker-compose.dev.yml down`
 
+### To run specific services
+`docker-compose -f docker-compose.dev.yml up backend pgadmin`
 
 
 ### Access:
@@ -16,4 +18,5 @@
 * Backend API: http://localhost:8000
 * Backend Docs: http://localhost:8000/api/docs
 * pgAdmin: http://localhost:5050
+* Redis: http://localhost:6379
 ```

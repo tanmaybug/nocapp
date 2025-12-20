@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 from core.Dependencies.auth import get_current_user
 
-router = APIRouter(prefix="/form3", tags=["Form"])
+router = APIRouter(prefix="/institution/form3", tags=["Form"])
 
 @router.post("/", response_model=response.APIResponse)
 def submit():
