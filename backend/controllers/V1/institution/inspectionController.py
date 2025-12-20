@@ -16,12 +16,14 @@ def get_inspection_data(current_user: dict = Depends(get_current_user)):
                 "inspectionStatus": "Complete",
                 "remarks": "Test Remarks",
                 "inspectionDocument": "",
+                "inspectionDocumentType": "LOI",
             },
             {
                 "inspectionDate": "15-12-2025",
                 "inspectionStatus": "Pending",
                 "remarks": "",
                 "inspectionDocument": "",
+                "inspectionDocumentType": "",
             },
         ]
     }

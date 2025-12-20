@@ -1,4 +1,5 @@
-from fastapi import APIRouter, status, UploadFile, HTTPException, Depends
+from fastapi import APIRouter, status, HTTPException, Depends, UploadFile
+# from dtos.institution.fileUploadDTO import FileUploadRequest
 from utils.iP import get_client_ip
 from services.form3Repo import form3Service
 from helpers import response
@@ -64,7 +65,7 @@ def upload_file(
             uploadDataMap = dtotodb(
                 {
                     "regId": nocRegId,
-                    "documentId": 1,
+                    "documentId": 0,
                     "documentName": unique_filename,
                     "ip": client_ip,
                 }
@@ -76,12 +77,12 @@ def upload_file(
                 # print(f"Base64 data : {base64Data}")
                 data = {
                     "fileName": unique_filename,
-                    "fileType": file.content_type,
+                    "filePath": "",
                     "fileId": insertData["upload_document_id_pk"],
                 }
                 result = {
                     "status_code": status.HTTP_200_OK,
-                    "message": "Test Response",
+                    "message": "File Upload Success",
                     "data": data,
                 }          
         else:
