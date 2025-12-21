@@ -6,7 +6,7 @@ import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css' 
 import 'vuetify/styles/main.css'
 
-import router from './routes'
+import router from './router'
 import './style.css'
 import App from './App.vue'
 

@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import AppHeader from '@/components/AppHeader.vue'
-import DialogBox from '@/components/DialogBox.vue';
+import DialogBox from '@/components/common/DialogBox.vue'
 </script>
 
 <template>
   <v-app>
-    <AppHeader />
-    <v-main>
-      <router-view />
-    </v-main>
+    <router-view />
   </v-app>
   <DialogBox />
 </template>

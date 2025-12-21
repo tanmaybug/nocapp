@@ -15,4 +15,11 @@ export type SubDivision = {
   districtId: string
 }
 
-export type Status = 'initialized' | 'processing' | 'processed' | 'failed'
+export const STATUS = {
+  INITIALIZED: 'initialized', 
+  PROCESSING: 'processing',
+  PROCESSED: 'processed',
+  FAILED: 'failed'
+} as const
+
+export type Status = typeof STATUS[keyof typeof STATUS]
