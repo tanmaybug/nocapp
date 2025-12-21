@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from dtos.form1DTOcg import Form1
 from sqlalchemy.orm import Session
 from config.DB.DBConfig import get_db
-from mappers.form1Mapper import dtotodb as form1Map
+from mappers.form1Mapper import dtotodb_update as form1Map
 from helpers import response
 from services.form1Repo import form1Service
 from core.Dependencies.auth import get_current_user

@@ -5,6 +5,7 @@ from config.DB.DBConfig import get_db
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 from services.department.applicationRepo import applicationService
+from mappers.department.reportMapper import applicant_report_dbtodto
 
 router = APIRouter(
     prefix="/department/InprocessApplication", tags=["Report"]
@@ -18,12 +19,13 @@ def get_application_data(
     print(current_user)
     # userId = current_user["stake_user"]
 
-    pending_data = jsonable_encoder(
+    inprocess_data = jsonable_encoder(
         applicationService(db).get_inprocess_application_data()
     )
+    data = applicant_report_dbtodto(inprocess_data)
     result = {
         "status_code": status.HTTP_200_OK,
         "message": "Inprocess Application Data",
-        "data": pending_data,
+        "data": data,
     }
     return result
