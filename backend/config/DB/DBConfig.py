@@ -31,7 +31,7 @@ def get_db():
         # Handle specific database connection errors if needed
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            details=f"Database connection failed: {str(e)}"
+            detail=f"Database connection failed: {str(e)}"
         )
     finally:
         db.close()
