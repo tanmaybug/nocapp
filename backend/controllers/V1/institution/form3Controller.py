@@ -5,7 +5,7 @@ from utils.iP import get_client_ip
 from services.form3Repo import form3Service
 from helpers import response
 from utils.customFileValidation import validatePDF
-from mappers.uploadDocumentTableMapper import dtotodb,save_file_dtotodb
+from mappers.uploadDocumentTableMapper import dtotodb, save_file_dtotodb
 from pathlib import Path
 import shutil
 import uuid
@@ -15,9 +15,10 @@ from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 from core.Dependencies.auth import get_current_user
 
-router = APIRouter(prefix="/institution/form3", tags=["Form"])
+router = APIRouter(prefix="/institution", tags=["Form"])
 
-@router.post("/", response_model=response.APIResponse)
+
+@router.post("", response_model=response.APIResponse)
 def submit():
     nocRegId = "NOC20251121102258"
     result = {
@@ -79,14 +80,14 @@ def upload_file(
                 # print(f"Base64 data : {base64Data}")
                 data = {
                     "fileName": unique_filename,
-                    "filePath": "",
+                    "fileUrl": "https://banglaruchchashiksha.wb.gov.in/assets/readwrite/uploads/E_Governance_Final_Book.pdf",
                     "fileId": insertData["upload_document_id_pk"],
                 }
                 result = {
                     "status_code": status.HTTP_200_OK,
                     "message": "File Upload Success",
                     "data": data,
-                }          
+                }
         else:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -108,12 +109,12 @@ def save_file(
 ):
     nocRegId = current_user["stake_user"]
     fileId = request.fileId
-    file_db_data = FileService(db).get_unsaved_data(fileId,nocRegId)
+    file_db_data = FileService(db).get_unsaved_data(fileId, nocRegId)
     if not file_db_data:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
         )
-    
+
     file_data = save_file_dtotodb(file_db_data, request.documentTypeId)
     update_status = FileService(db).update_doc_type(file_data)
     if update_status:
@@ -129,6 +130,7 @@ def save_file(
         )
     return result
 
+
 def file_to_base64(file_path):
     try:
         with open(file_path, "rb") as file:
@@ -142,4 +144,4 @@ def file_to_base64(file_path):
         return None
     except Exception as e:
         print(f"An error occurred: {e}")
-        return None 
+        return None
