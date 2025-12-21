@@ -12,3 +12,11 @@ def dtotodb(data) -> uploadDocumentDetails:
     )
 
     return result
+
+
+def save_file_dtotodb(
+    existing_data: uploadDocumentDetails, docTypeId: int
+) -> uploadDocumentDetails:
+    existing_data.document_id_fk = docTypeId
+
+    return existing_data

@@ -1,11 +1,11 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Depends
 from helpers import response
-# from fastapi.encoders import jsonable_encoder
-# from config.DB.DBConfig import get_db
-# from sqlalchemy.orm import Session
+from fastapi.encoders import jsonable_encoder
+from config.DB.DBConfig import get_db
+from sqlalchemy.orm import Session
 # from mappers.itemMapper import dbtodtolist
 # from models.testTableModel import Post
-
+from mappers.uploadDocumentTableMapper import dtotodb
 from fastapi.responses import StreamingResponse
 from jinja2 import Environment, FileSystemLoader
 # from weasyprint import HTML
@@ -17,23 +17,27 @@ router = APIRouter(prefix="/test", tags=["Test"])
 # Setup Jinja2 environment
 templates = Environment(loader=FileSystemLoader("templates"))
 
-# @router.get("/", response_model=response.APIResponse)
-# def get_data(db: Session = Depends(get_db)):
+@router.get("", response_model=response.APIResponse)
+def get_data(db: Session = Depends(get_db)):
 
-#     db_items = jsonable_encoder(db.query(Post).all())
-#     # print(db_items)
+    uploadDataMap = dtotodb(
+        {
+            "regId": "1234",
+            "documentId": 0,
+            "documentName": "unique_filename",
+            "ip": "1234",
+        }
+    )
+    print(jsonable_encoder(uploadDataMap))
 
-#     items = jsonable_encoder(dbtodtolist(db_items))
-#     # print(items)
+    data = {"Id": 12, "Details": "Test Details from test controller"}
 
-#     data = {"Id": 1, "Details": "Test Details from test controller","DB_Item":items}
-
-#     result = {
-#         "status_code": status.HTTP_200_OK,
-#         "message": "Test Response",
-#         "data": data,
-#     }
-#     return result
+    result = {
+        "status_code": status.HTTP_200_OK,
+        "message": "Test Response",
+        "data": data,
+    }
+    return result
 
 
 @router.get("/test2")
