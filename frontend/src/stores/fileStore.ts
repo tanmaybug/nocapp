@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import api from '@/apis'
+import api from '@/services/api'
 import type { Status } from '@/types/common'
 
 export const useFileStore = defineStore('file', {
