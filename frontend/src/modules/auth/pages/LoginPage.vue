@@ -10,9 +10,6 @@ import LoginForm from '../components/LoginForm.vue'
 
 <style scoped>
 .login-view {
-  background-image: url('@/assets/login-background.jpg');
-  background-size: cover;
-  background-position: center;
   position: relative;
   overflow: hidden;
 }
