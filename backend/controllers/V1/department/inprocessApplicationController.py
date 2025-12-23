@@ -8,7 +8,7 @@ from services.department.applicationRepo import applicationService
 from mappers.department.reportMapper import applicant_report_dbtodto
 
 router = APIRouter(
-    prefix="/department/InprocessApplication", tags=["Report"]
+    prefix="/department/InprocessNOCApplications", tags=["Report"]
 )
 
 @router.get("", response_model=response.APIResponse)

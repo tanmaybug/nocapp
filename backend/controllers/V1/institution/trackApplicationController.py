@@ -32,10 +32,30 @@ def get_application_track_data(
     print(track_data)
     data = {
         "trackData": [
-            {"object": "Registration Done", "date": "12-10-2025", "remarks": ""},
-            {"object": "Final Submit Done", "date": "14-10-2025", "remarks": ""},
-            {"object": "Docket Number Added","date": "20-10-2025","remarks": "",},
-            {"object": "Inspection Date Assigned","date": "20-10-2025","remarks": "",},
+            {
+                "sno": 1,
+                "activity": "Registration Done",
+                "date": "12-10-2025",
+                "remarks": "",
+            },
+            {
+                "sno": 2,
+                "activity": "Final Submit Done",
+                "date": "14-10-2025",
+                "remarks": "",
+            },
+            {
+                "sno": 3,
+                "activity": "Docket Number Added",
+                "date": "20-10-2025",
+                "remarks": "",
+            },
+            {
+                "sno": 4,
+                "activity": "Inspection Date Assigned",
+                "date": "20-10-2025",
+                "remarks": "",
+            },
         ],
     }
 

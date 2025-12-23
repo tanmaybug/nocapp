@@ -26,10 +26,10 @@ def login(request: LoginFormRequestDTO, db: Session = Depends(get_db)):
             )
             # loginService(db).update_token(db_data["stake_user"],token)
             if db_data["stake_level_id_fk"] == 1:
-                role = "ADMIN"
+                role = "STATE"
                 userName = "State"
             elif db_data["stake_level_id_fk"] == 2:
-                role = "ADMIN"
+                role = "DEPARTMENT"
                 userName = "Department"
             elif db_data["stake_level_id_fk"] == 3:
                 role = "INSTITUTION"

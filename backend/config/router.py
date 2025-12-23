@@ -7,7 +7,8 @@ from controllers.V1 import (
     noc_application_controller,
     test_new,
     file_upload_controller,
-    test_controller
+    test_controller,
+    view_file_controller
 )
 
 from controllers.V1.institution import (
@@ -41,6 +42,7 @@ master_router.include_router(registration_controller.router, prefix="/v1")
 master_router.include_router(otp_controller.router, prefix="/v1")
 
 master_router.include_router(login_controller.router, prefix="/v1")
+master_router.include_router(view_file_controller.router, prefix="/v1")
 
 # ----------Institution Section Start-------------------
 
