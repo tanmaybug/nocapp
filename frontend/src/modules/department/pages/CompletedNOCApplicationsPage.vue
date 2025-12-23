@@ -1,11 +1,11 @@
 <template>
   <div class="page dashboard-view">
     <v-container>
-      <institution-dashboard />
+      <completed-n-o-c-applications />
     </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import InstitutionDashboard from '../components/InstitutionDashboard.vue'
+import CompletedNOCApplications from '../components/CompletedNOCApplications.vue'
 </script>

@@ -7,7 +7,7 @@
         </div>
         <p class="eyebrow">{{ card.title }}</p>
         <h2 class="card-value">{{ card.value }}</h2>
-        <v-btn variant="text" class="text-none px-0 mt-auto align-self-start" :text="card.actionText" :append-icon="'mdi-arrow-right'" @click="card.onAction" />
+        <v-btn variant="text" class="text-none px-0 mt-auto align-self-start" :text="card.actionText" :append-icon="'mdi-arrow-right'" :to="card.link" />
       </v-card>
     </div>
   </div>
@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { useDepartmentStore } from '@/modules/department/stores'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 
 // Stores / base state
 const departmentStore = useDepartmentStore()
@@ -26,7 +26,7 @@ type CardType = {
   value: string
   actionText: string
   icon: string
-  onAction: () => void
+  link: { name: string }
 }
 
 // Computed
@@ -36,26 +36,31 @@ const cards = computed<CardType[]>(() => [
     value: departmentStore.dashboardData.totalInProcessApplication.toString(),
     actionText: 'View details',
     icon: 'mdi-file-document-outline',
-    onAction: () => { }
+    link: { name: 'DepartmentInProcessNOCApplications' },
   },
   {
     title: 'Total Pending Reviews',
     value: departmentStore.dashboardData.totalPendingApplication.toString(),
     actionText: 'View details',
     icon: 'mdi-clipboard-text-clock-outline',
-    onAction: () => { }
+    link: { name: 'DepartmentPendingNOCApplications' },
   },
   {
     title: 'Total NOC Complete Documents',
     value: departmentStore.dashboardData.totalNocCompleteApplication.toString(),
     actionText: 'View details',
     icon: 'mdi-shield-alert-outline',
-    onAction: () => { }
+    link: { name: 'DepartmentCompletedNOCApplications' },
   }
 ])
 
-// Init
-departmentStore.getDashboardData()
+function loadDashboardData() {
+  departmentStore.getDashboardData()
+}
+
+onMounted(() => {
+  loadDashboardData()
+})
 </script>
 
 <style scoped>
