@@ -11,7 +11,7 @@
         <div class="d-flex align-start justify-space-between gap-4">
           <div>
             <p class="fw-600 text-grey-darken-1 mb-2">Current Status</p>
-            <v-chip :color="currentStatusColor" size="large" variant="tonal" class="text-none fw-600">
+            <v-chip color="info" size="large" variant="tonal" class="text-none fw-600">
               {{ dashboardData.currentStatus }}
             </v-chip>
             <div class="d-flex align-center mt-3 text-body-2 text-grey-darken-1">
@@ -46,16 +46,16 @@
         <p class="fw-600 mb-0">Recent Activities</p>
         <p class="text-body-2 text-grey-darken-1 mb-0">Stay up to date with actions taken on your application</p>
       </div>
-      <v-btn text="Refresh" prepend-icon="mdi-refresh" variant="tonal" class="text-none" @click="onRefresh" />
+      <v-btn text="Refresh" prepend-icon="mdi-refresh" variant="tonal" class="text-none" @click="loadDashboardData" />
     </div>
     <v-divider />
-    <v-data-table v-model:sort-by="activitySortBy" :headers="activityHeaders" :items="activityItems" density="comfortable" item-value="slNo" hide-default-footer>
-      <template #item.slNo="{ item }">
-        <span class="fw-600">{{ item.slNo }}</span>
+    <v-data-table v-model:sort-by="activitySortBy" :headers="activityHeaders" :items="dashboardData.activities" density="comfortable" item-value="sno" hide-default-footer>
+      <template #item.sno="{ item }">
+        <span class="fw-600">{{ item.sno }}</span>
       </template>
 
-      <template #item.object="{ item }">
-        <p class="fw-600">{{ item.object }}</p>
+      <template #item.activity="{ item }">
+        <p class="fw-600">{{ item.activity }}</p>
       </template>
 
       <template #item.status="{ item }">
@@ -77,22 +77,19 @@
 import router from '@/router'
 import useAuthStore from '@/modules/auth/stores'
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
-import { useInstitutionStore } from '../stores'
+import { computed, onMounted, ref } from 'vue'
+import { useInstitutionStore, ACTIVITY_STATUS } from '../stores'
 
 // Stores / base state
-const { dashboardData } = storeToRefs(useInstitutionStore())
+const institutionStore = useInstitutionStore()
+const { dashboardData } = storeToRefs(institutionStore)
 const { user } = storeToRefs(useAuthStore())
 
 // Shared UI helpers
 const statusColorMap: Record<string, string> = {
-  Submitted: 'info',
-  Pending: 'warning',
-  Done: 'success'
+  [ACTIVITY_STATUS.PENDING]: 'warning',
+  [ACTIVITY_STATUS.COMPLETED]: 'success'
 }
-
-// Current Status tile
-const currentStatusColor = computed(() => statusColorMap[dashboardData.value.currentStatus ?? ''] ?? 'primary')
 
 // Quick Actions tile
 const actions = computed(() => [
@@ -108,13 +105,17 @@ const actions = computed(() => [
     label: 'View Application',
     icon: 'mdi-eye-outline',
     color: 'info',
-    handler: () => { }
+    handler: () => {
+      router.push({ name: 'NOCProfileView' })
+    }
   },
   {
     label: 'Track Application',
     icon: 'mdi-timeline-clock-outline',
     color: 'default',
-    handler: () => { }
+    handler: () => {
+      router.push({ name: 'NOCTrackApplication' })
+    }
   },
   {
     label: 'NOC Doc Download',
@@ -127,17 +128,21 @@ const actions = computed(() => [
 
 // Recent Activities table
 const activityHeaders = [
-  { title: 'Sl. No', key: 'slNo', sortable: true },
-  { title: 'Activity', key: 'object' },
-  { title: 'Status', key: 'status' },
-  { title: 'Date', key: 'date' },
+  { title: 'S.No.', key: 'sno', sortable: true },
+  { title: 'Activity', key: 'activity', sortable: true },
+  { title: 'Status', key: 'status', sortable: true },
+  { title: 'Date', key: 'date', sortable: true },
 ]
-const activityItems = computed(() => (dashboardData.value.trackData ?? []).map((row, index) => ({ ...row, slNo: index + 1 })))
-const activitySortBy = ref([{ key: 'date', order: 'desc' as const }])
+const activitySortBy = ref([{ key: 'sno', order: 'asc' as const }])
 
-function onRefresh() {
+function loadDashboardData() {
+  institutionStore.getDashboardData()
 }
 
+
+onMounted(() => {
+  loadDashboardData()
+})
 </script>
 
 <style scoped>

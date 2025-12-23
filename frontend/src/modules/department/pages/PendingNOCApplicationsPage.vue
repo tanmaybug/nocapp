@@ -1,11 +1,11 @@
 <template>
   <div class="page dashboard-view">
     <v-container>
-      <institution-dashboard />
+      <pending-n-o-c-applications />
     </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import InstitutionDashboard from '../components/InstitutionDashboard.vue'
+import PendingNOCApplications from '../components/PendingNOCApplications.vue'
 </script>

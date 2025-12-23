@@ -2,29 +2,23 @@ import { defineStore } from 'pinia'
 import type { Status } from '@/types/common'
 import { getDashboardData } from '@/modules/institution/services/institution.service'
 
-export const FORM_STATUS = {
-  SUBMITTED: 'Submitted',
-  IN_PROCESS: 'In Process',
-  NOC_COMPLETED: 'NOC Completed',
-} as const
-export type FormStatus = typeof FORM_STATUS[keyof typeof FORM_STATUS]
-
-export const TRACK_DATA_STATUS = {
+export const ACTIVITY_STATUS = {
   PENDING: 'Pending',
-  DONE: 'Done',
-}
-export type TrackDataStatus = typeof TRACK_DATA_STATUS[keyof typeof TRACK_DATA_STATUS]
-export type TrackData = {
-  object: string
+  COMPLETED: 'Completed',
+} as const
+export type ActivityStatus = typeof ACTIVITY_STATUS[keyof typeof ACTIVITY_STATUS]
+export type Activity = {
+  sno: number
+  activity: string
   date: string
-  status: TrackDataStatus
+  status: ActivityStatus
 }
 export interface InstitutionState {
   dashboardData: {
-    currentStatus: FormStatus | null
+    currentStatus: string | null
     lastUpdatedDate: String | null
     isNOCCompleted: boolean
-    trackData: TrackData[]
+    activities: Activity[]
   }
   status: Status
   error: string | null
@@ -33,19 +27,21 @@ export interface InstitutionState {
 export const useInstitutionStore = defineStore('institution', {
   state: (): InstitutionState => ({
     dashboardData: {
-      currentStatus: FORM_STATUS.SUBMITTED,
-      lastUpdatedDate: "2025-12-18",
+      currentStatus: "Submitted", // TODO: Set to "UNKNOWN" as default
+      lastUpdatedDate: "2025-12-18", // TODO: Set to "UNKNOWN" as default
       isNOCCompleted: false,
-      trackData: [
+      activities: [
         {
-          object: 'Form 1',
+          sno: 1,
+          activity: 'Form 1',
           date: '2024-06-01',
-          status: 'Done'
+          status: ACTIVITY_STATUS.COMPLETED
         },
-          {
-          object: 'Form 2',
+        {
+          sno: 2,
+          activity: 'Form 2',
           date: '2024-06-01',
-          status: 'Pending'
+          status: ACTIVITY_STATUS.PENDING
         },
       ]
     },

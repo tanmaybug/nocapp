@@ -23,3 +23,9 @@ export const STATUS = {
 } as const
 
 export type Status = typeof STATUS[keyof typeof STATUS]
+
+export type ApiEnvelope<T> = {
+  status_code?: number
+  message?: string
+  data?: T
+}

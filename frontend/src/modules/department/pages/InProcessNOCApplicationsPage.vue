@@ -1,11 +1,11 @@
 <template>
   <div class="page dashboard-view">
     <v-container>
-      <institution-dashboard />
+      <in-process-n-o-c-applications />
     </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import InstitutionDashboard from '../components/InstitutionDashboard.vue'
+import InProcessNOCApplications from '../components/InProcessNOCApplications.vue'
 </script>

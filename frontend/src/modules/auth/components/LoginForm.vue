@@ -19,6 +19,10 @@
             <v-btn variant="text" @click="onReset">Reset</v-btn>
             <v-btn class="ms-2" :disabled="false" @click="onSubmit" color="primary" tabindex="3">Login</v-btn>
           </v-col>
+
+          <v-col cols="12" class="text-center">
+            <v-btn variant="text" class="text-none" :to="{ name: 'Registration' }">NOC Registration</v-btn>
+          </v-col>
         </v-row>
       </v-form>
     </v-card-text>

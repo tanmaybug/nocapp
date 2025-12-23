@@ -116,6 +116,11 @@
             <v-btn variant="text" @click="onReset">Reset</v-btn>
             <v-btn class="ms-2" :disabled="!allOTPVerified" @click.prevent="onSubmit" color="primary">Submit</v-btn>
           </v-col>
+
+          <v-col cols="12" class="text-center">
+            <span class="text-body-2 text-medium-emphasis">Already have an account?</span>
+            <v-btn variant="text" class="text-none" :to="{ name: 'Login' }">Login</v-btn>
+          </v-col>
         </v-row>
       </v-form>
     </v-card-text>

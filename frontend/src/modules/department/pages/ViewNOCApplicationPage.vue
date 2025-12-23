@@ -1,7 +1,7 @@
 <template>
   <div class="page dashboard-view">
     <v-container>
-      <DepartmentDashboard />
+      <department-dashboard />
     </v-container>
   </div>
 </template>
