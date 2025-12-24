@@ -5,7 +5,9 @@ from utils.token import validate_token, decode_token
 
 
 async def auth_middleware(request: Request, call_next):
-    print(request)
+    if request.method == "OPTIONS":
+        return await call_next(request)
+    
     protected_paths = [
         "/v1/institution/form1",
         "/v1/institution/form2",
@@ -24,9 +26,9 @@ async def auth_middleware(request: Request, call_next):
         "/v1/department/Inspection/getInspectionTrack",
         "/v1/department/Inspection/addInspectionFeedback",
         "/v1/department/Inspection/addInspectionDocument",
-        "/v1/department/PendingApplication",
-        "/v1/department/InprocessApplication",
-        "/v1/department/CompleteApplication",
+        "/v1/department/noc-applications/pending",
+        "/v1/department/noc-applications/in-process",
+        "/v1/department/noc-applications/completed",
     ]
 
     # url_token_allow_path = ["/v1/institution/NOCApplication/download","/v1/department/ViewApplication/download",]
@@ -37,7 +39,7 @@ async def auth_middleware(request: Request, call_next):
         if token:
             if token and validate_token(token.split(" ")[1]):
                 user_data = decode_token(token.split(" ")[1])
-                print(user_data)
+                # print(f"Auth middle:{user_data}")
                 request.state.user = user_data
             else:
                 return JSONResponse(
@@ -48,7 +50,7 @@ async def auth_middleware(request: Request, call_next):
             token = request.query_params.get("token")
             if token and validate_token(token):
                 user_data = decode_token(token)
-                print(user_data)
+                # print(user_data)
                 request.state.user = user_data
             else:
                 return JSONResponse(

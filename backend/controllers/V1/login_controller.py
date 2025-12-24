@@ -12,7 +12,7 @@ from utils.token import create_token
 router = APIRouter(prefix="/login", tags=["Login"])
 
 
-@router.post("/", response_model=response.APIResponse)
+@router.post("", response_model=response.APIResponse)
 def login(request: LoginFormRequestDTO, db: Session = Depends(get_db)):
     db_data: Any = loginService(db).get_data(request.username)
 

@@ -7,14 +7,14 @@ from fastapi.encoders import jsonable_encoder
 from services.department.applicationRepo import applicationService
 from mappers.department.reportMapper import applicant_report_dbtodto
 
-router = APIRouter(prefix="/department/applications/pending", tags=["Report"])
+router = APIRouter(prefix="/department/noc-applications/pending", tags=["Report"])
 
 @router.get("", response_model=response.APIResponse)
 def get_application_data(
     current_user: dict = Depends(get_current_admin),
     db: Session = Depends(get_db),
 ):
-    print(current_user)
+    # print(current_user)
     # userId = current_user["stake_user"]
 
     pending_data = jsonable_encoder(
