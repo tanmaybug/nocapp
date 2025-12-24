@@ -54,7 +54,7 @@ export const useInstitutionStore = defineStore('institution', {
       this.error = null
       try {
         const response = await getDashboardData()
-        this.dashboardData = { ...response }
+        this.dashboardData = { ...response.data }
       } catch (err: any) {
         this.status = 'failed'
         this.error = err?.response?.data?.message || err?.message || 'Unable to fetch dashboard data'

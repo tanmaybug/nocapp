@@ -11,7 +11,7 @@ def get_dashboard_data(current_user: dict = Depends(get_current_user)):
     # nocRegId = current_user["stake_user"]
 
     data = {
-        "currentStatus": "Sumitted",
+        "currentStatus": "SUBMITTED",
         "lastUpdatedDate": "12-10-2025",
         "isNOCCompleted": False,
         "activities": [
@@ -19,27 +19,27 @@ def get_dashboard_data(current_user: dict = Depends(get_current_user)):
                 "sno": 1,
                 "activity": "Registration",
                 "date": "12-10-2025",
-                "status": "Completed",
+                "status": "COMPLETED",
             },
             {
                 "sno": 2,
                 "activity": "Form-1",
                 "date": "12-10-2025",
-                "status": "Completed",
+                "status": "COMPLETED",
             },
-            {"sno": 3, "activity": "Form-2", "date": "12-10-2025", "status": "Pending"},
-            {"sno": 4, "activity": "Form-3", "date": "12-10-2025", "status": "Pending"},
+            {"sno": 3, "activity": "Form-2", "date": "12-10-2025", "status": "PENDING"},
+            {"sno": 4, "activity": "Form-3", "date": "12-10-2025", "status": "PENDING"},
             {
                 "sno": 5,
                 "activity": "Final Submition",
                 "date": "14-10-2025",
-                "status": "Pending",
+                "status": "PENDING",
             },
             {
                 "sno": 6,
                 "activity": "Docket Number Added",
                 "date": "20-10-2025",
-                "status": "Pending",
+                "status": "PENDING",
             },
         ],
     }
