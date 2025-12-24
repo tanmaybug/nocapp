@@ -1,4 +1,5 @@
 import api from '@/services/api'
+import type { NOCApplicationType } from '../stores/departmentStore'
 
 const RESOURCE_BASE = '/department'
 
@@ -8,17 +9,7 @@ export const getDashboardData = async () => {
   return resp.data
 }
 
-export const getPendingApplications = async () => {
-  const resp = await api.get(`${RESOURCE_BASE}/PendingNOCApplications`)
-  return resp.data
-}
-
-export const getInprocessApplications = async () => {
-  const resp = await api.get(`${RESOURCE_BASE}/InProcessNOCApplications`)
-  return resp.data
-}
-
-export const getCompletedApplications = async () => {
-  const resp = await api.get(`${RESOURCE_BASE}/CompletedNOCApplications`)
+export const getNOCApplicationsByStatus = async (nocApplicationType: NOCApplicationType) => {
+  const resp = await api.get(`${RESOURCE_BASE}/noc-applications/${nocApplicationType}`)
   return resp.data
 }

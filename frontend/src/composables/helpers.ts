@@ -13,15 +13,15 @@ export function filterProperties<
   keys: K[],
   silentError: boolean = true
 ): Pick<T, K> {
-  const result = {} as Pick<T, K>;
+  const result = {} as Pick<T, K>
 
   for (const key of keys) {
     if (key in obj) {
-      result[key] = obj[key];
+      result[key] = obj[key]
     } else if (!silentError) {
-      throw new Error(`Missing property: ${String(key)}`);
+      throw new Error(`Missing property: ${String(key)}`)
     }
   }
 
-  return result;
+  return result
 }

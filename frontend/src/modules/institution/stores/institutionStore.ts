@@ -3,8 +3,8 @@ import type { Status } from '@/types/common'
 import { getDashboardData } from '@/modules/institution/services/institution.service'
 
 export const ACTIVITY_STATUS = {
-  PENDING: 'Pending',
-  COMPLETED: 'Completed',
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
 } as const
 export type ActivityStatus = typeof ACTIVITY_STATUS[keyof typeof ACTIVITY_STATUS]
 export type Activity = {
@@ -13,7 +13,7 @@ export type Activity = {
   date: string
   status: ActivityStatus
 }
-export interface InstitutionState {
+export type InstitutionState = {
   dashboardData: {
     currentStatus: string | null
     lastUpdatedDate: String | null
@@ -27,7 +27,7 @@ export interface InstitutionState {
 export const useInstitutionStore = defineStore('institution', {
   state: (): InstitutionState => ({
     dashboardData: {
-      currentStatus: "Submitted", // TODO: Set to "UNKNOWN" as default
+      currentStatus: "SUBMITTED", // TODO: Set to "UNKNOWN" as default
       lastUpdatedDate: "2025-12-18", // TODO: Set to "UNKNOWN" as default
       isNOCCompleted: false,
       activities: [

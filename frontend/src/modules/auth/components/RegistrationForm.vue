@@ -23,6 +23,10 @@
             <v-text-field v-model="form.applicantDesignation" label="Designation of Applicant/Office Bearer *" :rules="[requiredRule]" />
           </v-col>
 
+          <v-col cols="12" v-if="showMinorityDetails">
+            <v-textarea v-model="form.minorityDetails" label="Minority Details *" :rules="minorityDetailsRules" />
+          </v-col>
+
           <v-col cols="12">
             <div class="text-subtitle-1">Address of the Registered Office of the Applicant</div>
           </v-col>
@@ -153,10 +157,16 @@ const {
 } = storeToRefs(store)
 const formRef = ref<any>(null)
 
+const showMinorityDetails = computed(() => form.value.entityTypeID === 4)
+const minorityDetailsRules = computed(() => (showMinorityDetails.value ? [requiredRule] : []))
+
 // Entity Type
 watchEffect(() => {
   if (form.value.entityTypeID === 4) {
     form.value.minorityFlag = 1
+  } else {
+    form.value.minorityFlag = 0
+    form.value.minorityDetails = ''
   }
 })
 

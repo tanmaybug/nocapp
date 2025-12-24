@@ -10,7 +10,15 @@
     </v-col>
 
     <v-col cols="12">
+      <FileUploadField :label="'Vision Files'" :uploadedFiles="uploadedVisionFiles" :rules="[]" @add="onAddVision" @remove="onRemoveVision" />
+    </v-col>
+
+    <v-col cols="12">
       <v-text-field v-model="modelValue.aimAndObjective.mission" label="Mission" @input="updateValue" />
+    </v-col>
+
+    <v-col cols="12">
+      <FileUploadField :label="'Mission Files'" :uploadedFiles="uploadedMissionFiles" :rules="[]" @add="onAddMission" @remove="onRemoveMission" />
     </v-col>
 
     <v-col cols="12">
@@ -18,11 +26,23 @@
     </v-col>
 
     <v-col cols="12">
+      <FileUploadField :label="'Core Values Files'" :uploadedFiles="uploadedCoreValuesFiles" :rules="[]" @add="onAddCoreValues" @remove="onRemoveCoreValues" />
+    </v-col>
+
+    <v-col cols="12">
       <v-text-field v-model="modelValue.aimAndObjective.aims" label="Aims" @input="updateValue" />
     </v-col>
 
     <v-col cols="12">
+      <FileUploadField :label="'Aims Files'" :uploadedFiles="uploadedAimsFiles" :rules="[]" @add="onAddAims" @remove="onRemoveAims" />
+    </v-col>
+
+    <v-col cols="12">
       <v-text-field v-model="modelValue.aimAndObjective.objectiveConcernedInstitution" label="Objectives of Concerned Institution" @input="updateValue" />
+    </v-col>
+
+    <v-col cols="12">
+      <FileUploadField :label="'Objectives of Concerned Institution Files'" :uploadedFiles="uploadedObjectiveConcernedInstitutionFiles" :rules="[]" @add="onAddObjectiveConcernedInstitution" @remove="onRemoveObjectiveConcernedInstitution" />
     </v-col>
 
     <!-- Details of the land of the college -->
@@ -53,6 +73,10 @@
     </v-col>
 
     <v-col cols="12">
+      <FileUploadField :label="'Khatian Documents'" :uploadedFiles="uploadedKhatianFiles" :rules="[]" @add="onAddKhatian" @remove="onRemoveKhatian" />
+    </v-col>
+
+    <v-col cols="12">
       <div class="text-body-2 mb-2">Plot Type</div>
       <v-radio-group v-model="modelValue.collegeLandDetails.plotType" row @update:model-value="updateValue">
         <v-radio v-for="option in plotTypeOptions" :key="option.value" :label="option.label" :value="option.value" />
@@ -65,7 +89,7 @@
 
     <v-col cols="12">
       <div class="text-body-2 mb-2">Area Classification</div>
-      <v-radio-group v-model="modelValue.collegeLandDetails.areaClasification" row @update:model-value="updateValue">
+      <v-radio-group v-model="modelValue.collegeLandDetails.areaClassification" row @update:model-value="updateValue">
         <v-radio v-for="option in areaClassificationOptions" :key="option.value" :label="option.label" :value="option.value" />
       </v-radio-group>
     </v-col>
@@ -73,6 +97,10 @@
     <!-- Area of land for the college -->
     <v-col cols="12">
       <v-text-field v-model="modelValue.collegeLandAreaInAcres" label="Area of land for the college (in acres)" type="number" step="0.01" :rules="[landAreaRule]" hint="'Minimum 3 acres (Urban) and 5 acres (Rural)'" @input="updateValue" />
+    </v-col>
+
+    <v-col cols="12">
+      <FileUploadField :label="'College Land Documents'" :uploadedFiles="uploadedCollegeLandFiles" :rules="[]" @add="onAddCollegeLand" @remove="onRemoveCollegeLand" />
     </v-col>
 
     <!-- Area of covered/built-up space -->
@@ -119,6 +147,10 @@
     </v-col>
 
     <v-col cols="12">
+      <FileUploadField :label="'Student Reservation Documents'" :uploadedFiles="uploadedStudentReservationFiles" :rules="[]" @add="onAddStudentReservation" @remove="onRemoveStudentReservation" />
+    </v-col>
+
+    <v-col cols="12">
       <div class="text-body-2 mb-2">Reservations for Employees</div>
       <v-radio-group v-model="modelValue.additionalCommitmentsAndPlans.employeeReservation" row @update:model-value="updateValue">
         <v-radio v-for="option in yesNoOptions" :key="option.value" :label="option.label" :value="option.value" />
@@ -135,7 +167,7 @@
       </v-radio-group>
     </v-col>
     <v-col cols="12">
-      <v-textarea v-model="modelValue.additionalCommitmentsAndPlans.specialSkilDetails" label="Special Skill Development Activities (Details)" rows="3" auto-grow @input="updateValue" />
+      <v-textarea v-model="modelValue.additionalCommitmentsAndPlans.specialSkillDetails" label="Special Skill Development Activities (Details)" rows="3" auto-grow @input="updateValue" />
     </v-col>
 
     <v-col cols="12">
@@ -156,9 +188,12 @@
       </v-radio-group>
     </v-col>
 
-    <!-- Insertion field will be replaced by Upload field -->
     <v-col cols="12">
-      <v-textarea v-model="modelValue.comprehensivePlan" label="Insertion field will be replaced by Upload field" rows="3" @input="updateValue" />
+      <v-textarea v-model="modelValue.comprehensivePlan" label="Comprehensive Plan" rows="3" @input="updateValue" />
+    </v-col>
+
+    <v-col cols="12">
+      <FileUploadField :label="'Comprehensive Plan Files'" :uploadedFiles="uploadedComprehensivePlanFiles" :rules="[]" @add="onAddComprehensivePlan" @remove="onRemoveComprehensivePlan" />
     </v-col>
 
     <!-- Details of plan for campus development -->
@@ -290,7 +325,10 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import { numericRule } from '@/composables/validators'
+import FileUploadField from '@/components/ui/FileUploadField.vue'
+import { useFileStore } from '@/stores/fileStore'
 
 // Props
 const props = defineProps<{
@@ -301,6 +339,149 @@ const props = defineProps<{
 const emit = defineEmits<{
   'update:modelValue': [value: any]
 }>()
+
+const fileStore = useFileStore()
+
+const uploadedVisionFiles = ref<any[]>([])
+const uploadedMissionFiles = ref<any[]>([])
+const uploadedCoreValuesFiles = ref<any[]>([])
+const uploadedAimsFiles = ref<any[]>([])
+const uploadedObjectiveConcernedInstitutionFiles = ref<any[]>([])
+const uploadedKhatianFiles = ref<any[]>([])
+const uploadedCollegeLandFiles = ref<any[]>([])
+const uploadedStudentReservationFiles = ref<any[]>([])
+const uploadedComprehensivePlanFiles = ref<any[]>([])
+
+function onAddVision(file: File | null) {
+  return uploadFile(file, uploadedVisionFiles, 'Vision')
+}
+function onRemoveVision(index: number) {
+  return removeItem(uploadedVisionFiles, index)
+}
+
+function onAddMission(file: File | null) {
+  return uploadFile(file, uploadedMissionFiles, 'Mission')
+}
+function onRemoveMission(index: number) {
+  return removeItem(uploadedMissionFiles, index)
+}
+
+function onAddCoreValues(file: File | null) {
+  return uploadFile(file, uploadedCoreValuesFiles, 'Core Values')
+}
+function onRemoveCoreValues(index: number) {
+  return removeItem(uploadedCoreValuesFiles, index)
+}
+
+function onAddAims(file: File | null) {
+  return uploadFile(file, uploadedAimsFiles, 'Aims')
+}
+function onRemoveAims(index: number) {
+  return removeItem(uploadedAimsFiles, index)
+}
+
+function onAddObjectiveConcernedInstitution(file: File | null) {
+  return uploadFile(file, uploadedObjectiveConcernedInstitutionFiles, 'Objectives of Concerned Institution')
+}
+function onRemoveObjectiveConcernedInstitution(index: number) {
+  return removeItem(uploadedObjectiveConcernedInstitutionFiles, index)
+}
+
+function onAddKhatian(file: File | null) {
+  return uploadFile(file, uploadedKhatianFiles, 'Khatian Document')
+}
+function onRemoveKhatian(index: number) {
+  return removeItem(uploadedKhatianFiles, index)
+}
+
+function onAddCollegeLand(file: File | null) {
+  return uploadFile(file, uploadedCollegeLandFiles, 'College Land Document')
+}
+function onRemoveCollegeLand(index: number) {
+  return removeItem(uploadedCollegeLandFiles, index)
+}
+
+function onAddStudentReservation(file: File | null) {
+  return uploadFile(file, uploadedStudentReservationFiles, 'Student Reservation Document')
+}
+function onRemoveStudentReservation(index: number) {
+  return removeItem(uploadedStudentReservationFiles, index)
+}
+
+function onAddComprehensivePlan(file: File | null) {
+  return uploadFile(file, uploadedComprehensivePlanFiles, 'Comprehensive Plan')
+}
+function onRemoveComprehensivePlan(index: number) {
+  return removeItem(uploadedComprehensivePlanFiles, index)
+}
+
+async function uploadFile(file: File | null, uploadedArrayRef: any, label?: string) {
+  if (!file) return
+
+  const fd = new FormData()
+  fd.append('file', file as Blob, (file as any).name)
+
+  try {
+    const resp: any = await fileStore.uploadFile(fd)
+    uploadedArrayRef.value.push(resp[0])
+  } catch (err: any) {
+    console.error(`${label || 'File'} upload failed`, err)
+  }
+}
+
+function removeItem(collection: any, index: number, options?: { minLength?: number }) {
+  const minLength = options?.minLength ?? 0
+  const arr = collection?.value ?? collection
+  if (!Array.isArray(arr)) return
+  if (index < 0 || index >= arr.length) return
+  if (arr.length < minLength) return
+  arr.splice(index, 1)
+}
+
+watch(uploadedVisionFiles, (newDocs: any[]) => {
+  props.modelValue.aimAndObjective.visionFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
+
+watch(uploadedMissionFiles, (newDocs: any[]) => {
+  props.modelValue.aimAndObjective.missionFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
+
+watch(uploadedCoreValuesFiles, (newDocs: any[]) => {
+  props.modelValue.aimAndObjective.coreValuesFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
+
+watch(uploadedAimsFiles, (newDocs: any[]) => {
+  props.modelValue.aimAndObjective.aimsFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
+
+watch(uploadedObjectiveConcernedInstitutionFiles, (newDocs: any[]) => {
+  props.modelValue.aimAndObjective.objectiveConcernedInstitutionFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
+
+watch(uploadedKhatianFiles, (newDocs: any[]) => {
+  props.modelValue.collegeLandDetails.khatianFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
+
+watch(uploadedCollegeLandFiles, (newDocs: any[]) => {
+  props.modelValue.collegeLandFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
+
+watch(uploadedStudentReservationFiles, (newDocs: any[]) => {
+  props.modelValue.additionalCommitmentsAndPlans.studentReservationFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
+
+watch(uploadedComprehensivePlanFiles, (newDocs: any[]) => {
+  props.modelValue.comprehensivePlanFiles = newDocs.map((doc: any) => doc.id)
+  updateValue()
+}, { deep: true })
 
 // Options for radio buttons
 const yesNoOptions = [
@@ -328,7 +509,7 @@ const plotTypeOptions = [
 
 // Land area
 function landAreaRule(value: any) {
-  const classification = Number(props.modelValue?.collegeLandDetails?.areaClasification)
+  const classification = Number(props.modelValue?.collegeLandDetails?.areaClassification)
   if (!classification) return true
 
   const minRequired = classification === 2 ? 5 : 3

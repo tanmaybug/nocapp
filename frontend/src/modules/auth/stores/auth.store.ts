@@ -17,7 +17,7 @@ export type User  = {
   role: Role
   name: string
 }
-export interface AuthState {
+export type AuthState = {
   user: User | null
   status: Status
   error: string | null
