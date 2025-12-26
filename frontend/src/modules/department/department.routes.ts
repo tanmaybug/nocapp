@@ -15,29 +15,19 @@ const adminRoutes: RouteRecordRaw = {
       component: () => import('./pages/DashboardPage.vue')
     },
     {
-      path: 'noc-applications',
+      path: 'noc-applications', // Redirect to default type 'pending'
       redirect: () => ({ name: 'DepartmentNOCApplications', params: { type: 'pending' }, replace: true }),
     },
     {
-      path: 'noc-applications/:type',
+      path: 'noc-applications/type/:type',
       name: 'DepartmentNOCApplications',
       component: () => import('./pages/NOCApplicationsPage.vue')
     },
      {
-      path: 'noc-applications-pending',
-      name: 'DepartmentNOCApplicationsPending',
-      redirect: () => ({ name: 'DepartmentNOCApplications', params: { type: 'pending' }, replace: true }),
-    },
-    {
-      path: 'noc-applications-inprocess',
-      name: 'DepartmentNOCApplicationsInProcess',
-      redirect: () => ({ name: 'DepartmentNOCApplications', params: { type: 'in-process' }, replace: true }),
-    },
-    {
-      path: 'noc-applications-completed',
-      name: 'DepartmentNOCApplicationsCompleted',
-      redirect: () => ({ name: 'DepartmentNOCApplications', params: { type: 'completed' }, replace: true }),
-    },
+      path: 'noc-applications/:registrationId',
+      name: 'DepartmentNOCProfileView',
+      component: () => import('./pages/NOCProfileViewPage.vue')
+    }
   ],
 }
 

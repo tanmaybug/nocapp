@@ -5,8 +5,8 @@
     </v-col>
   </v-row>
 
-  <v-row>
-    <v-col cols="12" md="8" lg="9">
+  <v-row class="align-stretch">
+    <v-col cols="12" md="8" lg="9" class="d-flex flex-column">
       <v-card class="pa-6" elevation="2" rounded="lg">
         <div class="d-flex align-start justify-space-between gap-4">
           <div>
@@ -23,9 +23,26 @@
           <v-icon icon="mdi-file-document-outline" size="34" color="primary" />
         </div>
       </v-card>
+
+      <v-card class="pa-6 mt-4" elevation="2" rounded="lg">
+        <div class="d-flex align-start justify-space-between gap-4">
+          <div>
+            <p class="fw-600 text-grey-darken-1 mb-2">Inspection Date</p>
+            <v-chip :color="dashboardData.inspectionDate ? 'info' : 'warning'" size="large" variant="tonal" class="text-none fw-600">
+              {{ dashboardData.inspectionDate || 'Not Scheduled' }}
+            </v-chip>
+            <div class="d-flex align-center mt-3 text-body-2 text-grey-darken-1">
+              <v-icon icon="mdi-calendar-clock-outline" size="16" class="mr-1" />
+              <span>Inspection schedule for your application</span>
+            </div>
+          </div>
+
+          <v-icon icon="mdi-calendar-month-outline" size="34" color="primary" />
+        </div>
+      </v-card>
     </v-col>
-    <v-col cols="12" md="4" lg="3">
-      <v-card class="pa-4" elevation="2" rounded="lg">
+    <v-col cols="12" md="4" lg="3" class="d-flex">
+      <v-card class="pa-4 flex-grow-1" elevation="2" rounded="lg">
         <div class="d-flex align-center justify-space-between mb-3">
           <p class="fw-600 mb-0">Quick Actions</p>
           <v-icon icon="mdi-lightning-bolt-outline" color="primary" />
@@ -115,6 +132,14 @@ const actions = computed(() => [
     color: 'default',
     handler: () => {
       router.push({ name: 'NOCTrackApplication' })
+    }
+  },
+  {
+    label: 'Track Inspection',
+    icon: 'mdi-timeline-clock-outline',
+    color: 'default',
+    handler: () => {
+      router.push({ name: 'NOCTrackInspection' })
     }
   },
   {

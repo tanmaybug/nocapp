@@ -29,6 +29,11 @@ const institutionRoutes: RouteRecordRaw = {
       name: 'NOCTrackApplication',
       component: () => import('./pages/NOCTrackApplicationPage.vue'),
     },
+    {
+      path: 'noc-track-inspection',
+      name: 'NOCTrackInspection',
+      component: () => import('./pages/NOCTrackInspectionPage.vue'),
+    },
   ],
 }
 

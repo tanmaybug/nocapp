@@ -9,23 +9,44 @@
                 <div class="text-h5 text-primary fw-600">NOC Application</div>
                 <div class="text-subtitle-1 text-medium-emphasis">Application Details</div>
               </div>
-              <v-btn color="primary" variant="outlined" @click="docketDialog = true">Add docket Number</v-btn>
+              <div class="header-actions">
+                <v-btn color="primary" variant="outlined" @click="inspectionDialog = true">Set Inspection Date</v-btn>
+                <v-btn color="primary" variant="outlined" @click="feedbackDialog = true">Inspection Feedback</v-btn>
+              </div>
             </div>
           </v-card-title>
           <v-divider />
 
-          <v-dialog v-model="docketDialog" max-width="420">
+          <v-dialog v-model="inspectionDialog" max-width="620">
             <v-card>
-              <v-card-title class="text-subtitle-1 fw-600">Add docket Number</v-card-title>
+              <v-card-title class="text-subtitle-1 fw-600">Set Inspection Date</v-card-title>
               <v-divider />
               <v-card-text>
-                <v-text-field v-model="docketNumber" label="Docket number" density="compact" variant="outlined" hide-details />
+                <v-text-field v-model="inspectionDate" type="date" label="Inspection Date" density="compact" variant="outlined" hide-details />
               </v-card-text>
               <v-divider />
               <v-card-actions>
                 <v-spacer />
-                <v-btn variant="text" @click="docketDialog = false">Close</v-btn>
-                <v-btn color="primary" @click="saveDocketNumber">Save</v-btn>
+                <v-btn variant="text" @click="inspectionDialog = false">Close</v-btn>
+                <v-btn color="primary" @click="saveInspectionDate">Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <v-dialog v-model="feedbackDialog" max-width="620">
+            <v-card>
+              <v-card-title class="text-subtitle-1 fw-600">Inspection Feedback</v-card-title>
+              <v-divider />
+              <v-card-text>
+                <v-select v-model="feedbackType" label="Type" density="compact" variant="outlined" :items="feedbackTypeOptions" hide-details class="mb-4" />
+                <v-textarea v-model="feedbackText" label="Feedback" rows="4" density="compact" variant="outlined" hide-details class="mb-4" />
+                <FileUploadField label="Feedback Document" :uploadedFiles="feedbackDocuments" :maxFiles="1" @add="onAddFeedbackDocument" @remove="onRemoveFeedbackDocument" />
+              </v-card-text>
+              <v-divider />
+              <v-card-actions>
+                <v-spacer />
+                <v-btn variant="text" @click="feedbackDialog = false">Close</v-btn>
+                <v-btn color="primary" @click="saveInspectionFeedback">Save</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -478,13 +499,41 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import FileUploadField from '@/components/ui/FileUploadField.vue'
 
-const docketDialog = ref(false)
-const docketNumber = ref('')
+const inspectionDialog = ref(false)
+const inspectionDate = ref<string | null>(null)
 
-const saveDocketNumber = () => {
+const feedbackDialog = ref(false)
+const feedbackTypeOptions = ['NOC', 'LOI']
+const feedbackType = ref<(typeof feedbackTypeOptions)[number] | null>(null)
+const feedbackText = ref('')
+const feedbackDocuments = ref<any[]>([])
+
+const onAddFeedbackDocument = (file: File) => {
+  feedbackDocuments.value = [
+    {
+      __pending: true,
+      file,
+      name: file.name,
+      originalName: file.name,
+      size: file.size,
+    },
+  ]
+}
+
+const onRemoveFeedbackDocument = (index: number) => {
+  feedbackDocuments.value.splice(index, 1)
+}
+
+const saveInspectionDate = () => {
   // Persisting to API/store is not implemented here (not requested)
-  docketDialog.value = false
+  inspectionDialog.value = false
+}
+
+const saveInspectionFeedback = () => {
+  // Persisting to API/store is not implemented here (not requested)
+  feedbackDialog.value = false
 }
 
 const applicantDetails = {
@@ -533,6 +582,13 @@ const campusDevelopment = {
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .label {

@@ -12,6 +12,11 @@
     <v-divider />
 
     <v-data-table v-model:sort-by="sortBy" :headers="headers" :items="nocApplications.nocApplications" :loading="nocApplications.status === STATUS.PROCESSING" :search="search" item-value="registrationId" density="comfortable">
+      <template #item.actions="{ item }">
+        <v-btn variant="text" density="compact" :to="{ name: 'DepartmentNOCProfileView', params: { registrationId: item.registrationId } }" icon aria-label="View application" title="View application">
+          <v-icon icon="mdi-eye" />
+        </v-btn>
+      </template>
       <template #no-data>
         <div class="text-center text-grey-darken-1 py-6">No applications found</div>
       </template>
@@ -39,6 +44,7 @@ const headers = [
   { title: 'Applicant Name', key: 'applicantName', sortable: true },
   { title: 'Applicant Phone', key: 'applicantPhone', sortable: true },
   { title: 'Applicant Email', key: 'applicantEmail', sortable: true },
+  { title: 'Action', key: 'actions', sortable: false },
 ]
 
 const sortBy = ref([{ key: 'registrationId', order: 'asc' as const }])

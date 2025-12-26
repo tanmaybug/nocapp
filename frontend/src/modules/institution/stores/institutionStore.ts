@@ -17,6 +17,7 @@ export type InstitutionState = {
   dashboardData: {
     currentStatus: string | null
     lastUpdatedDate: String | null
+    inspectionDate: string | null
     isNOCCompleted: boolean
     activities: Activity[]
   }
@@ -27,23 +28,11 @@ export type InstitutionState = {
 export const useInstitutionStore = defineStore('institution', {
   state: (): InstitutionState => ({
     dashboardData: {
-      currentStatus: "SUBMITTED", // TODO: Set to "UNKNOWN" as default
-      lastUpdatedDate: "2025-12-18", // TODO: Set to "UNKNOWN" as default
+      currentStatus: null,
+      lastUpdatedDate: null,
+      inspectionDate: null,
       isNOCCompleted: false,
-      activities: [
-        {
-          sno: 1,
-          activity: 'Form 1',
-          date: '2024-06-01',
-          status: ACTIVITY_STATUS.COMPLETED
-        },
-        {
-          sno: 2,
-          activity: 'Form 2',
-          date: '2024-06-01',
-          status: ACTIVITY_STATUS.PENDING
-        },
-      ]
+      activities: []
     },
     status: 'initialized',
     error: null,

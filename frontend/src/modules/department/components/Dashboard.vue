@@ -36,21 +36,21 @@ const cards = computed<CardType[]>(() => [
     value: departmentStore.dashboardData.totalPendingApplication.toString(),
     actionText: 'View details',
     icon: 'mdi-clipboard-text-clock-outline',
-    link: { name: 'DepartmentNOCApplicationsPending' },
+    link: { name: 'DepartmentNOCApplications', params: { type: 'pending' } },
   },
   {
     title: 'Total In-Process Applications',
     value: departmentStore.dashboardData.totalInProcessApplication.toString(),
     actionText: 'View details',
     icon: 'mdi-file-document-outline',
-    link: { name: 'DepartmentNOCApplicationsInProcess' },
+    link: { name: 'DepartmentNOCApplications', params: { type: 'in-process' } },
   },
   {
     title: 'Total NOC Completed Applications',
     value: departmentStore.dashboardData.totalNocCompleteApplication.toString(),
     actionText: 'View details',
     icon: 'mdi-shield-alert-outline',
-    link: { name: 'DepartmentNOCApplicationsCompleted' },
+    link: { name: 'DepartmentNOCApplications', params: { type: 'completed' } },
   }
 ])
 

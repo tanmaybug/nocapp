@@ -1,11 +1,11 @@
 <template>
   <div class="page dashboard-view">
     <v-container>
-      <institution-dashboard />
+      <dashboard />
     </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import InstitutionDashboard from '../components/InstitutionDashboard.vue'
+import Dashboard from '../components/Dashboard.vue'
 </script>

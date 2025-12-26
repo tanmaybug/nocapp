@@ -13,6 +13,7 @@ def get_dashboard_data(current_user: dict = Depends(get_current_user)):
     data = {
         "currentStatus": "SUBMITTED",
         "lastUpdatedDate": "12-10-2025",
+        "inspectionDate": "21-02-2026",
         "isNOCCompleted": False,
         "activities": [
             {
