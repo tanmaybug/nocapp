@@ -9,10 +9,13 @@ class fileService:
 
     def get_data(self, fileId):
         stmt = (
-            select(uploadDocumentDetails.uploaded_document_name)
+            select(uploadDocumentDetails)
             .where(uploadDocumentDetails.active_status == 1)
             .where(uploadDocumentDetails.upload_document_id_pk == fileId)
         )
 
         result = self.db.execute(stmt).mappings().all()
-        return result
+        if result:
+            return result[0]["uploadDocumentDetails"]
+        else:
+            False

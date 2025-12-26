@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
+from pathlib import Path
+from typing import ClassVar
 
 class Settings(BaseSettings):
     POSTGRES_HOST: str
@@ -8,12 +9,17 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
     POSTGRES_DATABASE: str
 
+    ENV:str
+
     PROJECT_TITLE: str = "NOC"
     MAX_FILE_SIZE: int = 2097152  # 2MB
     MIN_FILE_SIZE: int = 1250  # 10KB
 
     MAX_PDF_FILE_SIZE: int = 2097152  # 2MB
     MIN_PDF_FILE_SIZE: int = 1250  # 10KB
+
+    BASE_DIR: ClassVar[Path] = Path(__file__).resolve().parents[2]
+    UPLOADS_DIR: ClassVar[Path] = BASE_DIR / "uploads"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore", env_file_encoding="utf-8")
 

@@ -2,10 +2,10 @@
   <v-row class="pa-2">
     <!-- 1. Projected Fund Flow -->
     <v-col cols="12">
-      <div class="text-subtitle-1">Projected Fund Flow</div>
+      <div class="text-subtitle-1"><strong>Projected Fund Flow</strong></div>
     </v-col>
     
-    <v-col cols="12">
+    <v-col cols="6">
       <v-text-field
         v-model="modelValue.projectedFundFlow.amount"
         label="Amount"
@@ -16,7 +16,7 @@
       />
     </v-col>
     
-    <v-col cols="12">
+    <v-col cols="6">
       <v-text-field
         v-model="modelValue.projectedFundFlow.sourceOfFund"
         label="Source of Fund"
@@ -29,10 +29,10 @@
       <v-divider class="my-4"></v-divider>
     </v-col>
     <v-col cols="12">
-      <div class="text-subtitle-1">Synopsis</div>
+      <div class="text-subtitle-1"><strong>Synopsis</strong></div>
     </v-col>
     
-    <v-col cols="12">
+    <v-col cols="6">
       <v-text-field
         v-model="modelValue.synopsis.proposedInvestment"
         label="Proposed Investment"
@@ -40,7 +40,7 @@
       />
     </v-col>
     
-    <v-col cols="12">
+    <v-col cols="6">
       <v-text-field
         v-model="modelValue.synopsis.proposedEmployment"
         label="Proposed Employment"
@@ -48,7 +48,7 @@
       />
     </v-col>
     
-    <v-col cols="12">
+    <v-col cols="6">
       <v-text-field
         v-model="modelValue.synopsis.professionalCollegesCountWithin25Km"
         label="Number of Professional Colleges within 25 kms"
@@ -57,7 +57,7 @@
       />
     </v-col>
     
-    <v-col cols="12">
+    <v-col cols="6">
       <v-text-field
         v-model="modelValue.synopsis.feederSchoolCountWithin15Km"
         label="Number of Feeder school in the region within 15 kms"
@@ -70,7 +70,7 @@
     <v-col cols="12">
       <v-divider class="my-4"></v-divider>
     </v-col>
-    <v-col cols="12">
+    <v-col cols="6">
       <div class="text-body-2 mb-2">Whether the building is completed</div>
       <v-radio-group
         v-model="modelValue.buildingCompletionStatus"
@@ -87,7 +87,7 @@
     </v-col>
 
     <!-- 4. Building Completion Date (conditional) -->
-    <v-col cols="12" v-if="modelValue.buildingCompletionStatus === '1'">
+    <v-col cols="6" v-if="modelValue.buildingCompletionStatus === '1'">
       <v-text-field
         v-model="modelValue.buildingCompletionDate"
         label="Date of Completion of the Building"
@@ -96,7 +96,7 @@
       />
     </v-col>
     
-    <v-col cols="12" v-else-if="modelValue.buildingCompletionStatus === '0'">
+    <v-col cols="6" v-else-if="modelValue.buildingCompletionStatus === '0'">
       <v-text-field
         v-model="modelValue.buildingCompletionExpectedDate"
         label="Expected Date of Completion of the Building"
@@ -138,17 +138,17 @@
     </v-col>
 
     <!-- 7. Initial Fund Information -->
-    <v-col cols="12">
+    <v-col cols="6">
       <v-textarea
         v-model="modelValue.initialFundInformation"
         label="Information about the initial fund"
-        rows="3"
+        rows="1"
         @input="updateValue"
       />
     </v-col>
 
     <!-- 8. Nationalized Bank -->
-    <v-col cols="12">
+    <v-col cols="6">
       <v-select
         v-model="modelValue.nationalizedBank"
         label="Nationalized Bank"
