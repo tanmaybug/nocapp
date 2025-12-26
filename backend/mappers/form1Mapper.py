@@ -4,10 +4,11 @@ from models.applicationDetailsModel import NocApplicationDetails
 
 def dtotodb_insert(regId: str, client_ip: str) -> NocApplicationDetails:
     result = NocApplicationDetails(
-        noc_registration_id = regId,
-        insert_time = date_time(),
-        insert_ip = client_ip,
-        active_status = 1,
+        noc_registration_id=regId,
+        application_status=1,
+        insert_time=date_time(),
+        insert_ip=client_ip,
+        active_status=1,
     )
     return result
 
