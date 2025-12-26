@@ -32,25 +32,25 @@ type CardType = {
 // Computed
 const cards = computed<CardType[]>(() => [
   {
+    title: 'Total Pending Applications',
+    value: departmentStore.dashboardData.totalPendingApplication.toString(),
+    actionText: 'View details',
+    icon: 'mdi-clipboard-text-clock-outline',
+    link: { name: 'DepartmentNOCApplicationsPending' },
+  },
+  {
     title: 'Total In-Process Applications',
     value: departmentStore.dashboardData.totalInProcessApplication.toString(),
     actionText: 'View details',
     icon: 'mdi-file-document-outline',
-    link: { name: 'DepartmentInProcessNOCApplications' },
+    link: { name: 'DepartmentNOCApplicationsInProcess' },
   },
   {
-    title: 'Total Pending Reviews',
-    value: departmentStore.dashboardData.totalPendingApplication.toString(),
-    actionText: 'View details',
-    icon: 'mdi-clipboard-text-clock-outline',
-    link: { name: 'DepartmentPendingNOCApplications' },
-  },
-  {
-    title: 'Total NOC Complete Documents',
+    title: 'Total NOC Completed Applications',
     value: departmentStore.dashboardData.totalNocCompleteApplication.toString(),
     actionText: 'View details',
     icon: 'mdi-shield-alert-outline',
-    link: { name: 'DepartmentCompletedNOCApplications' },
+    link: { name: 'DepartmentNOCApplicationsCompleted' },
   }
 ])
 
@@ -89,7 +89,7 @@ onMounted(() => {
 }
 
 .eyebrow {
-  min-height: 60px;
+  min-height: 80px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 1rem;

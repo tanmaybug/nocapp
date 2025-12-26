@@ -14,20 +14,29 @@ const adminRoutes: RouteRecordRaw = {
       name: 'DepartmentDashboard',
       component: () => import('./pages/DashboardPage.vue')
     },
+    {
+      path: 'noc-applications',
+      redirect: () => ({ name: 'DepartmentNOCApplications', params: { type: 'pending' }, replace: true }),
+    },
+    {
+      path: 'noc-applications/:type',
+      name: 'DepartmentNOCApplications',
+      component: () => import('./pages/NOCApplicationsPage.vue')
+    },
      {
-      path: 'pending-noc-applications',
-      name: 'DepartmentPendingNOCApplications',
-      component: () => import('./pages/PendingNOCApplicationsPage.vue')
+      path: 'noc-applications-pending',
+      name: 'DepartmentNOCApplicationsPending',
+      redirect: () => ({ name: 'DepartmentNOCApplications', params: { type: 'pending' }, replace: true }),
     },
     {
-      path: 'inprocess-noc-applications',
-      name: 'DepartmentInProcessNOCApplications',
-      component: () => import('./pages/InProcessNOCApplicationsPage.vue')
+      path: 'noc-applications-inprocess',
+      name: 'DepartmentNOCApplicationsInProcess',
+      redirect: () => ({ name: 'DepartmentNOCApplications', params: { type: 'in-process' }, replace: true }),
     },
     {
-      path: 'completed-noc-applications',
-      name: 'DepartmentCompletedNOCApplications',
-      component: () => import('./pages/CompletedNOCApplicationsPage.vue')
+      path: 'noc-applications-completed',
+      name: 'DepartmentNOCApplicationsCompleted',
+      redirect: () => ({ name: 'DepartmentNOCApplications', params: { type: 'completed' }, replace: true }),
     },
   ],
 }

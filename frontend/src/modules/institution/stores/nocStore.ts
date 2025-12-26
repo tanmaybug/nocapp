@@ -7,24 +7,31 @@ export type NOCFormType = 'form1' | 'form2' | 'form3'
 
 type Nullable<T> = T | null
 
-interface Form1Data {
+type Form1Data = {
   aimAndObjective: {
     vision: string
+    visionFiles: Array<string | number>
     mission: string
+    missionFiles: Array<string | number>
     coreValues: string
+    coreValuesFiles: Array<string | number>
     aims: string
+    aimsFiles: Array<string | number>
     objectiveConcernedInstitution: string
+    objectiveConcernedInstitutionFiles: Array<string | number>
   }
   collegeLandDetails: {
     mouza: string
     jlNo: string
     khatianType: Nullable<number>
     khatianNo: string
+    khatianFiles: Array<string | number>
     plotType: Nullable<number>
     plotNo: string
-    areaClasification: Nullable<number>
+    areaClassification: Nullable<number>
   }
   collegeLandAreaInAcres: string
+  collegeLandFiles: Array<string | number> 
   collegeCoveredArea: string
   credibilityAndReadiness: {
     experienceInEducation: string
@@ -34,10 +41,11 @@ interface Form1Data {
   additionalCommitmentsAndPlans: {
     studentReservation: Nullable<number>
     studentReservationDetails: string
+    studentReservationFiles: Array<string | number>
     employeeReservation: Nullable<number>
     employeeReservationDetails: string
     specialSkillDevelomentActivity: Nullable<number>
-    specialSkilDetails: string
+    specialSkillDetails : string
     academicAuditingPlans: Nullable<number>
     academicAuditDetails: string
   }
@@ -45,6 +53,7 @@ interface Form1Data {
     landOwnedStatus: Nullable<number>
   }
   comprehensivePlan: string
+  comprehensivePlanFiles: Array<string | number>
   campusDevlopmentPlan: {
     approvedPlanWith: {
       totalBuildUpArea: string
@@ -79,7 +88,7 @@ interface Form1Data {
   }
 }
 
-interface Form2Data {
+type Form2Data = {
   projectedFundFlow: {
     amount: string
     sourceOfFund: string
@@ -99,7 +108,7 @@ interface Form2Data {
   nationalizedBank: string
 }
 
-interface Form3Data {
+type Form3Data = {
   proposalForCampusDevelopmentProgram: Array<string | number>
   experienceAndExpertiseInDiscipline: Array<string | number>
   feeStructureProposal: Array<string | number>
@@ -117,13 +126,13 @@ interface Form3Data {
   otherInformation: Array<string | number>
 }
 
-interface NOCForm {
+type NOCForm = {
   form1: Form1Data
   form2: Form2Data
   form3: Form3Data
 }
 
-interface NOCStoreState {
+type NOCStoreState = {
   status: Status
   error: string | null
   form: NOCForm
@@ -142,21 +151,28 @@ function createDefaultNOCData(): NOCForm {
     form1: {
       aimAndObjective: {
         vision: '',
+        visionFiles: [],
         mission: '',
+        missionFiles: [],
         coreValues: '',
+        coreValuesFiles: [],
         aims: '',
-        objectiveConcernedInstitution: ''
+        aimsFiles: [],
+        objectiveConcernedInstitution: '',
+        objectiveConcernedInstitutionFiles: []
       },
       collegeLandDetails: {
         mouza: '',
         jlNo: '',
         khatianType: null,
         khatianNo: '',
+        khatianFiles: [],
         plotType: null,
         plotNo: '',
-        areaClasification: null
+        areaClassification: null
       },
       collegeLandAreaInAcres: '',
+      collegeLandFiles: [],
       collegeCoveredArea: '',
       credibilityAndReadiness: {
         experienceInEducation: '',
@@ -166,10 +182,11 @@ function createDefaultNOCData(): NOCForm {
       additionalCommitmentsAndPlans: {
         studentReservation: null,
         studentReservationDetails: '',
+        studentReservationFiles: [],
         employeeReservation: null,
         employeeReservationDetails: '',
         specialSkillDevelomentActivity: null,
-        specialSkilDetails: '',
+        specialSkillDetails : '',
         academicAuditingPlans: null,
         academicAuditDetails: ''
       },
@@ -177,6 +194,7 @@ function createDefaultNOCData(): NOCForm {
         landOwnedStatus: null,
       },
       comprehensivePlan: '',
+      comprehensivePlanFiles: [],
       campusDevlopmentPlan: {
         approvedPlanWith: {
           totalBuildUpArea: '',

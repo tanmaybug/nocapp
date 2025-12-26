@@ -7,6 +7,8 @@ import useDialogStore from '@/stores/dialogStore'
 function createDefaultRegistrationData() {
   return {
     entityTypeID: null,
+    minorityFlag: 0,
+    minorityDetails: '',
     applicantName: '',
     applicantDesignation: '',
     applicantLocation: {
