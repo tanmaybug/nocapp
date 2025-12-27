@@ -15,7 +15,6 @@ app = FastAPI(
     openapi_url="/openapi.json" if settings.ENV == "development" else None,
 )
 
-
 # app.add_middleware(
 #     CORSMiddleware,
 #     allow_origins=[
@@ -29,14 +28,14 @@ app = FastAPI(
 # Define allowed origins
 
 BASE_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vue
+    settings.FRONTEND_URL,  # Vue
 ]
 
 if settings.ENV == "development":
     BASE_ALLOWED_ORIGINS.extend(
         [
-            "http://127.0.0.1:8000",
-            "http://localhost:8000",
+            settings.DEV_URL_1,
+            settings.DEV_URL_2,
         ]
     )
 

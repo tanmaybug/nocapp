@@ -101,7 +101,7 @@ def submit_regisration_data(
     client_ip: str = Depends(get_client_ip),
 ):
     # print(request)
-    noc_application_id = generate_applicantion_id()
+    noc_application_id = generate_applicantion_id(db)
     password = hash_password(request.password)
     # print(noc_application_id)
 
@@ -137,9 +137,14 @@ def submit_regisration_data(
     return result
 
 
-def generate_applicantion_id():
+def generate_applicantion_id(db: Session):
     now = datetime.now()
     timestamp_part = now.strftime("%Y%m%d%H%M%S")
     noc_application_id = f"NOC{timestamp_part}"
+    # print(f"NOC ID: {noc_application_id}")
 
-    return noc_application_id
+    status = applicantRegistrationService(db).check_reg_id(noc_application_id)
+    if status:
+        return generate_applicantion_id(db)
+    else:
+        return noc_application_id
