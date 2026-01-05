@@ -16,12 +16,12 @@ export const uploadFile = async (file: File) => {
       'Content-Type': 'multipart/form-data',
     },
   })
-  return resp.data
+  return resp.data?.data ?? resp.data
 }
 
-export const saveFile = async (payload: { fileId: string; documentType: string }) => {
+export const saveFile = async (payload: { fileId: number; documentType: string; documentTypeId: number }) => {
   const resp = await api.post(`${RESOURCE_BASE}/saveFile`, payload)
-  return resp.data
+  return resp.data?.data ?? resp.data
 }
 
 export const getDashboardData = async () => {

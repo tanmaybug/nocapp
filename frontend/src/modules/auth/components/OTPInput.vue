@@ -1,8 +1,8 @@
 <template>
-  <div class="otp-input">
-    <div class="otp-input__row">
+  <div class="w-100">
+    <div class="d-flex flex-column flex-sm-row ga-4">
       <v-text-field v-model="userInputValue" :readonly="isVerified" :type="userInputType" :label="userInputLabel" density="comfortable" :rules="userInputRules" :error-messages="userInputError ? [userInputError] : []" @keyup.enter.prevent="handleSend" @update:model-value="userInputError = ''" />
-      <v-btn class="mb-5" :color="isVerified ? '#008080' : undefined" :prepend-icon="isVerified ? 'mdi-check-circle' : undefined" variant="outlined" :loading="sending && !showOTPDialog" :disabled="sending || !isContactValid || isVerified" @click="handleSend">
+      <v-btn class="mb-5 mb-sm-0 align-self-center" :color="isVerified ? '#008080' : undefined" :prepend-icon="isVerified ? 'mdi-check-circle' : undefined" variant="outlined" :loading="sending && !showOTPDialog" :disabled="sending || !isContactValid || isVerified" @click="handleSend">
         {{ isVerified ? 'Verified' : sendButtonText }}
       </v-btn>
     </div>
@@ -35,6 +35,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import type { PropType } from 'vue'
 
 type ValidationRule = (value: string) => true | string
 type SendOtpHandler = (payload: { userInput: string }) => Promise<any>
@@ -47,31 +48,34 @@ const otpError = ref(false)
 const userInputValue = defineModel('userInputValue', { type: String, default: '' })
 const otpValue = defineModel('otpValue', { type: String, default: '' })
 const isVerified = defineModel('isVerified', { type: Boolean, default: false })
-const props = withDefaults(defineProps<{
-  userInputLabel?: string
-  userInputType?: string
-  sendButtonText?: string
-  otpLabel?: string
-  otpLength?: number
-  verifyButtonText?: string
-  dialogTitle?: string
-  sendOtp: SendOtpHandler
-  verifyOtp: VerifyOtpHandler
-  userInputRules?: ValidationRule[]
-}>(), {
-  userInputLabel: 'Mobile Number',
-  userInputType: 'text',
-  sendButtonText: 'Send OTP',
-  otpLabel: 'Enter OTP',
-  otpLength: 6,
-  verifyButtonText: 'Verify OTP',
-  dialogTitle: `Please enter the OTP`,
-  userInputRules: () => [
-    (value: string) => !!value || 'This field is required.',
-  ],
+const {
+  userInputLabel,
+  userInputType,
+  sendButtonText,
+  otpLabel,
+  otpLength,
+  verifyButtonText,
+  dialogTitle,
+  sendOtp,
+  verifyOtp,
+  userInputRules,
+} = defineProps({
+  userInputLabel: { type: String, default: 'Mobile Number' },
+  userInputType: { type: String, default: 'text' },
+  sendButtonText: { type: String, default: 'Send OTP' },
+  otpLabel: { type: String, default: 'Enter OTP' },
+  otpLength: { type: Number, default: 6 },
+  verifyButtonText: { type: String, default: 'Verify OTP' },
+  dialogTitle: { type: String, default: 'Please enter the OTP' },
+  sendOtp: { type: Function as PropType<SendOtpHandler>, required: true },
+  verifyOtp: { type: Function as PropType<VerifyOtpHandler>, required: true },
+  userInputRules: {
+    type: Array as PropType<ValidationRule[]>,
+    default: () => [(value: string) => !!value || 'This field is required.'],
+  },
 })
 
-const isOtpValid = computed(() => otpValue.value.trim().length === props.otpLength)
+const isOtpValid = computed(() => otpValue.value.trim().length === otpLength)
 const isContactValid = computed(() => runContactValidation(userInputValue.value.trim()) === true)
 
 async function handleSend() {
@@ -83,7 +87,7 @@ async function handleSend() {
 
   try {
     sending.value = true
-    await props.sendOtp({ userInput: userInputValue.value.trim() })
+    await sendOtp({ userInput: userInputValue.value.trim() })
     otpValue.value = ''
     showOTPDialog.value = true
   } catch (error) {
@@ -97,7 +101,7 @@ async function handleSubmitOtp() {
   if (!isOtpValid.value) return
 
   try {
-    await props.verifyOtp({ userInput: userInputValue.value.trim(), otp: otpValue.value.trim() })
+    await verifyOtp({ userInput: userInputValue.value.trim(), otp: otpValue.value.trim() })
     showOTPDialog.value = false
     otpError.value = false
     isVerified.value = true
@@ -113,7 +117,7 @@ function handleCancel() {
 }
 
 function runContactValidation(value: string): true | string {
-  const rules = props.userInputRules || []
+  const rules = userInputRules || []
   for (const rule of rules) {
     const result = rule(value)
     if (result !== true) {
@@ -123,27 +127,3 @@ function runContactValidation(value: string): true | string {
   return true
 }
 </script>
-
-<style scoped>
-.otp-input {
-  width: 100%;
-}
-
-.otp-input__row {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-@media (min-width: 600px) {
-  .otp-input__row {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  .otp-input__row .v-btn {
-    align-self: center;
-    min-width: 140px;
-  }
-}
-</style>

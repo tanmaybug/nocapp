@@ -4,24 +4,13 @@
     <v-col cols="12">
       <div class="text-subtitle-1"><strong>Projected Fund Flow</strong></div>
     </v-col>
-    
+
     <v-col cols="6">
-      <v-text-field
-        v-model="modelValue.projectedFundFlow.amount"
-        label="Amount"
-        type="number"
-        step="0.01"
-        prefix="₹"
-        @input="updateValue"
-      />
+      <v-text-field v-model="modelValue.projectedFundFlow.amount" label="Amount" type="number" step="0.01" prefix="₹" @input="updateValue" />
     </v-col>
-    
+
     <v-col cols="6">
-      <v-text-field
-        v-model="modelValue.projectedFundFlow.sourceOfFund"
-        label="Source of Fund"
-        @input="updateValue"
-      />
+      <v-text-field v-model="modelValue.projectedFundFlow.sourceOfFund" label="Source of Fund" @input="updateValue" />
     </v-col>
 
     <!-- 2. Synopsis -->
@@ -31,39 +20,21 @@
     <v-col cols="12">
       <div class="text-subtitle-1"><strong>Synopsis</strong></div>
     </v-col>
-    
+
     <v-col cols="6">
-      <v-text-field
-        v-model="modelValue.synopsis.proposedInvestment"
-        label="Proposed Investment"
-        @input="updateValue"
-      />
+      <v-text-field v-model="modelValue.synopsis.proposedInvestment" label="Proposed Investment" @input="updateValue" />
     </v-col>
-    
+
     <v-col cols="6">
-      <v-text-field
-        v-model="modelValue.synopsis.proposedEmployment"
-        label="Proposed Employment"
-        @input="updateValue"
-      />
+      <v-text-field v-model="modelValue.synopsis.proposedEmployment" label="Proposed Employment" @input="updateValue" />
     </v-col>
-    
+
     <v-col cols="6">
-      <v-text-field
-        v-model="modelValue.synopsis.professionalCollegesCountWithin25Km"
-        label="Number of Professional Colleges within 25 kms"
-        type="number"
-        @input="updateValue"
-      />
+      <v-text-field v-model="modelValue.synopsis.professionalCollegesCountWithin25Km" label="Number of Professional Colleges within 25 kms" type="number" @input="updateValue" />
     </v-col>
-    
+
     <v-col cols="6">
-      <v-text-field
-        v-model="modelValue.synopsis.feederSchoolCountWithin15Km"
-        label="Number of Feeder school in the region within 15 kms"
-        type="number"
-        @input="updateValue"
-      />
+      <v-text-field v-model="modelValue.synopsis.feederSchoolCountWithin15Km" label="Number of Feeder school in the region within 15 kms" type="number" @input="updateValue" />
     </v-col>
 
     <!-- 3. Building Completion Status -->
@@ -72,37 +43,18 @@
     </v-col>
     <v-col cols="6">
       <div class="text-body-2 mb-2">Whether the building is completed</div>
-      <v-radio-group
-        v-model="modelValue.buildingCompletionStatus"
-        row
-        @update:model-value="updateValue"
-      >
-        <v-radio
-          v-for="option in yesNoOptions"
-          :key="option.value"
-          :label="option.label"
-          :value="option.value"
-        />
+      <v-radio-group v-model="modelValue.buildingCompletionStatus" row @update:model-value="updateValue">
+        <v-radio v-for="option in yesNoOptions" :key="option.value" :label="option.label" :value="option.value" />
       </v-radio-group>
     </v-col>
 
     <!-- 4. Building Completion Date (conditional) -->
     <v-col cols="6" v-if="modelValue.buildingCompletionStatus === '1'">
-      <v-text-field
-        v-model="modelValue.buildingCompletionDate"
-        label="Date of Completion of the Building"
-        type="date"
-        @input="updateValue"
-      />
+      <v-text-field v-model="modelValue.buildingCompletionDate" label="Date of Completion of the Building" type="date" @input="updateValue" />
     </v-col>
-    
+
     <v-col cols="6" v-else-if="modelValue.buildingCompletionStatus === '0'">
-      <v-text-field
-        v-model="modelValue.buildingCompletionExpectedDate"
-        label="Expected Date of Completion of the Building"
-        type="date"
-        @input="updateValue"
-      />
+      <v-text-field v-model="modelValue.buildingCompletionExpectedDate" label="Expected Date of Completion of the Building" type="date" @input="updateValue" />
     </v-col>
 
     <!-- 5. Building Plan Amount to be Deposited -->
@@ -111,16 +63,8 @@
     </v-col>
     <v-col cols="12">
       <div class="text-body-2 mb-2">Application Fees to be deposited to HED</div>
-      <v-radio-group
-        v-model="modelValue.buildingPlanAmountToBeDeposited"
-        @update:model-value="updateValue"
-      >
-        <v-radio
-          v-for="option in buildingPlanAmountOptions"
-          :key="option.value"
-          :label="option.label"
-          :value="option.value"
-        />
+      <v-radio-group v-model="modelValue.buildingPlanAmountToBeDeposited" @update:model-value="updateValue">
+        <v-radio v-for="option in buildingPlanAmountOptions" :key="option.value" :label="option.label" :value="option.value" />
       </v-radio-group>
     </v-col>
 
@@ -129,61 +73,48 @@
       <v-divider class="my-4"></v-divider>
     </v-col>
     <v-col cols="12">
-      <v-textarea
-        v-model="modelValue.estimatedIncomeAndExpenditureForFirst5Years"
-        label="Estimated Income and Expenditure for the first 5 years"
-        rows="4"
-        @input="updateValue"
-      />
+      <v-textarea v-model="modelValue.estimatedIncomeAndExpenditureForFirst5Years" label="Estimated Income and Expenditure for the first 5 years" rows="4" @input="updateValue" />
     </v-col>
 
     <!-- 7. Initial Fund Information -->
     <v-col cols="6">
-      <v-textarea
-        v-model="modelValue.initialFundInformation"
-        label="Information about the initial fund"
-        rows="1"
-        @input="updateValue"
-      />
+      <v-textarea v-model="modelValue.initialFundInformation" label="Information about the initial fund" rows="1" @input="updateValue" />
     </v-col>
 
     <!-- 8. Nationalized Bank -->
     <v-col cols="6">
-      <v-select
-        v-model="modelValue.nationalizedBank"
-        label="Nationalized Bank"
-        :items="nationalizedBankOptions"
-        item-title="label"
-        item-value="value"
-        @update:model-value="updateValue"
-      />
+      <v-select v-model="modelValue.nationalizedBank" label="Nationalized Bank" :items="nationalizedBankOptions" item-title="label" item-value="value" @update:model-value="updateValue" />
     </v-col>
   </v-row>
 </template>
 
 <script setup lang="ts">
+import type { PropType } from 'vue'
+
 // Props
-const props = defineProps<{
-  modelValue: {
-    projectedFundFlow: {
-      amount: string
-      sourceOfFund: string
-    }
-    synopsis: {
-      proposedInvestment: string
-      proposedEmployment: string
-      professionalCollegesCountWithin25Km: number
-      feederSchoolCountWithin15Km: number
-    }
-    buildingCompletionStatus: string
-    buildingCompletionDate: string
-    buildingCompletionExpectedDate: string
-    buildingPlanAmountToBeDeposited: string
-    estimatedIncomeAndExpenditureForFirst5Years: string
-    initialFundInformation: string
-    nationalizedBank: string
+type ModelValue = {
+  projectedFundFlow: {
+    amount: string
+    sourceOfFund: string
   }
-}>()
+  synopsis: {
+    proposedInvestment: string
+    proposedEmployment: string
+    professionalCollegesCountWithin25Km: number
+    feederSchoolCountWithin15Km: number
+  }
+  buildingCompletionStatus: string
+  buildingCompletionDate: string
+  buildingCompletionExpectedDate: string
+  buildingPlanAmountToBeDeposited: string
+  estimatedIncomeAndExpenditureForFirst5Years: string
+  initialFundInformation: string
+  nationalizedBank: string
+}
+
+const { modelValue } = defineProps({
+  modelValue: { type: Object as PropType<ModelValue>, required: true },
+})
 
 // Emits
 const emit = defineEmits<{
@@ -219,6 +150,6 @@ const nationalizedBankOptions = [
 ]
 
 function updateValue() {
-  emit('update:modelValue', props.modelValue)
+  emit('update:modelValue', modelValue)
 }
 </script>
