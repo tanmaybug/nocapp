@@ -1,11 +1,11 @@
 <template>
   <v-card elevation="2">
-    <div class="table-heading">
+    <div class="d-flex flex-wrap align-center justify-space-between pa-6 ga-4">
       <div>
-        <p class="fw-600 mb-0">Track Inspection</p>
+        <p class="font-weight-medium mb-0">Track Inspection</p>
       </div>
       <div>
-        <v-text-field v-model="search" density="compact" variant="outlined" label="Search" hide-details clearable class="search-field" />
+        <v-text-field v-model="search" density="compact" variant="outlined" label="Search" hide-details clearable style="min-width: 260px" />
       </div>
     </div>
     <v-divider />
@@ -65,21 +65,3 @@ const inspectionFeedbacks = ref<TrackRow[]>([
   }
 ])
 </script>
-
-<style scoped>
-.fw-600 {
-  font-weight: 600;
-}
-
-.table-heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem;
-}
-
-.search-field {
-  min-width: 260px;
-}
-</style>
