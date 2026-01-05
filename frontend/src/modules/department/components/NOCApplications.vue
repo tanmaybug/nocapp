@@ -1,12 +1,12 @@
 <template>
   <v-card elevation="2">
-    <div class="table-heading">
+    <div class="d-flex flex-wrap align-center justify-space-between pa-6 ga-4">
       <div>
-        <p class="fw-600 mb-0">NOC Applications</p>
+        <p class="font-weight-medium mb-0">NOC Applications</p>
       </div>
-      <div class="table-actions">
-        <v-select v-model="selectedType" density="compact" variant="outlined" label="Type" hide-details class="type-select" :items="typeOptions" />
-        <v-text-field v-model="search" density="compact" variant="outlined" label="Search" hide-details clearable class="search-field" />
+      <div class="d-flex flex-wrap align-center justify-end ga-3">
+        <v-select v-model="selectedType" density="compact" variant="outlined" label="Type" hide-details style="min-width: 220px" :items="typeOptions" />
+        <v-text-field v-model="search" density="compact" variant="outlined" label="Search" hide-details clearable style="min-width: 260px" />
       </div>
     </div>
     <v-divider />
@@ -73,34 +73,3 @@ watch(
   { immediate: true }
 )
 </script>
-
-<style scoped>
-.fw-600 {
-  font-weight: 600;
-}
-
-.table-heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem;
-  gap: 1rem;
-}
-
-.table-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.type-select {
-  min-width: 220px;
-}
-
-.search-field {
-  min-width: 260px;
-}
-</style>
