@@ -10,6 +10,12 @@ class Settings(BaseSettings):
     POSTGRES_DATABASE: str
 
     ENV:str
+    FRONTEND_URL:str
+    DEV_URL_1: str
+    DEV_URL_2: str
+
+    REDIS_HOST:str
+    REDIS_PORT:int
 
     PROJECT_TITLE: str = "NOC"
     MAX_FILE_SIZE: int = 2097152  # 2MB

@@ -40,15 +40,6 @@ class applicationService:
         result = self.db.execute(stmt).mappings().all()
         return result
     
-    def get_pending_application_data_old(self):
-        stmt = (
-            select(NocApplicationDetails)
-            .where(NocApplicationDetails.active_status == 1)
-        )
-
-        result = self.db.execute(stmt).mappings().all()
-        return result
-    
     def get_inprocess_application_data(self):
         j = join(
             NocApplicationDetails,

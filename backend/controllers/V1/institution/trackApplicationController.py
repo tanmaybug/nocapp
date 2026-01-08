@@ -1,10 +1,10 @@
 from fastapi import APIRouter, status, Depends, HTTPException
+from mappers.institution.applicationTrackMapper import application_track_response_dto
 from helpers import response
 from core.Dependencies.auth import get_current_user
 from services.institution.applicationDetailsRepo import applicationDetailsService
 from config.DB.DBConfig import get_db
-
-# from fastapi.encoders import jsonable_encoder
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from services.institution.applicationTrackRepo import applicationTrackService
@@ -28,8 +28,11 @@ def get_application_track_data(
             status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
         )
 
-    track_data = applicationTrackService(db).get_data(nocRegId)
+    track_data = jsonable_encoder(
+        applicationTrackService(db).get_track_data_by_applicant_id(nocRegId)
+    )
     print(track_data)
+    # data = application_track_response_dto(track_data)
     data = {
         "trackData": [
             {

@@ -77,3 +77,6 @@ class NocApplicationDetails(Base):
 
     docket_number = Column(String(50))
     inspection_date = Column(Date)
+
+    form_status = Column(SmallInteger)
+    application_status = Column(SmallInteger)

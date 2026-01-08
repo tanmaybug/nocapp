@@ -1,5 +1,5 @@
 from config.DB.DBConfig import Base
-from sqlalchemy import Column, Integer, String, TIMESTAMP, text, SMALLINT,Text,float
+from sqlalchemy import Column, Integer, String,SMALLINT
 
 
 class applicantTypeMaster(Base):
