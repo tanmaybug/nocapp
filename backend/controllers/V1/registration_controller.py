@@ -27,6 +27,7 @@ from services.postOfficeMasterRepo import postOfficeMasterService
 
 from services.religionMasterRepo import religionMasterService
 from services.languageMasterRepo import languageMasterService
+from services.applicantDesignationMasterRepo import designationMasterService
 
 router = APIRouter(prefix="/registration", tags=["Registration"])
 
@@ -47,6 +48,7 @@ def get_registration_master_data(db: Session = Depends(get_db)):
 
     religions = jsonable_encoder(religionMasterService(db).get_data())
     languages = jsonable_encoder(languageMasterService(db).get_data())
+    designations = jsonable_encoder(designationMasterService(db).get_data())
 
     data = {
         "entityTypes": noc_applicant_type,
@@ -59,7 +61,8 @@ def get_registration_master_data(db: Session = Depends(get_db)):
         "affiliatedUniversities": aff_university,
         "instituteType": institute_type,
         "religions": religions,
-        "languages": languages
+        "languages": languages,
+        "designations": designations
     }
 
     result = {
