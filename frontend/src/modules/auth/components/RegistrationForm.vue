@@ -17,14 +17,17 @@
             <OTPInput user-input-label="Applicant Email ID *" user-input-type="email" :user-input-rules="[requiredRule, emailRule]" :send-otp="sendOtp" :verify-otp="verifyOtp" v-model:is-verified="applicantEmailIdOtpVerified" v-model:user-input-value="form.applicantEmailId" v-model:otp-value="form.applicantEmailIdOTP" />
           </v-col>
           <v-col cols="6">
-            <v-text-field v-model="form.applicantTanNo" label="Applicant TAN No" :rules="[alphanumericRule(10)]" maxlength="10" />
+            <v-text-field v-model="form.applicantTanNo" label="Applicant TAN No (if applicable)" :rules="[alphanumericRule(10)]" maxlength="10" />
           </v-col>
           <v-col cols="6">
             <v-text-field v-model="form.applicantDesignation" label="Designation of Applicant/Office Bearer *" :rules="[requiredRule]" />
           </v-col>
 
-          <v-col cols="12" v-if="showMinorityDetails">
-            <v-textarea v-model="form.minorityDetails" label="Minority Details *" :rules="minorityDetailsRules" />
+          <v-col cols="6">
+            <v-autocomplete v-model.number="form.isMinority" :items="minorityOptions" item-title="details" item-value="id" label="Whether the Institution Minority? *" :rules="[requiredRule]" />
+          </v-col>
+          <v-col cols="6" v-if="showMinorityDetails">
+            <v-autocomplete v-model.number="form.minorityTypeId" :items="minorityTypeOptions" item-title="details" item-value="id" label="Minority Type *" :rules="minorityTypeRules" />
           </v-col>
 
           <v-col cols="12">
@@ -67,7 +70,7 @@
             <v-autocomplete v-model.number="form.affiliatedUniversityId" :items="affiliatedUniversities" item-title="details" item-value="id" label="Proposed Affiliating University *" :rules="[requiredRule]" />
           </v-col>
           <v-col cols="6">
-            <v-autocomplete v-model.number="form.institutionForId" :items="instituteType" item-title="details" item-value="id" label="The institution is for *" :rules="[requiredRule]" />
+            <v-autocomplete v-model.number="form.institutionForId" :items="instituteType" item-title="details" item-value="id" label="Student Gender Composition *" :rules="[requiredRule]" />
           </v-col>
 
           <v-col cols="12">
@@ -88,13 +91,10 @@
             <v-autocomplete v-model.number="form.collegeLocation.subDivisionId" :items="collegeSubDivisions" item-title="details" item-value="id" label="Subdivision *" :rules="[requiredRule]" />
           </v-col>
           <v-col cols="6">
-            <v-autocomplete v-model.number="form.collegeLocation.assemblyConstituencyId" :items="collegeAssemblyConstituencies" item-title="details" item-value="id" label="Assembly Constituency *" :rules="[requiredRule]" />
-          </v-col>
-          <v-col cols="6">
             <v-autocomplete v-model.number="form.collegeLocation.municipalityBlockId" :items="collegeMunicipalityBlocks" item-title="details" item-value="id" label="Municipality/Block *" :rules="[requiredRule]" />
           </v-col>
           <v-col cols="6">
-            <v-autocomplete v-model.number="form.collegeLocation.gramPanchayatId" :items="gramPanchayats" item-title="details" item-value="id" label="Gram Panchayat *" :rules="[requiredRule]" />
+            <v-autocomplete v-model.number="form.collegeLocation.gramPanchayatId" :items="gramPanchayats" item-title="details" item-value="id" label="Gram Panchayat/WARD *" :rules="[requiredRule]" />
           </v-col>
           <v-col cols="6">
             <v-autocomplete v-model.number="form.collegeLocation.policeStationId" :items="policeStations" item-title="details" item-value="id" label="Police Station *" :rules="[requiredRule]" />
@@ -149,7 +149,6 @@ const {
   policeStations,
   applicantPostOffices,
   collegePostOffices,
-  assemblyConstituencies,
   municipalityBlocks,
   gramPanchayats,
   instituteType,
@@ -157,16 +156,21 @@ const {
 } = storeToRefs(store)
 const formRef = ref<any>(null)
 
-const showMinorityDetails = computed(() => form.value.entityTypeID === 4)
-const minorityDetailsRules = computed(() => (showMinorityDetails.value ? [requiredRule] : []))
+const minorityOptions = [
+  { id: 1, details: 'Yes' },
+  { id: 0, details: 'No' }
+]
+const minorityTypeOptions = [
+  { id: 1, details: 'LINGUISTIC' },
+  { id: 2, details: 'RELIGIOUS' }
+]
+const showMinorityDetails = computed(() => form.value.isMinority === 1)
+const minorityTypeRules = computed(() => (showMinorityDetails.value ? [requiredRule] : []))
 
-// Entity Type
-watchEffect(() => {
-  if (form.value.entityTypeID === 4) {
-    form.value.minorityFlag = 1
-  } else {
-    form.value.minorityFlag = 0
-    form.value.minorityDetails = ''
+// Minority Flag
+watch(() => form.value.isMinority, (n) => {
+  if (n !== 1) {
+    form.value.minorityTypeId = null
   }
 })
 
@@ -174,13 +178,11 @@ watchEffect(() => {
 watch(() => form.value.applicantLocation.districtId, (n, o) => {
   if (n !== o) {
     form.value.applicantLocation.subDivisionId = null
-    form.value.applicantLocation.assemblyConstituencyId = null
   }
 })
 watch(() => form.value.collegeLocation.districtId, (n, o) => {
   if (n !== o) {
     form.value.collegeLocation.subDivisionId = null
-    form.value.collegeLocation.assemblyConstituencyId = null
   }
 })
 
@@ -204,13 +206,6 @@ watch(() => form.value.collegeLocation.subDivisionId, (n, o) => {
   if (n !== o) {
     form.value.collegeLocation.municipalityBlockId = null
   }
-})
-
-// Assembly Constituency
-const collegeAssemblyConstituencies = computed<any[]>(() => {
-  const selectedDistrictId = form.value.collegeLocation.districtId
-  if (!selectedDistrictId) return []
-  return (assemblyConstituencies.value || []).filter((s: any) => s.districtId === selectedDistrictId)
 })
 
 // Municipality/Block

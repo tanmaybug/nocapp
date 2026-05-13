@@ -1,5 +1,5 @@
 <template>
-  <div class="page fill-height d-flex align-center justify-center login-view">
+  <div class="page fill-height d-flex align-center justify-center login-view position-relative overflow-hidden">
     <login-form width="500" />
   </div>
 </template>
@@ -9,11 +9,6 @@ import LoginForm from '../components/LoginForm.vue'
 </script>
 
 <style scoped>
-.login-view {
-  position: relative;
-  overflow: hidden;
-}
-
 .login-view::before {
   content: '';
   position: absolute;

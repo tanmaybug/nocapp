@@ -21,7 +21,10 @@
           </v-col>
 
           <v-col cols="12" class="text-center">
-            <v-btn variant="text" class="text-none" :to="{ name: 'Registration' }">NOC Registration</v-btn>
+            New User?
+            <v-btn variant="text" class="text-none" :to="{ name: 'Registration' }">
+              Register here
+            </v-btn>
           </v-col>
         </v-row>
       </v-form>
