@@ -1,12 +1,12 @@
 <template>
   <div class="admin-dashboard">
     <div class="cards-grid">
-      <v-card v-for="card in cards" :key="card.title" variant="tonal" class="pa-4 card-panel">
+      <v-card v-for="card in cards" :key="card.title" variant="tonal" class="pa-4 d-flex flex-column">
         <div class="d-flex align-center justify-space-between mb-6">
-          <v-icon :icon="card.icon" size="36" class="card-icon" />
+          <v-icon :icon="card.icon" size="36" color="primary" />
         </div>
-        <p class="eyebrow">{{ card.title }}</p>
-        <h2 class="card-value">{{ card.value }}</h2>
+        <p class="text-overline text-medium-emphasis font-weight-medium mb-1" style="min-height: 80px">{{ card.title }}</p>
+        <h2 class="text-h4 text-grey-darken-4 ma-0">{{ card.value }}</h2>
         <v-btn variant="text" class="text-none px-0 mt-auto align-self-start" :text="card.actionText" :append-icon="'mdi-arrow-right'" :to="card.link" />
       </v-card>
     </div>
@@ -66,7 +66,7 @@ onMounted(() => {
 <style scoped>
 .admin-dashboard {
   min-height: 100vh;
-  background: linear-gradient(180deg, #f9fafc 0%, #ffffff 60%);
+  background: linear-gradient(180deg, rgb(var(--v-theme-background)) 0%, rgb(var(--v-theme-surface)) 60%);
   padding: clamp(1.5rem, 4vw, 3rem);
 }
 
@@ -80,31 +80,5 @@ onMounted(() => {
   .cards-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-}
-
-.card-panel {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.eyebrow {
-  min-height: 80px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 1rem;
-  color: #64748b;
-  margin-bottom: 0.35rem;
-  font-weight: 600;
-}
-
-.card-icon {
-  color: #3858d6;
-}
-
-.card-value {
-  font-size: 2.5rem;
-  margin: 0;
-  color: #0f172a;
 }
 </style>

@@ -13,7 +13,11 @@ export type NumericOptions = {
   messages?: NumericRuleMessages
 }
 
-export const requiredRule = (v: any) => (!!v && (Array.isArray(v) ? v.length > 0 : true)) || 'This field is required'
+export const requiredRule = (v: any) => {
+  if (v === null || v === undefined || v === '') return 'This field is required'
+  if (Array.isArray(v) && v.length === 0) return 'This field is required'
+  return true
+}
 
 export const emailRule = (v: any) => /\S+@\S+\.\S+/.test(String(v || '')) || 'Invalid email'
 
@@ -27,7 +31,9 @@ export function requiredIfRule(condition: boolean | (() => boolean), message = '
   return (v: any) => {
     const active = typeof condition === 'function' ? (condition as () => boolean)() : condition
     if (!active) return true
-    return (!!v && (Array.isArray(v) ? v.length > 0 : true)) || message
+    if (v === null || v === undefined || v === '') return message
+    if (Array.isArray(v) && v.length === 0) return message
+    return true
   }
 }
 
