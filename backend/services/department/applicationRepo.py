@@ -34,7 +34,10 @@ class applicationService:
                 NOCRegistration.applicant_email_id,
             )
             .select_from(j)
-            .where(NocApplicationDetails.active_status == 1)
+            .where(
+                NocApplicationDetails.active_status == 1,
+                NocApplicationDetails.application_status == 2,
+            )
         )
 
         result = self.db.execute(stmt).mappings().all()
@@ -57,7 +60,10 @@ class applicationService:
                 NOCRegistration.applicant_email_id,
             )
             .select_from(j)
-            .where(NocApplicationDetails.active_status == 1)
+            .where(
+                NocApplicationDetails.active_status == 1,
+                NocApplicationDetails.application_status == 3,
+            )
         )
 
         result = self.db.execute(stmt).mappings().all()
@@ -80,7 +86,10 @@ class applicationService:
                 NOCRegistration.applicant_email_id,
             )
             .select_from(j)
-            .where(NocApplicationDetails.active_status == 1)
+            .where(
+                NocApplicationDetails.active_status == 1,
+                NocApplicationDetails.application_status == 7,
+            )
         )
 
         result = self.db.execute(stmt).mappings().all()
