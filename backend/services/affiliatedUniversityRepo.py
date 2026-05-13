@@ -14,7 +14,10 @@ class affiliatedUniversityMasterService:
                 AffiliatedUniversityMaster.university_name.label("details"),
                 AffiliatedUniversityMaster.dist_id_fk.label("districtId"),
             )
-            .where(AffiliatedUniversityMaster.active_status == 1)
+            .where(
+                AffiliatedUniversityMaster.active_status == 1,
+                AffiliatedUniversityMaster.admin_type_id_fk == 5,
+            )
             .order_by(AffiliatedUniversityMaster.university_name.asc())
         )
 
