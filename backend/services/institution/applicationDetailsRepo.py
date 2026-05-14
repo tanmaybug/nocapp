@@ -10,7 +10,6 @@ class applicationDetailsService:
         self.db = db
 
     def get_application_data_by_id(self, regId: str):
-
         j = join(
             NocApplicationDetails,
             applicationStatusMaster,

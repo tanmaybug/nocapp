@@ -54,3 +54,7 @@ class NOCRegistration(Base):
     applicant_mobile = Column(BigInteger, nullable=True)
     applicant_email_id = Column(String, nullable=True)
     applicant_tan_no = Column(String, nullable=True)
+
+    minority_language_id_fk = Column(Integer, nullable=True)
+    minority_religion_id_fk = Column(Integer, nullable=True)
+    applicant_designation_id_fk = Column(Integer, nullable=True)
