@@ -10,7 +10,7 @@ import DialogBox from '@/components/common/DialogBox.vue'
 </template>
 
 <style scoped>
-body {
+:global(body) {
   margin: 0
 }
 </style>

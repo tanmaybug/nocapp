@@ -7,8 +7,8 @@ import useDialogStore from '@/stores/dialogStore'
 function createDefaultRegistrationData() {
   return {
     entityTypeID: null,
-    minorityFlag: 0,
-    minorityDetails: '',
+    isMinority: 0,
+    minorityTypeId: null,
     applicantName: '',
     applicantDesignation: '',
     applicantLocation: {
@@ -17,7 +17,6 @@ function createDefaultRegistrationData() {
       subDivisionId: null,
       policeStationId: null,
       postOfficeId: null,
-      assemblyConstituencyId: null,
       municipalityBlockId: null,
       city: '',
       pin: '',
@@ -32,7 +31,6 @@ function createDefaultRegistrationData() {
       policeStationId: null,
       postOfficeId: null,
       gramPanchayatId: null,
-      assemblyConstituencyId: null,
       municipalityBlockId: null,
       pin: '',
     },
@@ -54,7 +52,6 @@ export const useRegistrationStore = defineStore('registration', {
     applicantPostOffices: any[],
     collegePostOffices: any[],
     municipalityBlocks: any[],
-    assemblyConstituencies: any[],
     gramPanchayats: any[],
     instituteType: any[],
     affiliatedUniversities: any[],
@@ -70,7 +67,6 @@ export const useRegistrationStore = defineStore('registration', {
     applicantPostOffices: [],
     collegePostOffices: [],
     municipalityBlocks: [],
-    assemblyConstituencies: [],
     gramPanchayats: [],
     instituteType: [],
     affiliatedUniversities: [],
@@ -89,7 +85,6 @@ export const useRegistrationStore = defineStore('registration', {
             'subDivisions',
             'policeStations',
             'municipalityBlocks',
-            'assemblyConstituencies',
             'instituteType',
             'affiliatedUniversities'
           ])
