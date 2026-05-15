@@ -31,7 +31,7 @@ async def auth_middleware(request: Request, call_next):
         "/v1/department/noc-applications/completed",
     ]
 
-    # url_token_allow_path = ["/v1/institution/NOCApplication/download","/v1/department/ViewApplication/download",]
+    url_token_allow_path = ["/v1/institution/NOCApplication/download","/v1/department/ViewApplication/download",]
 
     # Only protect exact matches
     if any(request.url.path.startswith(prefix) for prefix in protected_paths):
@@ -47,11 +47,19 @@ async def auth_middleware(request: Request, call_next):
                     content={"detail": "Unauthorized"},
                 )
         else:
-            token = request.query_params.get("token")
-            if token and validate_token(token):
-                user_data = decode_token(token)
-                # print(user_data)
-                request.state.user = user_data
+            if any(
+                request.url.path.startswith(prefix) for prefix in url_token_allow_path
+            ):
+                token = request.query_params.get("token")
+                if token and validate_token(token):
+                    user_data = decode_token(token)
+                    # print(user_data)
+                    request.state.user = user_data
+                else:
+                    return JSONResponse(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        content={"detail": "Unauthorized"},
+                    )
             else:
                 return JSONResponse(
                     status_code=status.HTTP_401_UNAUTHORIZED,
