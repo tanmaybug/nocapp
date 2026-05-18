@@ -15,9 +15,10 @@ class applicationService:
             .where(NocApplicationDetails.active_status == 1)
         )
 
-        result = self.db.execute(stmt).mappings().all()
+        result = self.db.execute(stmt).mappings().first()
+        # result = db.execute(stmt).scalars().first()
         return result
-    
+
     def get_pending_application_data(self):
         j = join(
             NocApplicationDetails,

@@ -2,10 +2,11 @@ from fastapi import APIRouter, status, Depends, HTTPException
 from helpers import response
 from core.Dependencies.auth import get_current_admin
 from fastapi.templating import Jinja2Templates
-from xhtml2pdf import pisa
+from xhtml2pdf import pisa  # type: ignore
 import io
+from pathlib import Path
 from config.DB.DBConfig import get_db
-from fastapi.encoders import jsonable_encoder
+# from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from fastapi.responses import StreamingResponse
 from services.department.applicationRepo import applicationService
@@ -17,22 +18,35 @@ router = APIRouter(
 templates = Jinja2Templates(directory="templates")
 
 @router.get("", response_model=response.APIResponse)
-def get_application_data(nocRegId:str,current_user: dict = Depends(get_current_admin)):
-    print(current_user)
-    print(nocRegId)
+def get_application_data(
+    nocRegId: str,
+    db: Session = Depends(get_db),
+    current_user: dict = Depends(get_current_admin),
+):
+    # print(current_user)
+    # print(nocRegId)
     # userId = current_user["stake_user"]
+
+    application_db_data = applicationService(db).get_application_data_by_id(nocRegId)
+    if not application_db_data:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
+        )
+
+    BASE_DIR = Path(__file__).resolve().parents[4]
+
+    logo_path = BASE_DIR / "templates/static/images/Emblem_of_India.png"
+    # logo_path = os.path.join(BASE_DIR, "templates/static/images/Emblem_of_India.png")
 
     data = {
         "applicantDetails": {
             "entityType": "Society",
             "applicantName": "Tanmay",
-            "isRegistered": "YES",
-            "minorityType": "YES",
-            "minorityFlag": "YES",
-            "registrationNo": nocRegId,
-            "registrationDate": "2022-05-12",
-            "placeOfRegistration": "New Delhi",
-            "minorityDetails": "Muslim",
+            "isMinority": "YES",
+            "minorityType": "Linguistic",
+            "language": "SANTALI",
+            "religion": "",
+            "applicationId": nocRegId,
             "applicantMobileNo": 9876543210,
             "applicantEmailId": "tanmay.sharma@email.com",
             "applicantTanNo": "TAN9876543",
@@ -43,7 +57,6 @@ def get_application_data(nocRegId:str,current_user: dict = Depends(get_current_a
                 "policeStation": "Bantra",
                 "postOffice": "Kadamtala",
                 "municipalityBlock": "Howrah",
-                "assemblyConstituency": "Shibpur",
                 "city": "Gurgaon",
                 "pin": 711101,
             },
@@ -51,15 +64,14 @@ def get_application_data(nocRegId:str,current_user: dict = Depends(get_current_a
         "collegeDetails": {
             "proposedCollegeName": "Shree Ram College of Engineering",
             "affiliatedUniversity": "CU",
-            "institutionFor": "XYZ",
+            "institutionFor": "Male",
             "collegeLocation": {
-                "college_address": "456, College Road, Sector 21",
+                "collegeAddress": "456, College Road, Sector 21",
                 "districtId": "Howrah",
                 "subDivisionId": "Howrah Sub",
                 "policeStation": "Bantra",
                 "postOffice": "Kadamtala",
                 "gramPanchayat": "XYZ",
-                "assemblyConstituency": "Shibpur",
                 "municipalityBlock": "XYZ Block",
                 "pin": 711101,
             },
@@ -149,53 +161,36 @@ def get_application_data(nocRegId:str,current_user: dict = Depends(get_current_a
             "nationalizedBank": "State Bank of India",
         },
         "documentData": {
-            "proposalForCampusDevelopmentProgram": [
-                {"id": 1, "url": "https://example.com/campus-development-proposal"}
-            ],
-            "experienceAndExpertiseInDiscipline": [
-                {"id": 2, "url": "https://example.com/experience-details"}
-            ],
-            "feeStructureProposal": [
-                {"id": 3, "url": "https://example.com/fee-structure"}
-            ],
-            "endowmentFundDetails": [
-                {"id": 4, "url": "https://example.com/endowment-fund"}
-            ],
-            "employeeAppointmentProcedure": [
-                {"id": 5, "url": "https://example.com/employee-appointment"}
-            ],
-            "extracurricularActivitiesAndPlacesDetails": [
-                {"id": 6, "url": "https://example.com/extracurricular-activities"}
-            ],
-            "societyRegistrationCertificate": [
-                {"id": 7, "url": "https://example.com/society-registration"}
-            ],
-            "conveyanceDeed": [{"id": 8, "url": "https://example.com/conveyance-deed"}],
-            "homesteadPurposeConversionApplication": [
-                {"id": 9, "url": "https://example.com/homestead-conversion"}
-            ],
-            "gripsEchallan": [{"id": 10, "url": "https://example.com/grips-echallan"}],
-            "buildingPlan": [{"id": 11, "url": "https://example.com/building-plan"}],
-            "proofOfFees": [{"id": 12, "url": "https://example.com/proof-of-fees"}],
-            "proofOfLand": [{"id": 13, "url": "https://example.com/proof-of-land"}],
-            "phasedDevelopmentBluePrint": [
-                {"id": 14, "url": "https://example.com/phased-development"}
-            ],
-            "proofOfContiguousLandOwnership": [
-                {"id": 15, "url": "https://example.com/land-ownership"}
-            ],
-            "otherInformation": [
-                {"id": 16, "url": "https://example.com/other-information"}
-            ],
+            "proposalForCampusDevelopmentProgram": "https://example.com/campus-development-proposal",
+            "experienceAndExpertiseInDiscipline": "https://example.com/experience-details",
+            "feeStructureProposal": "https://example.com/fee-structure",
+            "endowmentFundDetails": "https://example.com/endowment-fund",
+            "employeeAppointmentProcedure": "https://example.com/employee-appointment",
+            "extracurricularActivitiesAndPlacesDetails": "https://example.com/extracurricular-activities",
+            "societyRegistrationCertificate": "https://example.com/society-registration",
+            "conveyanceDeed": "https://example.com/conveyance-deed",
+            "homesteadPurposeConversionApplication": "https://example.com/homestead-conversion",
+            "gripsEchallan": "https://example.com/grips-echallan",
+            "buildingPlan": "https://example.com/building-plan",
+            "proofOfFees": "https://example.com/proof-of-fees",
+            "proofOfLand": "https://example.com/proof-of-land",
+            "phasedDevelopmentBluePrint": "https://example.com/phased-development",
+            "proofOfContiguousLandOwnership": "https://example.com/land-ownership",
+            "otherInformation": "https://example.com/other-information",
+            "vision": "https://example.com/other-information",
+            "mission": "https://example.com/other-information",
+            "CoreValues": "https://example.com/other-information",
+            "aims": "https://example.com/other-information",
+            "objectivesOfGovernmentInstitution": "https://example.com/other-information",
+            "khatian": "https://example.com/other-information",
+            "totalAreaOfLandForCollege": "https://example.com/other-information",
+            "applicationFeesToBeDepositedToHED": "https://example.com/other-information",
         },
+        "logoPath": logo_path,
     }
-
-    result = {
-        "status_code": status.HTTP_200_OK,
-        "message": "Application Details",
-        "data": data,
-    }
-    return result
+    # Render the template with the request context (mandatory in FastAPI for Jinja2)
+    html_content = templates.get_template("applicant_noc_profile_view.html").render(**data)
+    return html_content
 
 
 @router.get("/download")
@@ -209,18 +204,19 @@ def download_application(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
         )
-    
+
+    BASE_DIR = Path(__file__).resolve().parents[4]
+
+    logo_path = BASE_DIR / "templates/static/images/Emblem_of_India.png"
     data = {
         "applicantDetails": {
             "entityType": "Society",
             "applicantName": "Tanmay",
-            "isRegistered": "YES",
-            "minorityType": "YES",
-            "minorityFlag": "YES",
-            "registrationNo": nocRegId,
-            "registrationDate": "2022-05-12",
-            "placeOfRegistration": "New Delhi",
-            "minorityDetails": "Muslim",
+            "isMinority": "YES",
+            "minorityType": "Linguistic",
+            "language": "SANTALI",
+            "religion": "",
+            "applicationId": nocRegId,
             "applicantMobileNo": 9876543210,
             "applicantEmailId": "tanmay.sharma@email.com",
             "applicantTanNo": "TAN9876543",
@@ -231,7 +227,6 @@ def download_application(
                 "policeStation": "Bantra",
                 "postOffice": "Kadamtala",
                 "municipalityBlock": "Howrah",
-                "assemblyConstituency": "Shibpur",
                 "city": "Gurgaon",
                 "pin": 711101,
             },
@@ -239,15 +234,14 @@ def download_application(
         "collegeDetails": {
             "proposedCollegeName": "Shree Ram College of Engineering",
             "affiliatedUniversity": "CU",
-            "institutionFor": "XYZ",
+            "institutionFor": "Male",
             "collegeLocation": {
-                "college_address": "456, College Road, Sector 21",
+                "collegeAddress": "456, College Road, Sector 21",
                 "districtId": "Howrah",
                 "subDivisionId": "Howrah Sub",
                 "policeStation": "Bantra",
                 "postOffice": "Kadamtala",
                 "gramPanchayat": "XYZ",
-                "assemblyConstituency": "Shibpur",
                 "municipalityBlock": "XYZ Block",
                 "pin": 711101,
             },
@@ -337,49 +331,37 @@ def download_application(
             "nationalizedBank": "State Bank of India",
         },
         "documentData": {
-            "proposalForCampusDevelopmentProgram": [
-                {"id": 1, "url": "https://example.com/campus-development-proposal"}
-            ],
-            "experienceAndExpertiseInDiscipline": [
-                {"id": 2, "url": "https://example.com/experience-details"}
-            ],
-            "feeStructureProposal": [
-                {"id": 3, "url": "https://example.com/fee-structure"}
-            ],
-            "endowmentFundDetails": [
-                {"id": 4, "url": "https://example.com/endowment-fund"}
-            ],
-            "employeeAppointmentProcedure": [
-                {"id": 5, "url": "https://example.com/employee-appointment"}
-            ],
-            "extracurricularActivitiesAndPlacesDetails": [
-                {"id": 6, "url": "https://example.com/extracurricular-activities"}
-            ],
-            "societyRegistrationCertificate": [
-                {"id": 7, "url": "https://example.com/society-registration"}
-            ],
-            "conveyanceDeed": [{"id": 8, "url": "https://example.com/conveyance-deed"}],
-            "homesteadPurposeConversionApplication": [
-                {"id": 9, "url": "https://example.com/homestead-conversion"}
-            ],
-            "gripsEchallan": [{"id": 10, "url": "https://example.com/grips-echallan"}],
-            "buildingPlan": [{"id": 11, "url": "https://example.com/building-plan"}],
-            "proofOfFees": [{"id": 12, "url": "https://example.com/proof-of-fees"}],
-            "proofOfLand": [{"id": 13, "url": "https://example.com/proof-of-land"}],
-            "phasedDevelopmentBluePrint": [
-                {"id": 14, "url": "https://example.com/phased-development"}
-            ],
-            "proofOfContiguousLandOwnership": [
-                {"id": 15, "url": "https://example.com/land-ownership"}
-            ],
-            "otherInformation": [
-                {"id": 16, "url": "https://example.com/other-information"}
-            ],
+            "proposalForCampusDevelopmentProgram": "https://example.com/campus-development-proposal",
+            "experienceAndExpertiseInDiscipline": "https://example.com/experience-details",
+            "feeStructureProposal": "https://example.com/fee-structure",
+            "endowmentFundDetails": "https://example.com/endowment-fund",
+            "employeeAppointmentProcedure": "https://example.com/employee-appointment",
+            "extracurricularActivitiesAndPlacesDetails": "https://example.com/extracurricular-activities",
+            "societyRegistrationCertificate": "https://example.com/society-registration",
+            "conveyanceDeed": "https://example.com/conveyance-deed",
+            "homesteadPurposeConversionApplication": "https://example.com/homestead-conversion",
+            "gripsEchallan": "https://example.com/grips-echallan",
+            "buildingPlan": "https://example.com/building-plan",
+            "proofOfFees": "https://example.com/proof-of-fees",
+            "proofOfLand": "https://example.com/proof-of-land",
+            "phasedDevelopmentBluePrint": "https://example.com/phased-development",
+            "proofOfContiguousLandOwnership": "https://example.com/land-ownership",
+            "otherInformation": "https://example.com/other-information",
+            "vision": "https://example.com/other-information",
+            "mission": "https://example.com/other-information",
+            "CoreValues": "https://example.com/other-information",
+            "aims": "https://example.com/other-information",
+            "objectivesOfGovernmentInstitution": "https://example.com/other-information",
+            "khatian": "https://example.com/other-information",
+            "totalAreaOfLandForCollege": "https://example.com/other-information",
+            "applicationFeesToBeDepositedToHED": "https://example.com/other-information",
         },
+        "logoPath": logo_path,
     }
-
     # Render HTML
-    html_content = templates.get_template("applicant_noc_profile_view.html").render(**data)
+    html_content = templates.get_template("applicant_noc_profile_view_pdf.html").render(
+        **data
+    )
     pdf = convert_html_to_pdf(html_content)
 
     return StreamingResponse(
