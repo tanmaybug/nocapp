@@ -9,8 +9,10 @@ function createDefaultRegistrationData() {
     entityTypeID: null,
     isMinority: 0,
     minorityTypeId: null,
+    religionId: null,
+    languageId: null,
     applicantName: '',
-    applicantDesignation: '',
+    designationId: null,
     applicantLocation: {
       applicantAddress: '',
       districtId: null,
@@ -46,6 +48,10 @@ function createDefaultRegistrationData() {
 export const useRegistrationStore = defineStore('registration', {
   state: (): {
     entityTypes: any[],
+    minorityTypes: any[],
+    religions: any[],
+    languages: any[],
+    designations: any[],
     districts: any[],
     subDivisions: any[],
     policeStations: any[],
@@ -61,6 +67,10 @@ export const useRegistrationStore = defineStore('registration', {
     dialogStore: ReturnType<typeof useDialogStore>
   } => ({
     entityTypes: [],
+    minorityTypes: [],
+    religions: [],
+    languages: [],
+    designations: [],
     districts: [],
     subDivisions: [],
     policeStations: [],
@@ -81,6 +91,10 @@ export const useRegistrationStore = defineStore('registration', {
         const response = await getRegistrationFormOptions()
         const optionFields = filterProperties(response.data, [
             'entityTypes',
+            'minorityTypes',
+            'religions',
+            'languages',
+            'designations',
             'districts',
             'subDivisions',
             'policeStations',
