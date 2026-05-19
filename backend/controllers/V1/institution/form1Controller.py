@@ -16,8 +16,8 @@ def update_application_data(
     db: Session = Depends(get_db),
     current_user: dict = Depends(get_current_user),
 ):
-    print(request)
-    print(current_user)
+    # print(request)
+    # print(current_user)
     nocRegId = current_user["stake_user"]
     
     
