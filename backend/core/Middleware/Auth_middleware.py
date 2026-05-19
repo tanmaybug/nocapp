@@ -15,9 +15,9 @@ async def auth_middleware(request: Request, call_next):
         "/v1/institution/Dashboard",
         "/v1/institution/TrackApplication",
         "/v1/institution/Inspection",
-        "/v1/institution/NOCApplication",
-        "/v1/institution/NOCApplication/test",
-        "/v1/institution/NOCApplication/download",
+        "/v1/institution/NOCApplication1",
+        # "/v1/institution/NOCApplication/view",
+        "/v1/institution/NOCApplication1/download",
         "/v1/department/Dashboard",
         "/v1/department/docketNumber",
         "/v1/department/ViewApplication",
@@ -31,7 +31,7 @@ async def auth_middleware(request: Request, call_next):
         "/v1/department/noc-applications/completed",
     ]
 
-    url_token_allow_path = ["/v1/institution/NOCApplication/download","/v1/department/ViewApplication/download",]
+    url_token_allow_path = ["/v1/institution/NOCApplication1/download","/v1/department/ViewApplication/download",]
 
     # Only protect exact matches
     if any(request.url.path.startswith(prefix) for prefix in protected_paths):
@@ -44,7 +44,7 @@ async def auth_middleware(request: Request, call_next):
             else:
                 return JSONResponse(
                     status_code=status.HTTP_401_UNAUTHORIZED,
-                    content={"detail": "Unauthorized"},
+                    content={"detail": "Unauthorized."},
                 )
         else:
             if any(
@@ -58,12 +58,12 @@ async def auth_middleware(request: Request, call_next):
                 else:
                     return JSONResponse(
                         status_code=status.HTTP_401_UNAUTHORIZED,
-                        content={"detail": "Unauthorized"},
+                        content={"detail": "Unauthorized.."},
                     )
             else:
                 return JSONResponse(
                     status_code=status.HTTP_401_UNAUTHORIZED,
-                    content={"detail": "Unauthorized"},
+                    content={"detail": "Unauthorized..."},
                 )
         
     response = await call_next(request)
