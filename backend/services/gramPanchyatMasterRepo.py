@@ -18,7 +18,10 @@ class gramPanchyatService:
         )
 
         result = self.db.execute(stmt).mappings().all()
-        return result
+        if result:
+            return result
+        else:
+            return None
     
     def get_data_by_blockid(self,blockId):
         stmt = (
@@ -32,4 +35,7 @@ class gramPanchyatService:
         )
 
         result = self.db.execute(stmt).mappings().all()
-        return result
+        if result:
+            return result
+        else:
+            return None

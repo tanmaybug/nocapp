@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from dtos.form2DTO import Form2
 from models.applicationDetailsModel import NocApplicationDetails
+from mappers.form2Mapper import dbtodto
+from fastapi.encoders import jsonable_encoder
 
 class form2Service:
     def __init__(self, db: Session):
@@ -18,6 +20,19 @@ class form2Service:
             return record 
         else:
             return False
+        
+    def get_data_for_update(self, regId: str):
+        # Fetch record
+        record = (
+            self.db.query(NocApplicationDetails)
+            .filter_by(noc_registration_id=regId)
+            .first()
+        )
+
+        if record:
+            return dbtodto(jsonable_encoder(record))
+        else:
+            return None
 
     def update_data(self, form_data: Form2):
         """

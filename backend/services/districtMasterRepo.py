@@ -17,4 +17,7 @@ class districtMasterService:
         )
         
         result = self.db.execute(stmt).mappings().all()
-        return result
+        if result:
+            return result
+        else:
+            return None

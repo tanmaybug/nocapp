@@ -8,7 +8,8 @@ from controllers.V1 import (
     test_new,
     file_upload_controller,
     test_controller,
-    view_file_controller
+    view_file_controller,
+    checkTokenValidity_controller,
 )
 
 from controllers.V1.institution import (
@@ -43,6 +44,8 @@ master_router.include_router(otp_controller.router, prefix="/v1")
 
 master_router.include_router(login_controller.router, prefix="/v1")
 master_router.include_router(view_file_controller.router, prefix="/v1")
+
+master_router.include_router(checkTokenValidity_controller.router, prefix="/v1")
 
 # ----------Institution Section Start-------------------
 

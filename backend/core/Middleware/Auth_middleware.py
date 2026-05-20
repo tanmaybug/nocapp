@@ -9,6 +9,7 @@ async def auth_middleware(request: Request, call_next):
         return await call_next(request)
     
     protected_paths = [
+        "/v1/checkTokenValidity",
         "/v1/institution/form1",
         "/v1/institution/form2",
         "/v1/institution/form3",

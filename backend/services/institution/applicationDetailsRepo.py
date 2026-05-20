@@ -25,7 +25,10 @@ class applicationDetailsService:
         )
 
         result = self.db.execute(stmt).mappings().all()
-        return result[0]
+        if result:
+            return result[0]
+        else:
+            return None
     
     def insert_data(
         self,

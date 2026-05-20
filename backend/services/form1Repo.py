@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from dtos.form1DTOcg import Form1
 from mappers.form1Mapper import dbtodto
 from models.applicationDetailsModel import NocApplicationDetails
-#from fastapi.encoders import jsonable_encoder
+from fastapi.encoders import jsonable_encoder
 
 class form1Service:
     def __init__(self, db: Session):
@@ -54,5 +54,5 @@ class form1Service:
                 return None
 
             # 2️⃣ Convert DB model → DTO
-            return dbtodto(db_obj)
+            return dbtodto(jsonable_encoder(db_obj))
 

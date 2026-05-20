@@ -17,7 +17,10 @@ class applicationService:
 
         result = self.db.execute(stmt).mappings().first()
         # result = db.execute(stmt).scalars().first()
-        return result
+        if result:
+            return result
+        else:
+            return None
 
     def get_pending_application_data(self):
         j = join(
@@ -42,7 +45,10 @@ class applicationService:
         )
 
         result = self.db.execute(stmt).mappings().all()
-        return result
+        if result:
+            return result
+        else:
+            return None
     
     def get_inprocess_application_data(self):
         j = join(
@@ -68,7 +74,10 @@ class applicationService:
         )
 
         result = self.db.execute(stmt).mappings().all()
-        return result
+        if result:
+            return result
+        else:
+            return None
     
     def get_complete_application_data(self):
         j = join(
@@ -94,4 +103,7 @@ class applicationService:
         )
 
         result = self.db.execute(stmt).mappings().all()
-        return result
+        if result:
+            return result
+        else:
+            return None

@@ -16,7 +16,10 @@ class docketService:
 
         # result = self.db.execute(stmt).mappings().first()
         result = self.db.execute(stmt).scalars().first()
-        return result
+        if result:
+            return result
+        else:
+            return None
 
 
     def insert_data(

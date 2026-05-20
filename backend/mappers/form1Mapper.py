@@ -185,8 +185,8 @@ def dtotodb_update(form_data: Form1, existing_obj: NocApplicationDetails) -> Noc
     return application
 
 
-def dbtodto(data: Dict[str, Any]) -> Form1:
-    db = data.get("NocApplicationDetails", {})
+def dbtodto(db: Dict[str, Any]) -> Form1:
+    # db = data.get("NocApplicationDetails", {})
 
     return Form1(
         aimAndObjective=AimAndObjective(
