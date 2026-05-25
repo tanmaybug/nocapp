@@ -10,7 +10,7 @@
     </div>
     <v-divider />
 
-    <v-data-table v-model:sort-by="sortBy" :headers="headers" :items="activities" :search="search" item-value="sno" density="comfortable" hide-default-footer>
+    <v-data-table v-model:sort-by="sortBy" :headers="headers" :items="trackApplication" :search="search" :loading="status === 'processing'" item-value="sno" density="comfortable" hide-default-footer>
       <template #no-data>
         <div class="text-center text-grey-darken-1 py-6">No activity found.</div>
       </template>
@@ -19,14 +19,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useInstitutionStore } from '../stores'
 
-type TrackRow = {
-  sno: number
-  activity: string
-  date: string
-  remarks: string
-}
+const institutionStore = useInstitutionStore()
+const { trackApplication, status } = storeToRefs(institutionStore)
 
 const headers = [
   { title: 'S.No.', key: 'sno', sortable: true },
@@ -38,30 +36,7 @@ const headers = [
 const sortBy = ref([{ key: 'sno', order: 'asc' as const }])
 const search = ref('')
 
-const activities = ref<TrackRow[]>([
-  {
-    sno: 1,
-    activity: 'Registration Done',
-    date: '12-10-2025',
-    remarks: '',
-  },
-  {
-    sno: 2,
-    activity: 'Final Submit Done',
-    date: '14-10-2025',
-    remarks: '',
-  },
-  {
-    sno: 3,
-    activity: 'Docket Number Added',
-    date: '20-10-2025',
-    remarks: '',
-  },
-  {
-    sno: 4,
-    activity: 'Inspection Date Assigned',
-    date: '20-10-2025',
-    remarks: '',
-  },
-])
+onMounted(() => {
+  institutionStore.getTrackApplication()
+})
 </script>

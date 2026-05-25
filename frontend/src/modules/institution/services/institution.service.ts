@@ -28,3 +28,13 @@ export const getDashboardData = async () => {
   const resp = await api.get(`${RESOURCE_BASE}/Dashboard`)
   return resp.data
 }
+
+export const getTrackApplication = async () => {
+  const resp = await api.get(`${RESOURCE_BASE}/TrackApplication`)
+  return resp.data
+}
+
+export const getNOCApplicationView = async () => {
+  const resp = await api.get(`${RESOURCE_BASE}/NOCApplication/view`)
+  return resp.data
+}

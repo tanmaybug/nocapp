@@ -1,33 +1,38 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
-  },
-  
-  server: {
-    host: '0.0.0.0',
-    port: 5173,
-    watch: {
-      usePolling: true,
-      interval: 1000,
-    },
-    hmr: {
-      host: 'localhost',
-      port: 5173,
-    },
-    proxy: {
-      '/v1': {
-        target: process.env.VITE_API_BASE_URL || '',
-        changeOrigin: true,
-        secure: false
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+
+  return {
+    plugins: [vue()],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
-  },
+
+    server: {
+      host: '0.0.0.0',
+      port: 5173,
+      watch: {
+        usePolling: true,
+        interval: 1000,
+      },
+      hmr: {
+        host: 'localhost',
+        port: 5173,
+      },
+      proxy: {
+        '/v1': {
+          target: env.VITE_API_BASE_URL,
+          changeOrigin: true,
+          secure: true,
+          rewrite: (path) => path.replace(/^\/v1/, ''),
+        },
+      },
+    },
+  }
 })

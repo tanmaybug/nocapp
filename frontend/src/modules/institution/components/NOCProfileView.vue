@@ -2,7 +2,7 @@
   <v-container class="py-6">
     <v-row justify="center">
       <v-col cols="12" lg="10" xl="9">
-        <v-card elevation="2">
+        <v-card elevation="2" :loading="status === 'processing'">
           <v-card-title>
             <div class="text-h5 text-primary font-weight-medium">NOC Application</div>
             <div class="text-subtitle-1 text-medium-emphasis">Application Details</div>
@@ -18,72 +18,60 @@
                   <tbody>
                     <tr>
                       <th class="label">Registration ID</th>
-                      <td>{{ applicantDetails.registrationNo }}</td>
+                      <td>{{ applicantDetails?.applicationId }}</td>
                       <th class="label">Applicant Name</th>
-                      <td>{{ applicantDetails.applicantName }}</td>
+                      <td>{{ applicantDetails?.applicantName }}</td>
                     </tr>
                     <tr>
                       <th class="label">Mobile No.</th>
-                      <td>{{ applicantDetails.applicantMobileNo }}</td>
+                      <td>{{ applicantDetails?.applicantMobileNo }}</td>
                       <th class="label">Email ID</th>
-                      <td>{{ applicantDetails.applicantEmailId }}</td>
+                      <td>{{ applicantDetails?.applicantEmailId }}</td>
                     </tr>
                     <tr>
                       <th class="label">Entity Type</th>
-                      <td>{{ applicantDetails.entityType }}</td>
-                      <th class="label">Is Registered?</th>
-                      <td>{{ applicantDetails.isRegistered }}</td>
+                      <td>{{ applicantDetails?.entityType }}</td>
+                      <th class="label">Is Minority?</th>
+                      <td>{{ applicantDetails?.isMinority }}</td>
                     </tr>
                     <tr>
                       <th class="label">Minority Type</th>
-                      <td></td>
-                      <th class="label">Registration No</th>
-                      <td>123456</td>
-                    </tr>
-                    <tr>
-                      <th class="label">Registration Date</th>
-                      <td>12-10-2025</td>
-                      <th class="label">Place Of Registration</th>
-                      <td>Howrah</td>
-                    </tr>
-                    <tr>
+                      <td>{{ applicantDetails?.minorityType }}</td>
                       <th class="label">Minority Details</th>
-                      <td></td>
+                      <td>{{ applicantDetails?.language || applicantDetails?.religion }}</td>
+                    </tr>
+                    <tr>
                       <th class="label">Applicant TAN No</th>
-                      <td>1234567890</td>
+                      <td>{{ applicantDetails?.applicantTanNo }}</td>
+                      <th class="label"></th>
+                      <td></td>
                     </tr>
                     <tr>
                       <th class="label" colspan="4" style="text-align: center;"><strong>Address Details</strong></th>
                     </tr>
                     <tr>
                       <th class="label">Address</th>
-                      <td>XYZ Test Address</td>
+                      <td>{{ applicantDetails?.applicantLocation?.applicantAddress }}</td>
                       <th class="label">District</th>
-                      <td>Howrah</td>
+                      <td>{{ applicantDetails?.applicantLocation?.district }}</td>
                     </tr>
                     <tr>
                       <th class="label">Sub Division</th>
-                      <td>Howrah Sub</td>
+                      <td>{{ applicantDetails?.applicantLocation?.subDivision }}</td>
                       <th class="label">Police Station</th>
-                      <td>Bantra</td>
+                      <td>{{ applicantDetails?.applicantLocation?.policeStation }}</td>
                     </tr>
                     <tr>
                       <th class="label">Post Office</th>
-                      <td>Kadamtala</td>
+                      <td>{{ applicantDetails?.applicantLocation?.postOffice }}</td>
                       <th class="label">Municipality Block</th>
-                      <td>Howrah</td>
+                      <td>{{ applicantDetails?.applicantLocation?.municipalityBlock }}</td>
                     </tr>
                     <tr>
-                      <th class="label">Assembly Constituency</th>
-                      <td>Shibpur</td>
                       <th class="label">City</th>
-                      <td>Howrah</td>
-                    </tr>
-                    <tr>
+                      <td>{{ applicantDetails?.applicantLocation?.city }}</td>
                       <th class="label">PIN</th>
-                      <td>711101</td>
-                      <th class="label"></th>
-                      <td></td>
+                      <td>{{ applicantDetails?.applicantLocation?.pin }}</td>
                     </tr>
                   </tbody>
                 </v-table>
@@ -98,13 +86,13 @@
                   <tbody>
                     <tr>
                       <th class="label">Proposed College Name</th>
-                      <td>{{ collegeDetails.proposedCollegeName }}</td>
+                      <td>{{ collegeDetails?.proposedCollegeName }}</td>
                       <th class="label">Affiliated University</th>
-                      <td>{{ collegeDetails.affiliatedUniversity }}</td>
+                      <td>{{ collegeDetails?.affiliatedUniversity }}</td>
                     </tr>
                     <tr>
                       <th class="label">Institution For</th>
-                      <td>{{ collegeDetails.institutionFor }}</td>
+                      <td>{{ collegeDetails?.institutionFor }}</td>
                       <th class="label"></th>
                       <td></td>
                     </tr>
@@ -113,33 +101,27 @@
                     </tr>
                     <tr>
                       <th class="label">Address</th>
-                      <td>XYZ Test Address</td>
+                      <td>{{ collegeDetails?.collegeLocation?.collegeAddress }}</td>
                       <th class="label">District</th>
-                      <td>Howrah</td>
+                      <td>{{ collegeDetails?.collegeLocation?.districtId }}</td>
                     </tr>
                     <tr>
                       <th class="label">Sub Division</th>
-                      <td>Howrah Sub</td>
+                      <td>{{ collegeDetails?.collegeLocation?.subDivisionId }}</td>
                       <th class="label">Police Station</th>
-                      <td>Bantra</td>
+                      <td>{{ collegeDetails?.collegeLocation?.policeStation }}</td>
                     </tr>
                     <tr>
                       <th class="label">Post Office</th>
-                      <td>Kadamtala</td>
+                      <td>{{ collegeDetails?.collegeLocation?.postOffice }}</td>
                       <th class="label">Municipality Block</th>
-                      <td>Howrah</td>
+                      <td>{{ collegeDetails?.collegeLocation?.municipalityBlock }}</td>
                     </tr>
                     <tr>
-                      <th class="label">Assembly Constituency</th>
-                      <td>Shibpur</td>
                       <th class="label">Gram Panchayat</th>
-                      <td>XYZ</td>
-                    </tr>
-                    <tr>
+                      <td>{{ collegeDetails?.collegeLocation?.gramPanchayat }}</td>
                       <th class="label">PIN</th>
-                      <td>711101</td>
-                      <th class="label"></th>
-                      <td></td>
+                      <td>{{ collegeDetails?.collegeLocation?.pin }}</td>
                     </tr>
                   </tbody>
                 </v-table>
@@ -154,42 +136,42 @@
                   <tbody>
                     <tr>
                       <th class="label">Vision</th>
-                      <td colspan="3">{{ institutionPurpose.aimAndObjective.vision }}</td>
+                      <td colspan="3">{{ institutionPurpose?.aimAndObjective?.vision }}</td>
                     </tr>
                     <tr>
                       <th class="label">Mission</th>
-                      <td colspan="3">{{ institutionPurpose.aimAndObjective.mission }}</td>
+                      <td colspan="3">{{ institutionPurpose?.aimAndObjective?.mission }}</td>
                     </tr>
                     <tr>
                       <th class="label">Core Values</th>
-                      <td colspan="3">{{ institutionPurpose.aimAndObjective.coreValues }}</td>
+                      <td colspan="3">{{ institutionPurpose?.aimAndObjective?.coreValues }}</td>
                     </tr>
                     <tr>
                       <th class="label">Aims</th>
-                      <td colspan="3">{{ institutionPurpose.aimAndObjective.aims }}</td>
+                      <td colspan="3">{{ institutionPurpose?.aimAndObjective?.aims }}</td>
                     </tr>
                     <tr>
                       <th class="label">Objective Concerned Institution</th>
-                      <td colspan="3">To meet the growing demand for skilled engineers by offering state-of-the-art learning resources.</td>
+                      <td colspan="3">{{ institutionPurpose?.aimAndObjective?.objectiveConcernedInstitution }}</td>
                     </tr>
                     <tr>
                       <th class="label" colspan="4" style="text-align: center;"><strong>Institution Land Details</strong></th>
                     </tr>
                     <tr>
                       <th class="label">Mouza</th>
-                      <td>Mauza-A</td>
+                      <td>{{ institutionPurpose?.collegeLandDetails?.mouza }}</td>
                       <th class="label">JlNo</th>
-                      <td>159</td>
+                      <td>{{ institutionPurpose?.collegeLandDetails?.jlNo }}</td>
                     </tr>
                     <tr>
                       <th class="label">KhatianNo</th>
-                      <td>1212</td>
+                      <td>{{ institutionPurpose?.collegeLandDetails?.khatianNo }}</td>
                       <th class="label">Plot No</th>
-                      <td>99/7B</td>
+                      <td>{{ institutionPurpose?.collegeLandDetails?.plotNo }}</td>
                     </tr>
                     <tr>
                       <th class="label">Area Clasification</th>
-                      <td>1</td>
+                      <td>{{ institutionPurpose?.collegeLandDetails?.areaClasification }}</td>
                       <th class="label"></th>
                       <td></td>
                     </tr>
@@ -198,30 +180,30 @@
                     </tr>
                     <tr>
                       <th class="label">Experience In Education</th>
-                      <td colspan="3">The trust has over 20 years of experience in running schools and training centers.</td>
+                      <td colspan="3">{{ institutionPurpose?.credibilityAndReadiness?.experienceInEducation }}</td>
                     </tr>
                     <tr>
                       <th class="label">General Reputation</th>
-                      <td colspan="3">Recognized for its commitment to quality and community service in the region.</td>
+                      <td colspan="3">{{ institutionPurpose?.credibilityAndReadiness?.generalReputation }}</td>
                     </tr>
                     <tr>
                       <th class="label">Readiness To Comply With Regulatory Norms</th>
-                      <td colspan="3">Fully committed to complying with regulatory norms set by the government and affiliating body.</td>
+                      <td colspan="3">{{ institutionPurpose?.credibilityAndReadiness?.readinessToComplyWithRegulatoryNorms }}</td>
                     </tr>
                     <tr>
                       <th class="label" colspan="4" style="text-align: center;"><strong>Additional Commitments And Plans</strong></th>
                     </tr>
                     <tr>
                       <th class="label">Student Reservation</th>
-                      <td></td>
+                      <td>{{ yesNo(institutionPurpose?.additionalCommitmentsAndPlans?.studentReservation) }}</td>
                       <th class="label">Employee Reservation</th>
-                      <td></td>
+                      <td>{{ yesNo(institutionPurpose?.additionalCommitmentsAndPlans?.employeeReservation) }}</td>
                     </tr>
                     <tr>
                       <th class="label">Special Skill Development Activity</th>
-                      <td></td>
+                      <td>{{ yesNo(institutionPurpose?.additionalCommitmentsAndPlans?.specialSkillDevelopmentActivity) }}</td>
                       <th class="label">Academic Auditing Plans</th>
-                      <td></td>
+                      <td>{{ yesNo(institutionPurpose?.additionalCommitmentsAndPlans?.academicAuditingPlans) }}</td>
                     </tr>
                   </tbody>
                 </v-table>
@@ -236,13 +218,13 @@
                   <tbody>
                     <tr>
                       <th class="label">Total Built-Up Area</th>
-                      <td>{{ campusDevelopment.campusDevlopmentPlan.approvedPlanWith.totalBuildUpArea }}</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.approvedPlanWith?.totalBuildUpArea }}</td>
                       <th class="label">Ground Floor Area</th>
-                      <td>{{ campusDevelopment.campusDevlopmentPlan.approvedPlanWith.groundFloorArea }}</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.approvedPlanWith?.groundFloorArea }}</td>
                     </tr>
                     <tr>
                       <th class="label">First Floor Area</th>
-                      <td>{{ campusDevelopment.campusDevlopmentPlan.approvedPlanWith.firstFloorArea }}</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.approvedPlanWith?.firstFloorArea }}</td>
                       <th class="label"></th>
                       <td></td>
                     </tr>
@@ -251,37 +233,37 @@
                     </tr>
                     <tr>
                       <th class="label">Class Room Count</th>
-                      <td>10</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.classRoomCount }}</td>
                       <th class="label">Seminar Room Count</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.seminarRoomCount }}</td>
                     </tr>
                     <tr>
                       <th class="label">Multipurpose Hall Count</th>
-                      <td>1</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.multipurposeHallCount }}</td>
                       <th class="label">Lab Resource Center Count</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.labResourceCenterCount }}</td>
                     </tr>
                     <tr>
                       <th class="label">ICT EduTech Lab Count</th>
-                      <td>1</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.ictEduTechLabCount }}</td>
                       <th class="label">Language Lab Count</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.languageLabCount }}</td>
                     </tr>
                     <tr>
                       <th class="label">Store Room Count</th>
-                      <td>1</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.storeRoomCount }}</td>
                       <th class="label">Boys CommonRoom Count</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.boysCommonRoomCount }}</td>
                     </tr>
                     <tr>
                       <th class="label">Girls Common Room Count</th>
-                      <td>1</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.girlsCommonRoomCount }}</td>
                       <th class="label">Boys Toilet Count</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.boysToiletCount }}</td>
                     </tr>
                     <tr>
                       <th class="label">Girls Toilet Count</th>
-                      <td>1</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalNumberOf?.girlsToiletCount }}</td>
                       <th class="label"></th>
                       <td></td>
                     </tr>
@@ -290,49 +272,49 @@
                     </tr>
                     <tr>
                       <th class="label">Conferrence Room Status</th>
-                      <td>1</td>
+                      <td>{{ yesNo(campusDevelopment?.campusDevlopmentPlan?.anyOtherRoom?.conferrenceRoomStatus) }}</td>
                       <th class="label">Meeting Room Status</th>
-                      <td>2</td>
+                      <td>{{ yesNo(campusDevelopment?.campusDevlopmentPlan?.anyOtherRoom?.meetingRoomStatus) }}</td>
                     </tr>
                     <tr>
                       <th class="label" colspan="4" style="text-align: center;"><strong>Library Details</strong></th>
                     </tr>
                     <tr>
                       <th class="label">Total Space</th>
-                      <td>1</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.libraryDetails?.totalSpace }}</td>
                       <th class="label">Reading Room Count</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.libraryDetails?.readingRoomCount }}</td>
                     </tr>
                     <tr>
                       <th class="label">Books Count</th>
-                      <td>1</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.libraryDetails?.booksCount }}</td>
                       <th class="label">Journal Periodical Count</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.libraryDetails?.journalPeriodicalCount }}</td>
                     </tr>
                     <tr>
                       <th class="label">Administrative Office Status</th>
-                      <td>1</td>
+                      <td>{{ yesNo(campusDevelopment?.campusDevlopmentPlan?.administrativeOfficeStatus) }}</td>
                       <th class="label">Total Planned Construction</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.campusDevlopmentPlan?.totalPlannedConstruction }}</td>
                     </tr>
                     <tr>
                       <th class="label">College Covered Area</th>
-                      <td>4</td>
+                      <td>{{ campusDevelopment?.collegeCoveredArea }}</td>
                       <th class="label">College Land Area In Acres</th>
-                      <td>2</td>
+                      <td>{{ campusDevelopment?.collegeLandAreaInAcres }}</td>
                     </tr>
                     <tr>
                       <th class="label">Comprehensive Plan</th>
-                      <td colspan="3">In the next 5 years, we will expand the infrastructure, including hostels and recreational facilities.</td>
+                      <td colspan="3">{{ campusDevelopment?.comprehensivePlan }}</td>
                     </tr>
                     <tr>
                       <th class="label" colspan="4" style="text-align: center;"><strong>Land Status</strong></th>
                     </tr>
                     <tr>
                       <th class="label">Land Owned Status</th>
-                      <td></td>
+                      <td>{{ yesNo(campusDevelopment?.landStatus?.landOwnedStatus) }}</td>
                       <th class="label">Land Converted For Educational Purpose Status</th>
-                      <td></td>
+                      <td>{{ yesNo(campusDevelopment?.landStatus?.landConvertedForEducationalPurposeStatus) }}</td>
                     </tr>
                   </tbody>
                 </v-table>
@@ -347,44 +329,50 @@
                   <tbody>
                     <tr>
                       <th class="label">Amount</th>
-                      <td>200000</td>
+                      <td>{{ financialDetails?.projectedFundFlow?.amount }}</td>
                       <th class="label">Source Of Fund</th>
-                      <td>Bank Loan, Trust Funds, Government Grants</td>
+                      <td>{{ financialDetails?.projectedFundFlow?.sourceOfFund }}</td>
                     </tr>
                     <tr>
                       <th class="label">Building Completion Status</th>
-                      <td>Under Construction</td>
+                      <td>{{ financialDetails?.buildingCompletionStatus }}</td>
                       <th class="label">Building Completion Date</th>
-                      <td>29-11-2025</td>
+                      <td>{{ financialDetails?.buildingCompletionDate }}</td>
                     </tr>
                     <tr>
+                      <th class="label">Building Completion Expected Date</th>
+                      <td>{{ financialDetails?.buildingCompletionExpectedDate }}</td>
                       <th class="label">Building Plan Amount To Be Deposited</th>
-                      <td>200000</td>
+                      <td>{{ financialDetails?.buildingPlanAmountToBeDeposited }}</td>
+                    </tr>
+                    <tr>
                       <th class="label">Nationalized Bank</th>
-                      <td>State Bank of India</td>
+                      <td>{{ financialDetails?.nationalizedBank }}</td>
+                      <th class="label"></th>
+                      <td></td>
                     </tr>
                     <tr>
                       <th class="label">Estimated Income And Expenditure For First 5 Years</th>
-                      <td colspan="3">Projected income of 100000, projected expenditure of 80000</td>
+                      <td colspan="3">{{ financialDetails?.estimatedIncomeAndExpenditureForFirst5Years }}</td>
                     </tr>
                     <tr>
                       <th class="label">Initial Fund Information</th>
-                      <td colspan="3">Initial capital from trust and government subsidy.</td>
+                      <td colspan="3">{{ financialDetails?.initialFundInformation }}</td>
                     </tr>
                     <tr>
                       <th class="label" colspan="4" style="text-align: center;"><strong>Synopsis</strong></th>
                     </tr>
                     <tr>
                       <th class="label">Proposed Investment</th>
-                      <td>500000</td>
+                      <td>{{ financialDetails?.synopsis?.proposedInvestment }}</td>
                       <th class="label">Proposed Employment</th>
-                      <td>200</td>
+                      <td>{{ financialDetails?.synopsis?.proposedEmployment }}</td>
                     </tr>
                     <tr>
                       <th class="label">Professional Colleges Count Within 25 Km</th>
-                      <td>5</td>
+                      <td>{{ financialDetails?.synopsis?.professionalCollegesCountWithin25Km }}</td>
                       <th class="label">Feeder School Count With in 15 Km</th>
-                      <td>10</td>
+                      <td>{{ financialDetails?.synopsis?.feederSchoolCountWithin15Km }}</td>
                     </tr>
                   </tbody>
                 </v-table>
@@ -397,57 +385,22 @@
               <v-card-text>
                 <v-table density="compact">
                   <tbody>
-                    <tr>
-                      <th class="label">Proposal For Campus Development Program</th>
-                      <td>
-                        <v-icon icon="mdi-check-circle" color="success" />
-                      </td>
-                      <th class="label">Experience And Expertise In Discipline</th>
-                      <td>
-                        <v-icon icon="mdi-check-circle" color="success" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="label">Certificate of Registration of Societies West Bengal ACT XXVI of 1961</th>
-                      <td>
-                        <v-icon icon="mdi-check-circle" color="success" />
-                      </td>
-                      <th class="label">Details of Endowment Fund</th>
-                      <td>
-                        <v-icon icon="mdi-check-circle" color="success" />
+                    <tr v-for="doc in documents" :key="doc.fieldName" class="doc-row">
+                      <td colspan="4" class="doc-cell">
+                        <div class="d-flex align-center justify-space-between ga-4">
+                          <span>{{ doc.label }}</span>
+                          <v-icon v-if="doc.filePath" icon="mdi-check-circle" color="success" />
+                          <v-icon v-else icon="mdi-close-circle" color="error" />
+                        </div>
                       </td>
                     </tr>
-                    <tr>
-                      <th class="label">Deed of Conveyance</th>
-                      <td>
-                        <v-icon icon="mdi-check-circle" color="success" />
-                      </td>
-                      <th class="label">Upload the document for the proof of land</th>
-                      <td>
-                        <v-icon icon="mdi-check-circle" color="success" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="label">Building Plan</th>
-                      <td>
-                        <v-icon icon="mdi-check-circle" color="success" />
-                      </td>
-                      <th class="label">Upload the proof of fees structure</th>
-                      <td>
-                        <v-icon icon="mdi-check-circle" color="success" />
-                      </td>
+                    <tr v-if="!documents.length">
+                      <td colspan="4" class="text-center text-grey-darken-1 py-4">No documents uploaded.</td>
                     </tr>
                   </tbody>
                 </v-table>
               </v-card-text>
             </v-card>
-
-            <!-- <v-alert variant="tonal" color="warning" class="mt-4">
-              <div class="font-weight-medium mb-1">Self Declaration</div>
-              <div class="text-body-2">
-                I Shri/ Smt {{ applicantDetails.applicantName }} do hereby declare that I / my parents/ legal guardian/ my family have/ has been residing in the State of West Bengal since last 10 years (or more). I further declare that the above-mentioned information furnished by me is correct and true to my knowledge and belief.
-              </div>
-            </v-alert> -->
           </v-card-text>
         </v-card>
       </v-col>
@@ -456,45 +409,42 @@
 </template>
 
 <script setup lang="ts">
-const applicantDetails = {
-  registrationNo: 'NOC20251218213221',
-  applicantName: 'Tanmay',
-  applicantMobileNo: '9876543210',
-  applicantEmailId: 'tanmay@example.com',
-  entityType: 'Private',
-  isRegistered: 'YES',
-}
+import { computed, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useInstitutionStore } from '../stores'
 
-const collegeDetails = {
-  proposedCollegeName: 'XYZ Engineering College',
-  affiliatedUniversity: 'XYZ University',
-  institutionFor: 'Engineering',
-}
+const institutionStore = useInstitutionStore()
+const { nocApplicationView, status } = storeToRefs(institutionStore)
 
-const institutionPurpose = {
-  aimAndObjective: {
-    vision: 'To be a premier institution promoting innovation and excellence in engineering education.',
-    mission: 'To provide world-class education, foster innovation, and create socially responsible engineers.',
-    coreValues: 'Integrity, Excellence, Innovation, Inclusivity, Sustainability',
-    aims: 'To provide a platform for young minds to achieve academic and personal growth, contributing to societal welfare.',
-  },
-}
+const applicantDetails = computed(() => nocApplicationView.value?.applicantDetails)
+const collegeDetails = computed(() => nocApplicationView.value?.collegeDetails)
+const institutionPurpose = computed(() => nocApplicationView.value?.institutionPurpose)
+const campusDevelopment = computed(() => nocApplicationView.value?.campusDevelopment)
+const financialDetails = computed(() => nocApplicationView.value?.financialDetails)
 
-const campusDevelopment = {
-  campusDevlopmentPlan: {
-    approvedPlanWith: {
-      totalBuildUpArea: '30000',
-      groundFloorArea: '10000',
-      firstFloorArea: '9000',
-    },
-  },
-}
+const yesNo = (v?: number | null) => (v === 1 ? 'YES' : v === 0 ? 'NO' : '')
+
+const documents = computed(() => nocApplicationView.value?.documentData ?? [])
+
+onMounted(() => {
+  institutionStore.getNOCApplicationView()
+})
 </script>
 
 <style scoped>
+:deep(.v-table table) {
+  table-layout: fixed;
+  width: 100%;
+}
+
+:deep(.v-table tbody > tr > th),
+:deep(.v-table tbody > tr > td) {
+  width: 25%;
+  vertical-align: top;
+  word-break: break-word;
+}
+
 .label {
-  width: 22%;
   font-weight: 600;
-  white-space: nowrap;
 }
 </style>

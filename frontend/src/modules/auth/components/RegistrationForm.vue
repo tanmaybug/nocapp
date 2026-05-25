@@ -20,14 +20,20 @@
             <v-text-field v-model="form.applicantTanNo" label="Applicant TAN No (if applicable)" :rules="[alphanumericRule(10)]" maxlength="10" />
           </v-col>
           <v-col cols="6">
-            <v-text-field v-model="form.applicantDesignation" label="Designation of Applicant/Office Bearer *" :rules="[requiredRule]" />
+            <v-autocomplete v-model.number="form.designationId" :items="designations" item-title="details" item-value="id" label="Designation of Applicant/Office Bearer *" :rules="[requiredRule]" />
           </v-col>
 
           <v-col cols="6">
             <v-autocomplete v-model.number="form.isMinority" :items="minorityOptions" item-title="details" item-value="id" label="Whether the Institution Minority? *" :rules="[requiredRule]" />
           </v-col>
           <v-col cols="6" v-if="showMinorityDetails">
-            <v-autocomplete v-model.number="form.minorityTypeId" :items="minorityTypeOptions" item-title="details" item-value="id" label="Minority Type *" :rules="minorityTypeRules" />
+            <v-autocomplete v-model.number="form.minorityTypeId" :items="minorityTypes" item-title="details" item-value="id" label="Minority Type *" :rules="minorityTypeRules" />
+          </v-col>
+          <v-col cols="6" v-if="showReligionDropdown">
+            <v-autocomplete v-model.number="form.religionId" :items="religions" item-title="details" item-value="id" label="Religion *" :rules="[requiredRule]" />
+          </v-col>
+          <v-col cols="6" v-if="showLanguageDropdown">
+            <v-autocomplete v-model.number="form.languageId" :items="languages" item-title="details" item-value="id" label="Language *" :rules="[requiredRule]" />
           </v-col>
 
           <v-col cols="12">
@@ -144,6 +150,10 @@ const store = useRegistrationStore()
 const {
   form,
   entityTypes,
+  minorityTypes,
+  religions,
+  languages,
+  designations,
   districts,
   subDivisions,
   policeStations,
@@ -160,11 +170,9 @@ const minorityOptions = [
   { id: 1, details: 'Yes' },
   { id: 0, details: 'No' }
 ]
-const minorityTypeOptions = [
-  { id: 1, details: 'LINGUISTIC' },
-  { id: 2, details: 'RELIGIOUS' }
-]
 const showMinorityDetails = computed(() => form.value.isMinority === 1)
+const showReligionDropdown = computed(() => showMinorityDetails.value && form.value.minorityTypeId === 1)
+const showLanguageDropdown = computed(() => showMinorityDetails.value && form.value.minorityTypeId === 2)
 const minorityTypeRules = computed(() => (showMinorityDetails.value ? [requiredRule] : []))
 
 // Minority Flag
@@ -172,6 +180,10 @@ watch(() => form.value.isMinority, (n) => {
   if (n !== 1) {
     form.value.minorityTypeId = null
   }
+})
+watch(() => form.value.minorityTypeId, (n) => {
+  if (n !== 1) form.value.religionId = null
+  if (n !== 2) form.value.languageId = null
 })
 
 // District
