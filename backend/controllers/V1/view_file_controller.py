@@ -33,7 +33,7 @@ def get_file_data(
     }
 
     result = response.APIResponse(
-        status_code=status.HTTP_200_OK, message="Test Response", data=data
+        status_code=status.HTTP_200_OK, message="Uploaded Documents", data=data
     )
     return result
 

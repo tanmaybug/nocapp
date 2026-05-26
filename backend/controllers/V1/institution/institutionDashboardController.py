@@ -27,18 +27,18 @@ def get_dashboard_data(
             status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
         )
     application_data = jsonable_encoder(application_db_data)
-
+    # print(application_data)
     track_db_data = applicationTrackService(db).get_track_data_by_applicant_id(
         nocRegId
     )
     track_data = jsonable_encoder(track_db_data)
-    
     last_update = max(track_data, key=lambda x: x["insert_date"])
     final_submit_date = next(
-        item["insert_date"] for item in track_data if item["status"] == 2
+        (item["insert_date"] for item in track_data if item["status"] == 2), None
     )
+    
     docket_date = next(
-        item["insert_date"] for item in track_data if item["status"] == 3
+        (item["insert_date"] for item in track_data if item["status"] == 3), None
     )
 
     data = {
@@ -58,26 +58,50 @@ def get_dashboard_data(
             {
                 "sno": 2,
                 "activity": "Form-1",
-                "date": "",
-                "status": "COMPLETED"
-                if application_data["NocApplicationDetails"]["form_status"] >= 1
-                else "PENDING",
+                "date": None,
+                "status": (
+                    "COMPLETED"
+                    if (
+                        application_data.get("NocApplicationDetails", {}).get(
+                            "form_status"
+                        )
+                        or 0
+                    )
+                    >= 1
+                    else "PENDING"
+                ),
             },
             {
                 "sno": 3,
                 "activity": "Form-2",
-                "date": "",
-                "status": "COMPLETED"
-                if application_data["NocApplicationDetails"]["form_status"] >= 2
-                else "PENDING",
+                "date": None,
+                "status": (
+                    "COMPLETED"
+                    if (
+                        application_data.get("NocApplicationDetails", {}).get(
+                            "form_status"
+                        )
+                        or 0
+                    )
+                    >= 2
+                    else "PENDING"
+                ),
             },
             {
                 "sno": 4,
                 "activity": "Form-3",
-                "date": "",
-                "status": "COMPLETED"
-                if application_data["NocApplicationDetails"]["form_status"] >= 3
-                else "PENDING",
+                "date": None,
+                "status": (
+                    "COMPLETED"
+                    if (
+                        application_data.get("NocApplicationDetails", {}).get(
+                            "form_status"
+                        )
+                        or 0
+                    )
+                    >= 3
+                    else "PENDING"
+                ),
             },
             {
                 "sno": 5,

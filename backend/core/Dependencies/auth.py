@@ -41,8 +41,7 @@ def get_current_user_admin(request: Request):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User not authenticated",
         )
-
-    if user.get("stake_level_id") != 2 or user.get("stake_level_id") != 3:
+    if user.get("stake_level_id") not in [2, 3]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Admin/User access required",

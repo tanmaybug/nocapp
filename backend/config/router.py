@@ -8,7 +8,8 @@ from controllers.V1 import (
     test_new,
     file_upload_controller,
     test_controller,
-    view_file_controller
+    view_file_controller,
+    checkTokenValidity_controller,
 )
 
 from controllers.V1.institution import (
@@ -18,7 +19,6 @@ from controllers.V1.institution import (
     inspectionController,
     institutionDashboardController,
     trackApplicationController,
-    docketNumberController,
     view_download_application_controller,
 )
 
@@ -29,6 +29,7 @@ from controllers.V1.department import (
     nocCompleteApplicationController,
     viewApplicationController,
     departmentInspectionController,
+    docketNumberController,
 )
 
 master_router = APIRouter()
@@ -44,6 +45,8 @@ master_router.include_router(otp_controller.router, prefix="/v1")
 master_router.include_router(login_controller.router, prefix="/v1")
 master_router.include_router(view_file_controller.router, prefix="/v1")
 
+master_router.include_router(checkTokenValidity_controller.router, prefix="/v1")
+
 # ----------Institution Section Start-------------------
 
 master_router.include_router(institutionDashboardController.router, prefix="/v1")
@@ -54,7 +57,6 @@ master_router.include_router(form1Controller.router, prefix="/v1")
 master_router.include_router(form2Controller.router, prefix="/v1")
 master_router.include_router(form3Controller.router, prefix="/v1")
 master_router.include_router(view_download_application_controller.router, prefix="/v1")
-master_router.include_router(docketNumberController.router, prefix="/v1")
 
 # ----------Institution Section End---------------------
 
@@ -66,5 +68,6 @@ master_router.include_router(inprocessApplicationController.router, prefix="/v1"
 master_router.include_router(nocCompleteApplicationController.router, prefix="/v1")
 master_router.include_router(viewApplicationController.router, prefix="/v1")
 master_router.include_router(departmentInspectionController.router, prefix="/v1")
+master_router.include_router(docketNumberController.router, prefix="/v1")
 
 # ----------Department Section End---------------------

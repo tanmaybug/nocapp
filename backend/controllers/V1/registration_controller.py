@@ -25,6 +25,10 @@ from services.affiliatedUniversityRepo import affiliatedUniversityMasterService
 from services.gramPanchyatMasterRepo import gramPanchyatService
 from services.postOfficeMasterRepo import postOfficeMasterService
 
+from services.religionMasterRepo import religionMasterService
+from services.languageMasterRepo import languageMasterService
+from services.applicantDesignationMasterRepo import designationMasterService
+
 router = APIRouter(prefix="/registration", tags=["Registration"])
 
 @router.get("", response_model=response.APIResponse)
@@ -42,6 +46,10 @@ def get_registration_master_data(db: Session = Depends(get_db)):
     aff_university = jsonable_encoder(affiliatedUniversityMasterService(db).get_data())
     institute_type = jsonable_encoder(institutionTypeMasterService(db).get_data())
 
+    religions = jsonable_encoder(religionMasterService(db).get_data())
+    languages = jsonable_encoder(languageMasterService(db).get_data())
+    designations = jsonable_encoder(designationMasterService(db).get_data())
+
     data = {
         "entityTypes": noc_applicant_type,
         "minorityTypes": minority_type,
@@ -52,6 +60,9 @@ def get_registration_master_data(db: Session = Depends(get_db)):
         "policeStations": police_station,
         "affiliatedUniversities": aff_university,
         "instituteType": institute_type,
+        "religions": religions,
+        "languages": languages,
+        "designations": designations
     }
 
     result = {

@@ -1,21 +1,22 @@
 from sqlalchemy.orm import Session
-from models.districtMasterModel import districtMaster
+from models.languageMasterModel import languageMaster
 from sqlalchemy import select
 
-class districtMasterService:
+
+class languageMasterService:
     def __init__(self, db: Session):
         self.db = db
 
     def get_data(self):
         stmt = (
             select(
-                districtMaster.dist_id_pk.label("id"),
-                districtMaster.dist_name.label("details"),
+                languageMaster.language_id_pk.label("id"),
+                languageMaster.language_name.label("details"),
             )
-            .where(districtMaster.active_status == 1)
-            .order_by(districtMaster.dist_name.asc())
+            .where(languageMaster.active_status == 1)
+            .order_by(languageMaster.language_name.asc())
         )
-        
+
         result = self.db.execute(stmt).mappings().all()
         if result:
             return result

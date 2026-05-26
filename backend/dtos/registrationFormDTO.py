@@ -23,7 +23,7 @@ class Applicantaddress(BaseModel):
     policeStationId: int | None = Field(default=None, description="Police station name")
     postOfficeId: int | None = Field(default=None, description="Post office name")
     municipalityBlockId: int | None = Field(default=None, description="Panchayat name")
-    assemblyConstituencyId: int | None = Field(default=None, description="Assembly constituency")
+    # assemblyConstituencyId: int | None = Field(default=None, description="Assembly constituency")
     city: str | None = Field(default=None, description="City name")
     pin: int | None = Field(description="6-digit PIN code")
 
@@ -55,13 +55,13 @@ class Applicantaddress(BaseModel):
 class Collegeaddress(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
-    college_address: str | None = Field(default=None, description="Address")
+    collegeAddress: str | None = Field(default=None, description="Address")
     districtId: int | None = Field(default=None, description="District ID")
     subDivisionId: int | None = Field(default=None, description="Subdivision ID")
     policeStationId: int | None = Field(default=None, description="Police station name")
     postOfficeId: int | None = Field(default=None, description="Post office name")
     gramPanchayatId: int | None = Field(default=None, description="Panchayat name")
-    assemblyConstituencyId: int | None = Field(default=None, description="Assembly constituency")
+    # assemblyConstituencyId: int | None = Field(default=None, description="Assembly constituency")
     municipalityBlockId: int | None = Field(default=None, description="Block name")
     pin: int | None = Field(description="6-digit PIN code")
 
@@ -95,13 +95,18 @@ class RegistrationFormRequestDTO(BaseModel):
     
     entityTypeID: int | None = Field(default=None, description="Legal Entity Type")
     applicantName: str | None = Field(default=None, description="Applicant Name")
-    isRegistered: int | None = Field(default=None, description="Legal Entity Status")
     minorityTypeId: int | None = Field(default=None, description="Minority Type")
-    minorityFlag: int | None = Field(default=None, description="Minority Flag")
-    registrationNo: str | None = Field(default=None, description="Registration Number")
-    registrationDate: str | None = Field(default=None, description="Registration Date")
-    placeOfRegistration: str | None = Field(default=None, description="Registration Place")
-    minorityDetails: str | None = Field(default=None, description="Minority Status")
+    isMinority: int | None = Field(default=None, description="Minority Flag")
+
+    # isRegistered: int | None = Field(default=None, description="Legal Entity Status")
+    # registrationNo: str | None = Field(default=None, description="Registration Number")
+    # registrationDate: str | None = Field(default=None, description="Registration Date")
+    # placeOfRegistration: str | None = Field(default=None, description="Registration Place")
+    # minorityDetails: str | None = Field(default=None, description="Minority Status")
+
+    religionId: int | None = Field(default=None, description="Religion")
+    languageId: int | None = Field(default=None, description="Language")
+    designationId: int | None = Field(default=None, description="Applicant Designation")
 
     applicantMobileNo: int | None = Field(default=None, description="Applicant Mobile Number")
     applicantEmailId: str | None = Field(default=None, description="Applicant Email Id")
@@ -132,9 +137,12 @@ class RegistrationFormRequestDTO(BaseModel):
     At least one special character.
 
     """
-                         
+
     password: str = Field(description="Password")
     confirm_password: str = Field(description="Confirm Password")
+
+    applicantMobileNoOTP: str = Field(description="Mobille OTP")
+    applicantEmailIdOTP: str = Field(description="Email OTP")
 
     @model_validator(mode="after")
     def check_all(cls, values):
@@ -151,25 +159,14 @@ class RegistrationFormRequestDTO(BaseModel):
                 }
             )
 
-        if values.entityTypeID == 4 and values.minorityDetails == "":
+        if values.isMinority==1 and values.minorityTypeId == "":
             errors.append(
                 {
                     "type": "value_error",
-                    "loc": ("minorityDetails",),
-                    "msg": "Please Enter Minority Details",
-                    "input": values.minorityDetails,
-                    "ctx": {"error": ValueError("Please Enter Minority Details")},
-                }
-            )
-
-        if values.minorityFlag and values.minorityDetails == "":
-            errors.append(
-                {
-                    "type": "value_error",
-                    "loc": ("minorityDetails",),
-                    "msg": "Please Enter Minority Details",
-                    "input": values.minorityDetails,
-                    "ctx": {"error": ValueError("Please Enter Minority Details")},
+                    "loc": ("minorityTypeId",),
+                    "msg": "Please Enter Minority Type",
+                    "input": values.minorityTypeId,
+                    "ctx": {"error": ValueError("Please Enter Minority Type")},
                 }
             )
 

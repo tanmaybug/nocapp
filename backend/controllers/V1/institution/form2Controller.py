@@ -5,9 +5,28 @@ from config.DB.DBConfig import get_db
 from mappers.form2Mapper import updatedb as form2Map
 from helpers import response
 from services.form2Repo import form2Service
+from services.institution.applicationDetailsRepo import applicationDetailsService
 from core.Dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/institution/form2", tags=["Form"])
+
+
+@router.get("/", response_model=response.APIResponse)
+def get_form2_data(db: Session = Depends(get_db),current_user: dict = Depends(get_current_user)):
+
+    nocRegId = current_user["stake_user"]
+    record = form2Service(db).get_data_for_update(nocRegId)
+    if not record:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"
+        )
+    result = {
+        "status_code": status.HTTP_200_OK,
+        "message": "Form2 Data",
+        "data": record,
+    }
+    return result
+
 
 @router.post("/", response_model=response.APIResponse)
 def update_application_data(
@@ -18,8 +37,7 @@ def update_application_data(
     # nocRegId = "NOC20251211212515"
     nocRegId = current_user["stake_user"]
 
-    record = form2Service(db).get_data(nocRegId)
-
+    record = applicationDetailsService(db).get_application_data_by_id(nocRegId)
     if not record:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Record not found"

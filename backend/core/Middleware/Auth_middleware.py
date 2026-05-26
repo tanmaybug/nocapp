@@ -9,17 +9,18 @@ async def auth_middleware(request: Request, call_next):
         return await call_next(request)
     
     protected_paths = [
+        "/v1/checkTokenValidity",
         "/v1/institution/form1",
         "/v1/institution/form2",
         "/v1/institution/form3",
         "/v1/institution/Dashboard",
         "/v1/institution/TrackApplication",
         "/v1/institution/Inspection",
-        "/v1/institution/docketNumber",
-        "/v1/institution/NOCApplication",
-        "/v1/institution/NOCApplication/test",
-        "/v1/institution/NOCApplication/download",
+        "/v1/institution/NOCApplication1",
+        # "/v1/institution/NOCApplication/view",
+        "/v1/institution/NOCApplication1/download",
         "/v1/department/Dashboard",
+        "/v1/department/docketNumber",
         "/v1/department/ViewApplication",
         "/v1/department/ViewApplication/download",
         "/v1/department/Inspection/setInspectionDate",
@@ -31,7 +32,7 @@ async def auth_middleware(request: Request, call_next):
         "/v1/department/noc-applications/completed",
     ]
 
-    # url_token_allow_path = ["/v1/institution/NOCApplication/download","/v1/department/ViewApplication/download",]
+    url_token_allow_path = ["/v1/institution/NOCApplication1/download","/v1/department/ViewApplication/download",]
 
     # Only protect exact matches
     if any(request.url.path.startswith(prefix) for prefix in protected_paths):
@@ -44,18 +45,26 @@ async def auth_middleware(request: Request, call_next):
             else:
                 return JSONResponse(
                     status_code=status.HTTP_401_UNAUTHORIZED,
-                    content={"detail": "Unauthorized"},
+                    content={"detail": "Unauthorized."},
                 )
         else:
-            token = request.query_params.get("token")
-            if token and validate_token(token):
-                user_data = decode_token(token)
-                # print(user_data)
-                request.state.user = user_data
+            if any(
+                request.url.path.startswith(prefix) for prefix in url_token_allow_path
+            ):
+                token = request.query_params.get("token")
+                if token and validate_token(token):
+                    user_data = decode_token(token)
+                    # print(user_data)
+                    request.state.user = user_data
+                else:
+                    return JSONResponse(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        content={"detail": "Unauthorized.."},
+                    )
             else:
                 return JSONResponse(
                     status_code=status.HTTP_401_UNAUTHORIZED,
-                    content={"detail": "Unauthorized"},
+                    content={"detail": "Unauthorized..."},
                 )
         
     response = await call_next(request)

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, Depends, HTTPException
-from mappers.institution.applicationTrackMapper import application_track_response_dto
 from helpers import response
 from core.Dependencies.auth import get_current_user
+from helpers.dateHelper import date_format
 from services.institution.applicationDetailsRepo import applicationDetailsService
 from config.DB.DBConfig import get_db
 from fastapi.encoders import jsonable_encoder
@@ -31,40 +31,23 @@ def get_application_track_data(
     track_data = jsonable_encoder(
         applicationTrackService(db).get_track_data_by_applicant_id(nocRegId)
     )
-    print(track_data)
-    # data = application_track_response_dto(track_data)
-    data = {
-        "trackData": [
-            {
-                "sno": 1,
-                "activity": "Registration Done",
-                "date": "12-10-2025",
-                "remarks": "",
-            },
-            {
-                "sno": 2,
-                "activity": "Final Submit Done",
-                "date": "14-10-2025",
-                "remarks": "",
-            },
-            {
-                "sno": 3,
-                "activity": "Docket Number Added",
-                "date": "20-10-2025",
-                "remarks": "",
-            },
-            {
-                "sno": 4,
-                "activity": "Inspection Date Assigned",
-                "date": "20-10-2025",
-                "remarks": "",
-            },
-        ],
-    }
+    # print(f"track data : {track_data}")
+
+    formatted_track_data = [
+        {
+            "sno": index,
+            "activity": item.get("remarks", ""),
+            "date": date_format(item.get("insert_date", "")),
+            "remarks": "",
+        }
+        for index, item in enumerate(track_data, start=1)
+    ]
+
+    # print(formatted_track_data)
 
     result = {
         "status_code": status.HTTP_200_OK,
         "message": "Application Track Data",
-        "data": data,
+        "data": formatted_track_data,
     }
     return result

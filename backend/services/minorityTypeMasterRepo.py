@@ -14,4 +14,7 @@ class minorityTypeService:
         ).where(minorityTypeMaster.active_status == 1)
 
         result = self.db.execute(stmt).mappings().all()
-        return result
+        if result:
+            return result
+        else:
+            return None

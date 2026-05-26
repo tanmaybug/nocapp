@@ -139,28 +139,23 @@
         <tbody>
             <tr>
                 <th style="text-align:left">Vision</th>
-                <td colspan="2">{{institutionPurpose['aimAndObjective']['vision']}}</td>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <td colspan="3">{{institutionPurpose['aimAndObjective']['vision']}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Mission</th>
-                <td colspan="2">{{institutionPurpose['aimAndObjective']['mission']}}</td>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <td colspan="3">{{institutionPurpose['aimAndObjective']['mission']}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Core Values</th>
-                <td colspan="2">{{institutionPurpose['aimAndObjective']['coreValues']}}</td>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <td colspan="3">{{institutionPurpose['aimAndObjective']['coreValues']}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Aims</th>
-                <td colspan="2">{{institutionPurpose['aimAndObjective']['aims']}}</td>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <td colspan="3">{{institutionPurpose['aimAndObjective']['aims']}}</td>
             </tr>
             <tr>
                 <th style="text-align:left">Objective Concerned Institution</th>
-                <td colspan="2">{{institutionPurpose['aimAndObjective']['objectiveConcernedInstitution']}}</td>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <td colspan="3">{{institutionPurpose['aimAndObjective']['objectiveConcernedInstitution']}}</td>
             </tr>
             <tr>
                 <th colspan="4" style="text-decoration: underline;padding:10px;font-size:15px;">Institution Land Details</th>
@@ -174,7 +169,7 @@
             </tr>
             <tr>
                 <th style="text-align:left">KhatianNo</th>
-                <td>{{institutionPurpose['collegeLandDetails']['khatianNo']}}<a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <td>{{institutionPurpose['collegeLandDetails']['khatianNo']}}</td>
                 <th style="text-align:left">Plot No</th>
                 <td>{{institutionPurpose['collegeLandDetails']['plotNo']}}</td>
             </tr>
@@ -403,101 +398,125 @@
                 {% if(documentData['proposalForCampusDevelopmentProgram'] !='') %}
                     <th style="text-align:left;">Proposal for campus development programme to be undertaken during first five years in phased manner after commencement
                     of functioning of the self-financing college and phased outlays of capital expenditure and sources of finance for those
-                    five years</th>
-                    <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                    five years<br/></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['experienceAndExpertiseInDiscipline'] !='') %}
-                    <th style="text-align:left">The experience and expertise in the concerned discipline</th>
-                    <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                    <th style="text-align:left">The experience and expertise in the concerned discipline<br/></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['feeStructureProposal'] !='') %}
                 <th style="text-align:left">Details of proposed fee structure along with proposal of fee concession/fee exemption for the poor and physically
-                handicapped students</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                handicapped students<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['endowmentFundDetails'] !='') %}
-                <th style="text-align:left">Details of Endowment Fund</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Details of Endowment Fund<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['employeeAppointmentProcedure'] !='') %}
                 <th style="text-align:left">Procedure to be followed for appointment of officials having requisite qualifications as well as non-teaching staff for
-                the proposed college</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                the proposed college<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['extracurricularActivitiesAndPlacesDetails'] !='') %}
                 <th style="text-align:left">Details of playground, auditorium and other facilities available or proposed to be created for games, sports, culture
-                and extracurricular activities like NSS, NCC, Scouts and Guides etc</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                and extracurricular activities like NSS, NCC, Scouts and Guides etc<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['societyRegistrationCertificate'] !='') %}
-                <th style="text-align:left">Certificate of Registration of Societies West Bengal ACT XXVI of 1961</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Certificate of Registration of Societies West Bengal ACT XXVI of 1961<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['conveyanceDeed'] !='') %}
-                <th style="text-align:left">Deed of Conveyance</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Deed of Conveyance<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['homesteadPurposeConversionApplication'] !='') %}
-                <th style="text-align:left">Application for Conversion of Land for Homestead purpose</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Application for Conversion of Land for Homestead purpose<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['gripsEchallan'] !='') %}
-                <th style="text-align:left">Govt of West Bengal Land & Land Reforms GRIPS eChallan</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Govt of West Bengal Land & Land Reforms GRIPS eChallan<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['buildingPlan'] !='') %}
-                <th style="text-align:left">Building Plan</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Building Plan<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['proofOfFees'] !='') %}
-                <th style="text-align:left">Upload the proof of fees</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Upload the proof of fees<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['proofOfLand'] !='') %}
-                <th style="text-align:left">Upload the document for the proof of land</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Upload the document for the proof of land<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['phasedDevelopmentBluePrint'] !='') %}
-                <th style="text-align:left">Upload the Blue-print for phased development</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Upload the Blue-print for phased development<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['proofOfContiguousLandOwnership'] !='') %}
-                <th style="text-align:left">Upload the Proof of Contiguous Land Ownership</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Upload the Proof of Contiguous Land Ownership<br /></th>
                 {% endif %}
             </tr>
             <tr>
                 {% if(documentData['otherInformation'] !='') %}
-                <th style="text-align:left">Any Other Information</th>
-                <td><a href="#" type="button" class="btn btn-primary btn-xs">View</a></td>
+                <th style="text-align:left">Any Other Information<br /></th>
+                {% endif %}
+            </tr>
+
+            <tr>
+                {% if(documentData['vision'] !='') %}
+                <th style="text-align:left">Vision<br /></th>
+                {% endif %}
+            </tr>
+            <tr>
+                {% if(documentData['mission'] !='') %}
+                <th style="text-align:left">Mission<br /></th>
+                {% endif %}
+            </tr><tr>
+                {% if(documentData['CoreValues'] !='') %}
+                <th style="text-align:left">Core Values<br /></th>
+                {% endif %}
+            </tr>
+            <tr>
+                {% if(documentData['aims'] !='') %}
+                <th style="text-align:left">Aims<br /></th>
+                {% endif %}
+            </tr>
+            <tr>
+                {% if(documentData['objectivesOfGovernmentInstitution'] !='') %}
+                <th style="text-align:left">Objectives Of Government Institution<br /></th>
+                {% endif %}
+            </tr>
+            <tr>
+                {% if(documentData['khatian'] !='') %}
+                <th style="text-align:left">Khatian<br /></th>
+                {% endif %}
+            </tr>
+            <tr>
+                {% if(documentData['totalAreaOfLandForCollege'] !='') %}
+                <th style="text-align:left">Total area of land for college<br /></th>
+                {% endif %}
+            </tr>
+            <tr>
+                {% if(documentData['applicationFeesToBeDepositedToHED'] !='') %}
+                <th style="text-align:left">Application Fees to be deposited to HED<br /></th>
                 {% endif %}
             </tr>
         </tbody>
